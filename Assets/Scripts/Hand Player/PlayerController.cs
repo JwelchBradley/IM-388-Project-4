@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,14 +23,24 @@ public class PlayerController : MonoBehaviour
     private ThirdPersonMovement tpm;
 
     /// <summary>
-    /// Holds true if the hand is active.
+    /// List of controllers.
     /// </summary>
-    private bool handActive = false;
+    private enum activeController { HAND, PERSON, EYE };
+
+    /// <summary>
+    /// The currently active controller;
+    /// </summary>
+    private activeController currentActive = activeController.PERSON;
 
     /// <summary>
     /// Holds true if the player can crouch.
     /// </summary>
     private bool canCrouch = true;
+
+    /// <summary>
+    /// The virtual camera for when the player is standing.
+    /// </summary>
+    private CinemachineFreeLook handCam;
     #endregion
 
     #region Funcitons
@@ -41,8 +52,24 @@ public class PlayerController : MonoBehaviour
     {
         pmb = GameObject.Find("Pause Menu Templates Canvas").GetComponent<PauseMenuBehavior>();
         pm = GetComponent<PlayerMovement>();
+
+        GameObject hand = GameObject.Find("Third Person Player");
+
+        if(hand != null)
+        {
+            tpm = hand.GetComponentInChildren<ThirdPersonMovement>();
+            handCam = hand.GetComponentInChildren<CinemachineFreeLook>();
+            
+            InitializeCamera();
+        }
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    private void InitializeCamera()
+    {
+        //handCam = hand.GetComponent<CinemachineVirtualCamera>();
     }
     #endregion
 
@@ -63,7 +90,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void OnCrouch()
     {
-        if (!handActive)
+        if (currentActive.Equals(activeController.PERSON))
         {
             pm.Crouch();
         }
@@ -85,13 +112,39 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 inputVec = input.Get<Vector2>();
 
-        if (handActive)
+        switch (currentActive)
         {
-            tpm.MovePlayer(inputVec);
+            case activeController.PERSON:
+                pm.MovePlayer(inputVec);
+                break;
+
+            case activeController.HAND:
+                tpm.MovePlayer(inputVec);
+                break;
+
+            case activeController.EYE:
+                break;
         }
-        else
+    }
+
+    public void OnHand()
+    {
+        switch (currentActive)
         {
-            pm.MovePlayer(inputVec);
+            case activeController.PERSON:
+                currentActive = activeController.HAND;
+                handCam.Priority = 100;
+                pm.MovePlayer(Vector2.zero);
+                break;
+
+            case activeController.HAND:
+                currentActive = activeController.PERSON;
+                handCam.Priority = 0;
+                tpm.MovePlayer(Vector2.zero);
+                break;
+
+            case activeController.EYE:
+                break;
         }
     }
 

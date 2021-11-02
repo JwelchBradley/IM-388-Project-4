@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/Input/InputMaster.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/Settings/Input/InputMaster.inputactions'
 
 using System;
 using System.Collections;
@@ -65,6 +65,14 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press(behavior=2)""
+                },
+                {
+                    ""name"": ""Hand"",
+                    ""type"": ""Button"",
+                    ""id"": ""3e18d2c0-98d6-44bd-8768-f64fa56a33aa"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -232,6 +240,17 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""action"": ""Crouch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5bf9e213-0192-468d-9dc9-b26330613b10"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Hand"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -301,6 +320,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
         m_Player_Click = m_Player.FindAction("Click", throwIfNotFound: true);
         m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
+        m_Player_Hand = m_Player.FindAction("Hand", throwIfNotFound: true);
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_Newaction = m_Menu.FindAction("New action", throwIfNotFound: true);
@@ -359,6 +379,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Pause;
     private readonly InputAction m_Player_Click;
     private readonly InputAction m_Player_Crouch;
+    private readonly InputAction m_Player_Hand;
     public struct PlayerActions
     {
         private @InputMaster m_Wrapper;
@@ -369,6 +390,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputAction @Click => m_Wrapper.m_Player_Click;
         public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
+        public InputAction @Hand => m_Wrapper.m_Player_Hand;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -396,6 +418,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @Crouch.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCrouch;
                 @Crouch.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCrouch;
                 @Crouch.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCrouch;
+                @Hand.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHand;
+                @Hand.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHand;
+                @Hand.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHand;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -418,6 +443,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @Crouch.started += instance.OnCrouch;
                 @Crouch.performed += instance.OnCrouch;
                 @Crouch.canceled += instance.OnCrouch;
+                @Hand.started += instance.OnHand;
+                @Hand.performed += instance.OnHand;
+                @Hand.canceled += instance.OnHand;
             }
         }
     }
@@ -481,6 +509,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
         void OnPause(InputAction.CallbackContext context);
         void OnClick(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
+        void OnHand(InputAction.CallbackContext context);
     }
     public interface IMenuActions
     {

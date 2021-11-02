@@ -118,16 +118,6 @@ public class PlayerMovement : MonoBehaviour
     /// The CinemachinePOV of the walk camera.
     /// </summary>
     private CinemachinePOV walkCamPOV;
-
-    /// <summary>
-    /// The virtual camera for when the player crouching.
-    /// </summary>
-    private CinemachineVirtualCamera crouchCam;
-
-    /// <summary>
-    /// The CinemachinePOV of the crouch camera.
-    /// </summary>
-    private CinemachinePOV crouchCamPOV;
     #endregion
     #endregion
 
@@ -155,8 +145,6 @@ public class PlayerMovement : MonoBehaviour
         cameraTransform = Camera.main.transform;
         walkCam = GameObject.Find("Walk vcam").GetComponent<CinemachineVirtualCamera>();
         walkCamPOV = walkCam.GetCinemachineComponent<CinemachinePOV>();
-        crouchCam = GameObject.Find("Crouch vcam").GetComponent<CinemachineVirtualCamera>();
-        crouchCamPOV = crouchCam.GetCinemachineComponent<CinemachinePOV>();
     }
     #endregion
 

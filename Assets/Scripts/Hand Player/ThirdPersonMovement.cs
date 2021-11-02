@@ -5,7 +5,6 @@ public class ThirdPersonMovement : MonoBehaviour
 {
     private CharacterController controller;
 
-    [SerializeField]
     private Transform cam;
 
     private Vector3 moveVec;
@@ -20,6 +19,7 @@ public class ThirdPersonMovement : MonoBehaviour
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
+        cam = Camera.main.transform;
     }
 
     private void FixedUpdate()
