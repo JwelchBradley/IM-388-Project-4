@@ -335,6 +335,7 @@ public class PlayerController : MonoBehaviour
     {
         if (eCaster.IsCasting && eCaster.CanCast && Time.timeScale != 0)
         {
+            Debug.Log(true);
             eCaster.IsCasting = false;
             GameObject eye = eCaster.SpawnEye();
             InitializeEye(eye);
