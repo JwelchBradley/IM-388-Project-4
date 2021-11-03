@@ -73,6 +73,14 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Eye"",
+                    ""type"": ""Button"",
+                    ""id"": ""5308e238-c36d-461e-bd13-25d88cd70bec"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -251,6 +259,17 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""action"": ""Hand"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b353e9e1-084f-443c-abd0-dc014bc45e36"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Eye"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -321,6 +340,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
         m_Player_Click = m_Player.FindAction("Click", throwIfNotFound: true);
         m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
         m_Player_Hand = m_Player.FindAction("Hand", throwIfNotFound: true);
+        m_Player_Eye = m_Player.FindAction("Eye", throwIfNotFound: true);
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_Newaction = m_Menu.FindAction("New action", throwIfNotFound: true);
@@ -380,6 +400,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Click;
     private readonly InputAction m_Player_Crouch;
     private readonly InputAction m_Player_Hand;
+    private readonly InputAction m_Player_Eye;
     public struct PlayerActions
     {
         private @InputMaster m_Wrapper;
@@ -391,6 +412,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
         public InputAction @Click => m_Wrapper.m_Player_Click;
         public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
         public InputAction @Hand => m_Wrapper.m_Player_Hand;
+        public InputAction @Eye => m_Wrapper.m_Player_Eye;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -421,6 +443,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @Hand.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHand;
                 @Hand.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHand;
                 @Hand.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHand;
+                @Eye.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEye;
+                @Eye.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEye;
+                @Eye.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEye;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -446,6 +471,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @Hand.started += instance.OnHand;
                 @Hand.performed += instance.OnHand;
                 @Hand.canceled += instance.OnHand;
+                @Eye.started += instance.OnEye;
+                @Eye.performed += instance.OnEye;
+                @Eye.canceled += instance.OnEye;
             }
         }
     }
@@ -510,6 +538,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
         void OnClick(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
         void OnHand(InputAction.CallbackContext context);
+        void OnEye(InputAction.CallbackContext context);
     }
     public interface IMenuActions
     {
