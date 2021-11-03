@@ -1,6 +1,12 @@
+/*****************************************************************************
+// File Name :         PlayerController.cs
+// Author :            Jacob Welch
+// Creation Date :     3 November 2021
+//
+// Brief Description : Handles the inputs of the player and changing between
+                       different controllers.
+*****************************************************************************/
 using Cinemachine;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -86,6 +92,9 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = false;
     }
 
+    /// <summary>
+    /// Sets the cursor to be locked to the center of the screen.
+    /// </summary>
     private void InitializeCursor()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -94,32 +103,36 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// Gets everything necessary for the hand to function.
     /// </summary>
-    /// <param name="hand"></param>
+    /// <param name="hand">The hand gameobject.</param>
     private void InitializeHand(GameObject hand)
     {
         if (hand != null)
         {
             tpm = hand.GetComponentInChildren<ThirdPersonMovement>();
             handCam = hand.GetComponentInChildren<CinemachineFreeLook>();
-
-            InitializeCamera();
         }
     }
 
+    /// <summary>
+    /// Initializes the eye when it is first placed.
+    /// </summary>
+    /// <param name="eye"></param>
     private void InitializeEye(GameObject eye)
     {
-
-    }
-
-    private void InitializeCamera()
-    {
-        //handCam = hand.GetComponent<CinemachineVirtualCamera>();
+        ec = eye.GetComponentInChildren<EyeController>();
+        eyeCam = eye.GetComponentInChildren<CinemachineVirtualCamera>();
+        pm.MovePlayer(Vector2.zero);
+        eyeCam.Priority = 100;
+        currentActive = activeController.EYE;
     }
     #endregion
 
     #region Input Calls
     #region Basic Calls
     #region Pause
+    /// <summary>
+    /// Pauses the game.
+    /// </summary>
     public void OnPause()
     {
         pmb.PauseGame();
@@ -195,67 +208,116 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Hand
+    /// <summary>
+    /// Handles changes to and from the hand.
+    /// </summary>
     public void OnHand()
     {
         switch (currentActive)
         {
+            // To the hand from the person
             case activeController.PERSON:
-                if(tpm == null)
-                {
-                    GameObject hand = (GameObject)Instantiate(Resources.Load("Prefabs/Player/Third Person Player/Third Person Player", typeof(GameObject)), transform.position + Camera.main.transform.forward*2, transform.rotation);
-                    InitializeHand(hand);
-                }
-
-                UpdateCam(100, CinemachineBrain.UpdateMethod.FixedUpdate, activeController.HAND);
-                pm.MovePlayer(Vector2.zero);
+                ToHandFromPerson();
                 break;
 
+            // To the person from the hand
             case activeController.HAND:
-                UpdateCam(0, CinemachineBrain.UpdateMethod.SmartUpdate, activeController.PERSON);
+                UpdateHandCam(0, CinemachineBrain.UpdateMethod.SmartUpdate, activeController.PERSON);
                 tpm.MovePlayer(Vector2.zero);
                 break;
 
+            // To the hand from the eye
             case activeController.EYE:
+                if (tpm != null)
+                {
+                    UpdateHandCam(100, CinemachineBrain.UpdateMethod.FixedUpdate, activeController.HAND);
+                    eyeCam.Priority = 0;
+                    pm.MovePlayer(Vector2.zero);
+                }
                 break;
         }
+    }
+
+    /// <summary>
+    /// Handles the event of changing to the hand from the person.
+    /// </summary>
+    private void ToHandFromPerson()
+    {
+        if (tpm == null)
+        {
+            GameObject hand = (GameObject)Instantiate(Resources.Load("Prefabs/Player/Third Person Player/Third Person Player", typeof(GameObject)), transform.position + Camera.main.transform.forward * 2, transform.rotation);
+            InitializeHand(hand);
+        }
+
+        if (ec == null && eCaster.IsCasting)
+        {
+            NoLongerCastingEye();
+        }
+
+        UpdateHandCam(100, CinemachineBrain.UpdateMethod.FixedUpdate, activeController.HAND);
+        pm.MovePlayer(Vector2.zero);
+    }
+
+    private void UpdateHandCam(int priority, CinemachineBrain.UpdateMethod camUpdateMethod, activeController newActive)
+    {
+        handCam.Priority = priority;
+        mainCamBrain.m_UpdateMethod = camUpdateMethod;
+        currentActive = newActive;
     }
     #endregion
 
     #region Eye
+    /// <summary>
+    /// Changes to and from the eye.
+    /// </summary>
     public void OnEye()
     {
         switch (currentActive)
         {
+            // Pulls out the eye to be place or changes from the person to the eye
             case activeController.PERSON:
                 if(ec == null)
                 {
-                    eCaster.IsCasting = !eCaster.IsCasting;
+                    NoLongerCastingEye();
                 }
                 else
                 {
+                    pm.MovePlayer(Vector2.zero);
                     eyeCam.Priority = 100;
                     currentActive = activeController.EYE;
                 }
                 break;
 
+            // Changes to the eye from the hand
             case activeController.HAND:
+                if(ec != null)
+                {
+                    tpm.MovePlayer(Vector2.zero);
+                    eyeCam.Priority = 100;
+                    currentActive = activeController.EYE;
+                }
                 break;
 
+            // Changes from the eye to the player
             case activeController.EYE:
                 eyeCam.Priority = 0;
                 currentActive = activeController.PERSON;
                 break;
         }
     }
-    #endregion
 
-    private void UpdateCam(int priority, CinemachineBrain.UpdateMethod camUpdateMethod, activeController newActive)
+    /// <summary>
+    /// Stops the casting funciton for the eye.
+    /// </summary>
+    private void NoLongerCastingEye()
     {
-        handCam.Priority = priority;
-        mainCamBrain.m_UpdateMethod = camUpdateMethod;
-        currentActive = newActive;
+        eCaster.IsCasting = !eCaster.IsCasting;
     }
 
+    /// <summary>
+    /// Handles the looking of the eye.
+    /// </summary>
+    /// <param name="input"></param>
     public void OnMouseLook(InputValue input)
     {
         Vector2 inputVec = input.Get<Vector2>();
@@ -266,18 +328,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Handles the spawning of the eye when the mouse is clicked and the playing is casting.
+    /// </summary>
     public void OnClick()
     {
-        if (eCaster.IsCasting && eCaster.CanCast)
+        if (eCaster.IsCasting && eCaster.CanCast && Time.timeScale != 0)
         {
             eCaster.IsCasting = false;
             GameObject eye = eCaster.SpawnEye();
-            ec = eye.GetComponentInChildren<EyeController>();
-            eyeCam = eye.GetComponentInChildren<CinemachineVirtualCamera>();
-            eyeCam.Priority = 100;
-            currentActive = activeController.EYE;
+            InitializeEye(eye);
         }
     }
+    #endregion
     #endregion
     #endregion
 }
