@@ -110,6 +110,11 @@ public class PlayerMovement : MonoBehaviour
     private Transform cameraTransform;
 
     /// <summary>
+    /// The cinemachine brain on the main camera.
+    /// </summary>
+    private CinemachineBrain mainCamBrain;
+
+    /// <summary>
     /// The virtual camera for when the player is standing.
     /// </summary>
     private CinemachineVirtualCamera walkCam;
@@ -143,6 +148,7 @@ public class PlayerMovement : MonoBehaviour
     private void GetCameras()
     {
         cameraTransform = Camera.main.transform;
+        mainCamBrain = Camera.main.GetComponent<CinemachineBrain>();
         walkCam = GameObject.Find("Walk vcam").GetComponent<CinemachineVirtualCamera>();
         walkCamPOV = walkCam.GetCinemachineComponent<CinemachinePOV>();
     }
@@ -225,6 +231,7 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private void Update()
     {
+        if(!mainCamBrain.IsBlending)
         MoveCalculation();
 
         GravityCalculation();

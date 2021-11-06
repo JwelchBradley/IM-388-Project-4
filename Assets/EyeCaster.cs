@@ -12,6 +12,7 @@ public class EyeCaster : MonoBehaviour
 
     [SerializeField]
     private LayerMask landableMask;
+    private MeshRenderer mr;
 
     private bool isCasting = false;
 
@@ -37,6 +38,7 @@ public class EyeCaster : MonoBehaviour
     {
         cam = Camera.main.transform;
         eyeLandIndicator = GameObject.Find("EyeLand");
+        mr = eyeLandIndicator.GetComponent<MeshRenderer>();
     }
 
     // Update is called once per frame
@@ -46,6 +48,13 @@ public class EyeCaster : MonoBehaviour
         {
             DisplayLandLocation();
         }
+        else
+        {
+            if (mr.enabled)
+            {
+                mr.enabled = false;
+            }
+        }
     }
 
     private void DisplayLandLocation()
@@ -54,9 +63,10 @@ public class EyeCaster : MonoBehaviour
 
         if (canCast)
         {
-            if (!eyeLandIndicator.activeInHierarchy)
+            if (!mr.enabled)
             {
-                eyeLandIndicator.SetActive(true);
+                mr.enabled = true;
+                //eyeLandIndicator.SetActive(true);
             }
             eyeLandIndicator.transform.position = hit.point;
             eyeLandIndicator.transform.localScale = Vector3.one * Vector3.Distance(hit.point, cam.position) * (eyeSizeMod / 100);
@@ -80,7 +90,7 @@ public class EyeCaster : MonoBehaviour
     {
         GameObject eye = (GameObject)Instantiate(Resources.Load("Prefabs/Player/Eye/Eye", typeof(GameObject)), hit.point, SpawnRotation());
         eye.transform.position = SpawnSpot(eye);
-
+        mr.enabled = false;
         return eye;
     }
 

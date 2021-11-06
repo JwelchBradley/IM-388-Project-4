@@ -187,21 +187,18 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 inputVec = input.Get<Vector2>();
 
-        if (!mainCamBrain.IsBlending)
+        switch (currentActive)
         {
-            switch (currentActive)
-            {
-                case activeController.PERSON:
-                    pm.MovePlayer(inputVec);
-                    break;
+            case activeController.PERSON:
+                pm.MovePlayer(inputVec);
+                break;
 
-                case activeController.HAND:
-                    tpm.MovePlayer(inputVec);
-                    break;
+            case activeController.HAND:
+                tpm.MovePlayer(inputVec);
+                break;
 
-                case activeController.EYE:
-                    break;
-            }
+            case activeController.EYE:
+                break;
         }
     }
     #endregion
@@ -322,7 +319,7 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 inputVec = input.Get<Vector2>();
 
-        if (currentActive.Equals(activeController.EYE))
+        if (currentActive.Equals(activeController.EYE) && !mainCamBrain.IsBlending)
         {
             ec.Look(inputVec);
         }

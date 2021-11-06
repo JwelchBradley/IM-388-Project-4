@@ -1,3 +1,4 @@
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -45,10 +46,16 @@ public class ThirdPersonMovement : MonoBehaviour
     [Tooltip("The layer mask of the ground")]
     private LayerMask groundMask;
 
+    /// <summary>
+    /// The cinemachine brain on the main camera.
+    /// </summary>
+    private CinemachineBrain mainCamBrain;
+
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
         cam = Camera.main.transform;
+        mainCamBrain = Camera.main.GetComponent<CinemachineBrain>();
     }
 
     #region Input Calls
@@ -78,7 +85,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
         GravityCalculation();
 
-        if (moveVec.magnitude >= 0.1f)
+        if (moveVec.magnitude >= 0.1f && !mainCamBrain.IsBlending)
         {
             RotatePlayer();
         }

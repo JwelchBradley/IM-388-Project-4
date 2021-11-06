@@ -26,9 +26,10 @@ public class EyeController : MonoBehaviour
 
     public void InitializeAngle(Quaternion rotation)
     {
-        if(transform.eulerAngles.x != 0)
+        if(transform.eulerAngles.x > 20 || transform.eulerAngles.x < -20)
         {
             isGroundCeiling = true;
+            Debug.Log(transform.eulerAngles.x);
         }
         transform.rotation = rotation;
         startingXRotation = transform.eulerAngles.x;
