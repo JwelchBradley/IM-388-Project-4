@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Hand Test.unity
     guid: 101dca6e374dd8b4f88d49f0269ec891
+  - enabled: 1
+    path: Assets/Scenes/Test Eye.unity
+    guid: 00f46dc21f13cbc408923d9fe8f256a5
   m_configObjects: {}

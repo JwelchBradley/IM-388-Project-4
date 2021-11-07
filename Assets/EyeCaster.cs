@@ -14,6 +14,12 @@ public class EyeCaster : MonoBehaviour
     private LayerMask landableMask;
     private MeshRenderer mr;
 
+    [SerializeField]
+    private Material canCastMat;
+
+    [SerializeField]
+    private Material cannotCastMat;
+
     private bool isCasting = false;
 
     private bool canCast = false;
@@ -68,23 +74,29 @@ public class EyeCaster : MonoBehaviour
                 mr.enabled = true;
                 //eyeLandIndicator.SetActive(true);
             }
-            eyeLandIndicator.transform.position = hit.point;
-            eyeLandIndicator.transform.localScale = Vector3.one * Vector3.Distance(hit.point, cam.position) * (eyeSizeMod / 100);
-            eyeLandIndicator.transform.rotation = SpawnRotation();
+
 
             // Can Land
-            if (hit.transform.gameObject.layer.Equals(landableMask) && Vector3.Distance(hit.point, cam.position) < maxDist)
+            if (landableMask == (landableMask | (1 << hit.transform.gameObject.layer)) && Vector3.Distance(hit.point, cam.position) < maxDist)
             {
-
+                mr.material = canCastMat;
             }
 
             // Cannont Land
             else
             {
-
+                mr.material = cannotCastMat;
+                canCast = false;
             }
+
+            eyeLandIndicator.transform.position = hit.point;
+            eyeLandIndicator.transform.localScale = Vector3.one * Vector3.Distance(hit.point, cam.position) * (eyeSizeMod / 100);
+            eyeLandIndicator.transform.rotation = SpawnRotation();
+
         }
     }
+
+    private void MoveIndicatorTowardsLocation() { }
 
     public GameObject SpawnEye()
     {

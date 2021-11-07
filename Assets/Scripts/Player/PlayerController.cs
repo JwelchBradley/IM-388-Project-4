@@ -121,7 +121,7 @@ public class PlayerController : MonoBehaviour
     {
         ec = eye.GetComponentInChildren<EyeController>();
         eyeCam = eye.GetComponentInChildren<CinemachineVirtualCamera>();
-        pm.MovePlayer(Vector2.zero);
+        pm.MovePlayer(Vector2.zero, false);
         eyeCam.Priority = 100;
         currentActive = activeController.EYE;
     }
@@ -190,7 +190,7 @@ public class PlayerController : MonoBehaviour
         switch (currentActive)
         {
             case activeController.PERSON:
-                pm.MovePlayer(inputVec);
+                pm.MovePlayer(inputVec, true);
                 break;
 
             case activeController.HAND:
@@ -219,7 +219,7 @@ public class PlayerController : MonoBehaviour
 
             // To the person from the hand
             case activeController.HAND:
-                UpdateHandCam(0, CinemachineBrain.UpdateMethod.SmartUpdate, activeController.PERSON);
+                UpdateHandCam(0, CinemachineBrain.UpdateMethod.LateUpdate, CinemachineBrain.BrainUpdateMethod.LateUpdate, activeController.PERSON);
                 tpm.MovePlayer(Vector2.zero);
                 break;
 
@@ -227,9 +227,9 @@ public class PlayerController : MonoBehaviour
             case activeController.EYE:
                 if (tpm != null)
                 {
-                    UpdateHandCam(100, CinemachineBrain.UpdateMethod.FixedUpdate, activeController.HAND);
+                    UpdateHandCam(100, CinemachineBrain.UpdateMethod.FixedUpdate, CinemachineBrain.BrainUpdateMethod.FixedUpdate, activeController.HAND);
                     eyeCam.Priority = 0;
-                    pm.MovePlayer(Vector2.zero);
+                    pm.MovePlayer(Vector2.zero, false);
                 }
                 break;
         }
@@ -251,14 +251,15 @@ public class PlayerController : MonoBehaviour
             NoLongerCastingEye();
         }
 
-        UpdateHandCam(100, CinemachineBrain.UpdateMethod.FixedUpdate, activeController.HAND);
-        pm.MovePlayer(Vector2.zero);
+        UpdateHandCam(100, CinemachineBrain.UpdateMethod.FixedUpdate, CinemachineBrain.BrainUpdateMethod.FixedUpdate, activeController.HAND);
+        pm.MovePlayer(Vector2.zero, false);
     }
 
-    private void UpdateHandCam(int priority, CinemachineBrain.UpdateMethod camUpdateMethod, activeController newActive)
+    private void UpdateHandCam(int priority, CinemachineBrain.UpdateMethod camUpdateMethod, CinemachineBrain.BrainUpdateMethod camBlendUpdate, activeController newActive)
     {
         handCam.Priority = priority;
         mainCamBrain.m_UpdateMethod = camUpdateMethod;
+        mainCamBrain.m_BlendUpdateMethod = camBlendUpdate;
         currentActive = newActive;
     }
     #endregion
@@ -279,7 +280,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
-                    pm.MovePlayer(Vector2.zero);
+                    pm.MovePlayer(Vector2.zero, false);
                     eyeCam.Priority = 100;
                     currentActive = activeController.EYE;
                 }
@@ -332,7 +333,6 @@ public class PlayerController : MonoBehaviour
     {
         if (eCaster.IsCasting && eCaster.CanCast && Time.timeScale != 0)
         {
-            Debug.Log(true);
             eCaster.IsCasting = false;
             GameObject eye = eCaster.SpawnEye();
             InitializeEye(eye);

@@ -7,6 +7,7 @@ public class ThirdPersonMovement : MonoBehaviour
     private CharacterController controller;
 
     private Transform cam;
+    private RaycastHit hit;
 
     private Vector3 moveVec;
 
@@ -46,16 +47,28 @@ public class ThirdPersonMovement : MonoBehaviour
     [Tooltip("The layer mask of the ground")]
     private LayerMask groundMask;
 
+    [Header("Climb")]
+    [SerializeField]
+    [Tooltip("How far away the player will they start climbing")]
+    [Range(0, 2)]
+    private float climbDist = 1;
+
+    [SerializeField]
+    private LayerMask wallMask;
+
     /// <summary>
     /// The cinemachine brain on the main camera.
     /// </summary>
     private CinemachineBrain mainCamBrain;
+
+    private CinemachineFreeLook cineCam;
 
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
         cam = Camera.main.transform;
         mainCamBrain = Camera.main.GetComponent<CinemachineBrain>();
+        cineCam = transform.parent.gameObject.GetComponentInChildren<CinemachineFreeLook>();
     }
 
     #region Input Calls
@@ -72,8 +85,6 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public void MovePlayer(Vector2 input)
     {
-        //Vector2 inputVec = input.Get<Vector2>();
-
         moveVec = new Vector3(input.x, 0, input.y).normalized;
     }
     #endregion
@@ -99,20 +110,73 @@ public class ThirdPersonMovement : MonoBehaviour
         isGrounded = Physics.CheckSphere(groundCheckPos.transform.position, groundCheckDist, groundMask);
     }
 
+    [SerializeField]
+    private GameObject visuals;
     private void RotatePlayer()
     {
-        float angle = Mathf.Atan2(moveVec.x, moveVec.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-        float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, angle, ref turnSmoothVeloctiy, turnSmoothTime);
+        float xValue = cineCam.m_XAxis.Value;
+        if (xValue < 0)
+        {
+            xValue += 360;
+        }
+        //float angle = Mathf.Atan2(moveVec.x, moveVec.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+        float angle = Mathf.Atan2(moveVec.x, moveVec.z) * Mathf.Rad2Deg + xValue;
+        float smoothAngle = Mathf.SmoothDampAngle(visuals.transform.localRotation.eulerAngles.y, angle, ref turnSmoothVeloctiy, turnSmoothTime);
+        visuals.transform.localRotation = Quaternion.Euler(0, smoothAngle, 0f);
 
-        transform.rotation = Quaternion.Euler(0f, smoothAngle, 0f);
-
-        MovePlayer(angle);
+        MovePlayer();
     }
 
-    private void MovePlayer(float targetAngle)
+    private float xAngle = 0;
+
+    private void MovePlayer()
     {
-        Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+        Vector3 moveDir = visuals.transform.forward;
         controller.Move(moveSpeed * moveDir.normalized * Time.fixedDeltaTime);
+
+        ClimbObject();
+    }
+
+    private bool isClimbing = false;
+    private bool hasClimbed = false;
+    float xMod = 1;
+    private void ClimbObject()
+    {
+        bool canClimb = Physics.Raycast(transform.position, visuals.transform.forward, out hit, climbDist, wallMask);
+
+        if (canClimb)
+        {
+            isClimbing = true;
+            if (hit.normal.x != 0 || hit.normal.z != 0)
+                xAngle = -90;
+            mainCamBrain.m_WorldUpOverride = transform.parent;
+            if (!hasClimbed)
+            {
+                if(hit.normal.x > 0)
+                {
+                    xMod = 1.5f;
+                    Debug.Log(true);
+                }
+                else if(hit.normal.x < 0)
+                {
+                    xMod = -1.5f;
+                }
+                else
+                {
+                    if (hit.normal.z == 1)
+                        xMod = hit.normal.z;
+                    else
+                        xMod = 0;
+                }
+                Vector3 pos = transform.position;
+                transform.parent.position = pos;
+                transform.position = pos;
+                transform.parent.rotation = Quaternion.Euler(xAngle, 0, 180 * xMod);
+                transform.position += transform.up*-0.4f;
+                hasClimbed = true;
+            }
+
+        }
     }
 
     /// <summary>
@@ -120,11 +184,13 @@ public class ThirdPersonMovement : MonoBehaviour
     /// </summary>
     private void GravityCalculation()
     {
-        if (!isGrounded)
+        if (isClimbing)
         {
-            jumpVel += gravity * Time.deltaTime;
-
-            //controller.Move(moveVec * Time.fixedDeltaTime);
+            jumpVel = 0;
+        }
+        else if (!isGrounded)
+        {
+            jumpVel += gravity * Time.fixedDeltaTime;
         }
 
         controller.Move(new Vector3(0, jumpVel, 0) * Time.fixedDeltaTime);

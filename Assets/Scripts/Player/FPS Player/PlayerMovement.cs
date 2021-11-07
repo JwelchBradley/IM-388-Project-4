@@ -24,6 +24,8 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private Animator anim;
 
+    private bool active = true;
+
     #region Movement
     [Header("Move Speed")]
     [SerializeField]
@@ -124,6 +126,10 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private CinemachinePOV walkCamPOV;
     #endregion
+
+    #region Visuals
+    private GameObject mesh;
+    #endregion
     #endregion
 
     #region Functions
@@ -138,6 +144,8 @@ public class PlayerMovement : MonoBehaviour
 
         controller = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
+
+        mesh = GameObject.Find("Zombie Player Merged");
 
         GetCameras();
     }
@@ -159,8 +167,9 @@ public class PlayerMovement : MonoBehaviour
     /// Recieves player input as a Vector2.
     /// </summary>
     /// <param name="move">The Vector2 movement for the player.</param>
-    public void MovePlayer(Vector2 move)
+    public void MovePlayer(Vector2 move, bool active)
     {
+        this.active = active;
         this.move = new Vector3(move.x, 0, move.y);
     }
 
@@ -226,19 +235,19 @@ public class PlayerMovement : MonoBehaviour
     #endregion
 
     #region Calculations
-    /// <summary>
-    /// Calls for movement calculations and to check if the player is on the ground.
-    /// </summary>
-    private void Update()
+    private void FixedUpdate()
     {
-        if(!mainCamBrain.IsBlending)
-        MoveCalculation();
+        if (!mainCamBrain.IsBlending)
+            MoveCalculation();
 
         GravityCalculation();
 
         IsGrounded();
 
-        IsOnObject();
+        if (active)
+        {
+            RotateMesh();
+        }
     }
 
     /// <summary>
@@ -247,11 +256,6 @@ public class PlayerMovement : MonoBehaviour
     private void IsGrounded()
     {
         isGrounded = Physics.CheckSphere(groundCheckPos.transform.position, groundCheckDist, groundMask);
-    }
-
-    private void IsOnObject()
-    {
-        playerIsOn = Physics.OverlapSphere(groundCheckPos.transform.position, 1, interactableMask);
     }
 
     /// <summary>
@@ -263,7 +267,14 @@ public class PlayerMovement : MonoBehaviour
         currentMove.y = 0f;
         currentMove.Normalize();
 
-        controller.Move(currentMove * currentSpeed * Time.deltaTime);
+        controller.Move(currentMove * currentSpeed * Time.fixedDeltaTime);
+    }
+
+    private void RotateMesh()
+    {
+        Quaternion camRot = cameraTransform.rotation;
+        camRot.eulerAngles = new Vector3(0, camRot.eulerAngles.y+90, 0);
+        mesh.transform.rotation = camRot;
     }
 
     /// <summary>
@@ -273,13 +284,13 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!isGrounded)
         {
-            velocity.y += gravity * Time.deltaTime;
+            velocity.y += gravity * Time.fixedDeltaTime;
 
-            controller.Move(velocity * Time.deltaTime);
+            controller.Move(velocity * Time.fixedDeltaTime);
         }
         else
         {
-            controller.Move(velocity * Time.deltaTime);
+            controller.Move(velocity * Time.fixedDeltaTime);
         }
     }
     #endregion
