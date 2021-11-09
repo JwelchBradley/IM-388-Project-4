@@ -1,4 +1,6 @@
 using Cinemachine;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -96,9 +98,9 @@ public class ThirdPersonMovement : MonoBehaviour
 
         GravityCalculation();
 
-        if (moveVec.magnitude >= 0.1f && !mainCamBrain.IsBlending)
+        if (moveVec.magnitude >= 0.1f && !mainCamBrain.IsBlending && !isClimbTransitioning)
         {
-            RotatePlayer();
+            RotatePlayer(moveVec);
         }
     }
 
@@ -112,7 +114,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
     [SerializeField]
     private GameObject visuals;
-    private void RotatePlayer()
+    private void RotatePlayer(Vector3 moveVec)
     {
         float xValue = cineCam.m_XAxis.Value;
         if (xValue < 0)
@@ -124,7 +126,10 @@ public class ThirdPersonMovement : MonoBehaviour
         float smoothAngle = Mathf.SmoothDampAngle(visuals.transform.localRotation.eulerAngles.y, angle, ref turnSmoothVeloctiy, turnSmoothTime);
         visuals.transform.localRotation = Quaternion.Euler(0, smoothAngle, 0f);
 
-        MovePlayer();
+        if (!isClimbTransitioning)
+        {
+            MovePlayer();
+        }
     }
 
     private float xAngle = 0;
@@ -137,9 +142,16 @@ public class ThirdPersonMovement : MonoBehaviour
         ClimbObject();
     }
 
+    private void MovePlayerOverride()
+    {
+        Vector3 moveDir = visuals.transform.forward;
+        controller.Move(moveSpeed * moveDir.normalized * Time.fixedDeltaTime);
+    }
+
     private bool isClimbing = false;
     private bool hasClimbed = false;
     float xMod = 1;
+    private float yAngle = 0;
     private void ClimbObject()
     {
         bool canClimb = Physics.Raycast(transform.position, visuals.transform.forward, out hit, climbDist, wallMask);
@@ -155,7 +167,6 @@ public class ThirdPersonMovement : MonoBehaviour
                 if(hit.normal.x > 0)
                 {
                     xMod = 1.5f;
-                    Debug.Log(true);
                 }
                 else if(hit.normal.x < 0)
                 {
@@ -168,14 +179,111 @@ public class ThirdPersonMovement : MonoBehaviour
                     else
                         xMod = 0;
                 }
-                Vector3 pos = transform.position;
-                transform.parent.position = pos;
-                transform.position = pos;
+
+                float camAngle = 0;
+
+                if(hit.normal.y == 1 || hit.normal.y == -1)
+                {
+                    xAngle = 0;
+                    yAngle = 0;
+                    camAngle = cineCam.m_XAxis.Value;
+                    isClimbing = false;
+                }
+
+                //ClimbOld(camAngle);
+                StartCoroutine(ClimbTransition());
+                //hasClimbed = true;
+            }
+        }
+    }
+
+    private void ClimbOld(float camAngle)
+    {
+        Vector3 pos = transform.position;
+        Vector3 localUp = visuals.transform.up;
+        localUp.x = xAngle/90;
+        transform.parent.position = pos;
+        transform.position = pos;
+
+        transform.parent.rotation = Quaternion.Euler(xAngle, 0, 180 * xMod);
+        visuals.transform.forward = localUp;
+        cineCam.m_XAxis.Value = 0;
+
+        
+        while (!Physics.CheckSphere(groundCheckPos.transform.position, groundCheckDist, groundMask))
+        {
+            transform.position += visuals.transform.up * -0.01f;
+        }
+    }
+
+    bool isClimbTransitioning = false;
+    float climbTransitionSpeed = 1;
+    private IEnumerator ClimbTransition()
+    {
+        isClimbTransitioning = true;
+        Vector3 pos = transform.position;
+        transform.parent.position = pos;
+        transform.position = pos;
+
+        float t = 0;
+        Quaternion newParentRot = Quaternion.Euler(xAngle, 0, 180 * xMod);
+        Quaternion oldParentRot = transform.parent.rotation;
+        Vector3 localUp = visuals.transform.up;
+        localUp.x = xAngle / 90;
+        Vector3 oldforward = visuals.transform.forward;
+        float oldCineCamXValue = cineCam.m_XAxis.Value;
+        RaycastHit tempHit;
+        Physics.Raycast(visuals.transform.position, -visuals.transform.up, out tempHit, climbDist, groundMask);
+        float newCineCamXValue = 0;
+
+        if (hit.normal.y == 1 || hit.normal.y == -1)
+        {
+            switch (tempHit.normal.x)
+            {
+                case 1:
+                    newCineCamXValue = 90;
+                    break;
+                case -1:
+                    newCineCamXValue = -90;
+                    break;
+                case 0:
+                    if(tempHit.normal.z == -1)
+                    {
+                        newCineCamXValue = 180;
+                    }
+                    break;
+            }
+        }
+
+            while (transform.parent.rotation != newParentRot)
+        {
+            t += Time.fixedDeltaTime*climbTransitionSpeed;
+            t = Mathf.Clamp(t, 0, 1);
+            transform.parent.rotation = Quaternion.Lerp(oldParentRot, newParentRot, t);
+            RotatePlayer(Vector3.zero);
+            cineCam.m_XAxis.Value = Mathf.Lerp(oldCineCamXValue, newCineCamXValue, t);
+            yield return new WaitForFixedUpdate();
+
+            if(t == 1)
+            {
                 transform.parent.rotation = Quaternion.Euler(xAngle, 0, 180 * xMod);
-                transform.position += transform.up*-0.4f;
-                hasClimbed = true;
             }
 
+            MovePlayerOverride();
+
+            
+            while(!Physics.CheckSphere(groundCheckPos.transform.position, groundCheckDist, groundMask))
+            {
+                transform.position += visuals.transform.up * -0.01f;
+            }
+
+        }
+
+        isClimbTransitioning = false;
+
+        while (!Physics.CheckSphere(groundCheckPos.transform.position, groundCheckDist, groundMask))
+        {
+            transform.position += visuals.transform.up * -0.01f;
         }
     }
 

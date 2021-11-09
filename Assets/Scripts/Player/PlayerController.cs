@@ -68,6 +68,13 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private CinemachineBrain mainCamBrain;
     #endregion
+
+    #region FPS Visuals
+    [Header("FPS Visuals")]
+    [Tooltip("The mesh of the fps player")]
+    [SerializeField]
+    private GameObject fpsMesh;
+    #endregion
     #endregion
 
     #region Funcitons
@@ -219,7 +226,8 @@ public class PlayerController : MonoBehaviour
 
             // To the person from the hand
             case activeController.HAND:
-                UpdateHandCam(0, CinemachineBrain.UpdateMethod.LateUpdate, CinemachineBrain.BrainUpdateMethod.LateUpdate, activeController.PERSON);
+                UpdateHandCam(0, CinemachineBrain.UpdateMethod.LateUpdate, CinemachineBrain.BrainUpdateMethod.FixedUpdate, activeController.PERSON);
+                fpsMesh.SetActive(false);
                 tpm.MovePlayer(Vector2.zero);
                 break;
 
@@ -251,6 +259,8 @@ public class PlayerController : MonoBehaviour
             NoLongerCastingEye();
         }
 
+        fpsMesh.SetActive(true);
+
         UpdateHandCam(100, CinemachineBrain.UpdateMethod.FixedUpdate, CinemachineBrain.BrainUpdateMethod.FixedUpdate, activeController.HAND);
         pm.MovePlayer(Vector2.zero, false);
     }
@@ -280,6 +290,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
+                    fpsMesh.SetActive(true);
                     pm.MovePlayer(Vector2.zero, false);
                     eyeCam.Priority = 100;
                     currentActive = activeController.EYE;
@@ -300,6 +311,9 @@ public class PlayerController : MonoBehaviour
             case activeController.EYE:
                 eyeCam.Priority = 0;
                 currentActive = activeController.PERSON;
+                mainCamBrain.m_UpdateMethod = CinemachineBrain.UpdateMethod.LateUpdate;
+                mainCamBrain.m_BlendUpdateMethod = CinemachineBrain.BrainUpdateMethod.FixedUpdate;
+                fpsMesh.SetActive(false);
                 break;
         }
     }

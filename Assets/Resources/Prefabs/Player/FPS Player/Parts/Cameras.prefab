@@ -169,13 +169,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_RecenterTarget: 0
   m_VerticalAxis:
-    Value: 14.920859
+    Value: 27.995956
     m_SpeedMode: 0
     m_MaxSpeed: 400
     m_AccelTime: 0.001
     m_DecelTime: 0.001
     m_InputAxisName: Mouse Y
-    m_InputAxisValue: -0.4
+    m_InputAxisValue: 0.05
     m_InvertInput: 1
     m_MinValue: -70
     m_MaxValue: 70
@@ -193,13 +193,13 @@ MonoBehaviour:
     m_LegacyHeadingDefinition: -1
     m_LegacyVelocityFilterStrength: -1
   m_HorizontalAxis:
-    Value: 117.77952
+    Value: -100.32447
     m_SpeedMode: 0
     m_MaxSpeed: 600
     m_AccelTime: 0.001
     m_DecelTime: 0.001
     m_InputAxisName: Mouse X
-    m_InputAxisValue: -3.3500001
+    m_InputAxisValue: 0.2
     m_InvertInput: 0
     m_MinValue: -180
     m_MaxValue: 180
@@ -244,8 +244,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1119962704133113636}
-  m_LocalRotation: {x: 0.0670873, y: 0.8489271, z: -0.11116697, w: 0.51231253}
-  m_LocalPosition: {x: 0.5349458, y: 1.0585258, z: 9.719147}
+  m_LocalRotation: {x: 0.1549571, y: -0.74505925, z: 0.18573622, w: 0.6215924}
+  m_LocalPosition: {x: 0.5349458, y: 0.28852576, z: 9.719147}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1274134929}
@@ -289,8 +289,8 @@ Camera:
   m_TargetDisplay: 0
   m_TargetEye: 0
   m_HDR: 1
-  m_AllowMSAA: 0
-  m_AllowDynamicResolution: 0
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 1
   m_ForceIntoRT: 0
   m_OcclusionCulling: 0
   m_StereoConvergence: 10
@@ -328,8 +328,8 @@ MonoBehaviour:
   m_RenderPostProcessing: 1
   m_Antialiasing: 2
   m_AntialiasingQuality: 2
-  m_StopNaN: 0
-  m_Dithering: 0
+  m_StopNaN: 1
+  m_Dithering: 1
   m_ClearDepth: 1
   m_AllowXRRendering: 1
   m_RequiresDepthTexture: 0
@@ -351,7 +351,7 @@ MonoBehaviour:
   m_ShowCameraFrustum: 1
   m_IgnoreTimeScale: 0
   m_WorldUpOverride: {fileID: 0}
-  m_UpdateMethod: 2
+  m_UpdateMethod: 1
   m_BlendUpdateMethod: 0
   m_DefaultBlend:
     m_Style: 1

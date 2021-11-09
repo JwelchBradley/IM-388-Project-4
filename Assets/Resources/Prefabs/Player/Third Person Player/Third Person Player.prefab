@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5138946509663610521}
   - component: {fileID: 5138946509663610522}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BottomRig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24,7 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5138946509663610523}
-  m_LocalRotation: {x: -0.039033633, y: -0.34136346, z: -0.014190059, w: 0.9390133}
+  m_LocalRotation: {x: -0.0009599687, y: 0.2330436, z: 0.00023004878, w: 0.9724658}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 5138946509755645883}
   - component: {fileID: 5138946509755645884}
   - component: {fileID: 5138946509755645885}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -162,7 +162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: 0, y: 0.3334632, z: -6.8575134}
+  m_FollowOffset: {x: 0, y: 0.63849473, z: -7.380093}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -182,7 +182,7 @@ MonoBehaviour:
     m_LegacyHeadingDefinition: -1
     m_LegacyVelocityFilterStrength: -1
   m_XAxis:
-    Value: -39.955868
+    Value: 26.952671
     m_SpeedMode: 0
     m_MaxSpeed: 300
     m_AccelTime: 0.1
@@ -215,20 +215,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4044717213e31446939f7bd49c896ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TrackedObjectOffset: {x: 0, y: -0.3, z: 0}
+  m_TrackedObjectOffset: {x: 0, y: 0, z: 0}
   m_LookaheadTime: 0
   m_LookaheadSmoothing: 0
   m_LookaheadIgnoreY: 0
   m_HorizontalDamping: 0
   m_VerticalDamping: 0
   m_ScreenX: 0.5
-  m_ScreenY: 0.9
+  m_ScreenY: 0.7
   m_DeadZoneWidth: 0
   m_DeadZoneHeight: 0.2
   m_SoftZoneWidth: 0.8
   m_SoftZoneHeight: 0.8
   m_BiasX: 0
-  m_BiasY: 0.4999991
+  m_BiasY: 0.49999902
   m_CenterOnActivate: 1
 --- !u!1 &5138946509792034448
 GameObject:
@@ -241,9 +241,9 @@ GameObject:
   - component: {fileID: 5138946509792034475}
   - component: {fileID: 5138946509792034476}
   - component: {fileID: 5138946509792034477}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Hand Player
-  m_TagString: Player
+  m_TagString: Hand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -281,7 +281,7 @@ CharacterController:
   m_StepOffset: 0.05
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.01, z: 0}
 --- !u!114 &5138946509792034477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,15 +298,15 @@ MonoBehaviour:
   turnSmoothTime: 0.1
   jumpHeight: 1
   gravity: -9.8
-  groundCheckDist: 0.1
+  groundCheckDist: 0.086
   groundCheckPos: {fileID: 5138946509709438048}
   groundMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 449
   climbDist: 0.6
   wallMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 192
   visuals: {fileID: 5138946510329534288}
 --- !u!1 &5138946509842976468
 GameObject:
@@ -320,7 +320,7 @@ GameObject:
   - component: {fileID: 5138946509842976464}
   - component: {fileID: 5138946509842976465}
   - component: {fileID: 5138946509842976466}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -366,7 +366,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: 0, y: 0.3334632, z: -6.8575134}
+  m_FollowOffset: {x: 0, y: 0.63849473, z: -7.380093}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -386,7 +386,7 @@ MonoBehaviour:
     m_LegacyHeadingDefinition: -1
     m_LegacyVelocityFilterStrength: -1
   m_XAxis:
-    Value: -39.955868
+    Value: 26.952671
     m_SpeedMode: 0
     m_MaxSpeed: 300
     m_AccelTime: 0.1
@@ -443,7 +443,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5138946509927016496}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 3rd Person Cameras
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -479,7 +479,7 @@ GameObject:
   - component: {fileID: 5138946510179123933}
   - component: {fileID: 5138946510179123934}
   - component: {fileID: 5138946510179123935}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -628,7 +628,7 @@ GameObject:
   - component: {fileID: 5138946510329534319}
   - component: {fileID: 5138946510329534317}
   - component: {fileID: 5138946510329534318}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -711,7 +711,7 @@ GameObject:
   - component: {fileID: 5138946510475235064}
   - component: {fileID: 5138946510475235065}
   - component: {fileID: 5138946510475235066}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Third Person Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -726,7 +726,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5138946510475235067}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.4038777, y: 0.3334632, z: -5.2565536}
+  m_LocalPosition: {x: -3.345059, y: 0.63849473, z: -6.5784764}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5138946511138708791}
@@ -771,7 +771,7 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_YAxis:
-    Value: 0.16119123
+    Value: 0.26482213
     m_SpeedMode: 0
     m_MaxSpeed: 5
     m_AccelTime: 0.2
@@ -795,7 +795,7 @@ MonoBehaviour:
     m_LegacyHeadingDefinition: -1
     m_LegacyVelocityFilterStrength: -1
   m_XAxis:
-    Value: -39.955868
+    Value: 26.952671
     m_SpeedMode: 0
     m_MaxSpeed: 300
     m_AccelTime: 0.1
@@ -891,7 +891,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5138946510701689275}
   - component: {fileID: 5138946510701689276}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: MiddleRig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -905,7 +905,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5138946510701689277}
-  m_LocalRotation: {x: 0.012416265, y: -0.34162843, z: 0.0045137373, w: 0.93974227}
+  m_LocalRotation: {x: 0.031179251, y: 0.23292391, z: -0.0074718557, w: 0.9719663}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -964,7 +964,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5138946511043987946}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Third Person Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -997,7 +997,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5138946511138708791}
   - component: {fileID: 5138946511138708792}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TopRig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1011,8 +1011,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5138946511138708793}
-  m_LocalRotation: {x: 0.024292156, y: 0.000000029770417, z: -7.2340106e-10, w: 0.99970496}
-  m_LocalPosition: {x: -4.4038777, y: 0, z: -1.6009598}
+  m_LocalRotation: {x: 0.041949343, y: 0.23282678, z: -0.0100528225, w: 0.9715611}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5138946509842976467}
@@ -1073,7 +1073,7 @@ GameObject:
   - component: {fileID: 5138946511602951131}
   - component: {fileID: 5138946511602951132}
   - component: {fileID: 5138946511602951133}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1119,7 +1119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: 0, y: 0.3334632, z: -6.8575134}
+  m_FollowOffset: {x: 0, y: 0.63849473, z: -7.380093}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -1139,7 +1139,7 @@ MonoBehaviour:
     m_LegacyHeadingDefinition: -1
     m_LegacyVelocityFilterStrength: -1
   m_XAxis:
-    Value: -39.955868
+    Value: 26.952671
     m_SpeedMode: 0
     m_MaxSpeed: 300
     m_AccelTime: 0.1
@@ -1257,6 +1257,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b4fff8f942b8e9a4c98932415c3f2862, type: 3}
       propertyPath: m_Name
       value: Hand
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b4fff8f942b8e9a4c98932415c3f2862, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b4fff8f942b8e9a4c98932415c3f2862, type: 3}

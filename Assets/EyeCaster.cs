@@ -12,6 +12,10 @@ public class EyeCaster : MonoBehaviour
 
     [SerializeField]
     private LayerMask landableMask;
+
+    [SerializeField]
+    private LayerMask castableMask;
+
     private MeshRenderer mr;
 
     [SerializeField]
@@ -65,14 +69,13 @@ public class EyeCaster : MonoBehaviour
 
     private void DisplayLandLocation()
     {
-        canCast = Physics.Raycast(cam.position, cam.forward, out hit);
+        canCast = Physics.Raycast(cam.position, cam.forward, out hit, Mathf.Infinity, castableMask);
 
         if (canCast)
         {
             if (!mr.enabled)
             {
                 mr.enabled = true;
-                //eyeLandIndicator.SetActive(true);
             }
 
 
