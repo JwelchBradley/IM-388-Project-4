@@ -711,6 +711,7 @@ GameObject:
   - component: {fileID: 5138946510475235064}
   - component: {fileID: 5138946510475235065}
   - component: {fileID: 5138946510475235066}
+  - component: {fileID: 7202631333508426538}
   m_Layer: 3
   m_Name: Third Person Camera
   m_TagString: Untagged
@@ -881,6 +882,23 @@ MonoBehaviour:
   m_Damping: 0.6
   m_DampingWhenOccluded: 0.6
   m_OptimalTargetDistance: 0
+--- !u!114 &7202631333508426538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5138946510475235067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 449ef5ebbe24720439ec31d15f7b6f3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FocusTracksTarget: 0
+  m_FocusTracking: 0
+  m_FocusTarget: {fileID: 0}
+  m_FocusOffset: 0
+  m_Profile: {fileID: 11400000, guid: c3314ba629170604fbbb10fd58b18870, type: 2}
 --- !u!1 &5138946510701689277
 GameObject:
   m_ObjectHideFlags: 3
@@ -1011,7 +1029,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5138946511138708793}
-  m_LocalRotation: {x: 0.041949343, y: 0.23282678, z: -0.0100528225, w: 0.9715611}
+  m_LocalRotation: {x: 0.041949347, y: 0.2328268, z: -0.010052823, w: 0.9715611}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
