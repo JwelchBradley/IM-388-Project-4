@@ -354,9 +354,10 @@ public class PlayerMovement : MonoBehaviour
     #endregion
 
     #region Camera Limitation
+
     private float GetAxisCustom(string axisName)
     {
-        if (mainCamBrain.IsBlending)
+        if (mainCamBrain.IsBlending || GetComponent<PlayerController>().Current)
             return 0;
         return Input.GetAxis(axisName);
     }

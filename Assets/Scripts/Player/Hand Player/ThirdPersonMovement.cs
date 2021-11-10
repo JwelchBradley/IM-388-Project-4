@@ -71,7 +71,6 @@ public class ThirdPersonMovement : MonoBehaviour
         cam = Camera.main.transform;
         mainCamBrain = Camera.main.GetComponent<CinemachineBrain>();
         cineCam = transform.parent.gameObject.GetComponentInChildren<CinemachineFreeLook>();
-        CinemachineCore.GetInputAxis = GetAxisCustom;
 
         SetCameraSens();
     }
@@ -328,12 +327,24 @@ public class ThirdPersonMovement : MonoBehaviour
     }
     #endregion
 
-    #region Camera Limitation
-    private float GetAxisCustom(string axisName)
+    #region Cam Limits
+    private void Update()
     {
-        if (mainCamBrain.IsBlending)
-            return 0;
-        return Input.GetAxis(axisName);
+        LimitCamera();
+    }
+
+    private void LimitCamera()
+    {
+        if (mainCamBrain.IsBlending || GameObject.Find("Player").GetComponent<PlayerController>().Current)
+        {
+            cineCam.m_XAxis.m_MaxSpeed = 0;
+            cineCam.m_YAxis.m_MaxSpeed = 0;
+        }
+        else
+        {
+            cineCam.m_XAxis.m_MaxSpeed = PlayerPrefs.GetFloat("X Sens Hand");
+            cineCam.m_YAxis.m_MaxSpeed = PlayerPrefs.GetFloat("Y Sens Hand");
+        }
     }
     #endregion
 }

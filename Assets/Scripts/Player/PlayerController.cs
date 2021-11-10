@@ -75,6 +75,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject fpsMesh;
     #endregion
+
+    #region Radial Menu
+    private GameObject radialMenuPanel;
+
+    private GameObject radialMenu;
+    #endregion
     #endregion
 
     #region Funcitons
@@ -97,6 +103,15 @@ public class PlayerController : MonoBehaviour
         // Sets the cursor state
         Invoke("InitializeCursor", 0.1f);
         Cursor.visible = false;
+
+        InitializeRadialMenu();
+    }
+
+    private void InitializeRadialMenu()
+    {
+        radialMenuPanel = GameObject.Find("Radial Menu Panel");
+        radialMenu = GameObject.Find("Radial Menu");
+        radialMenuPanel.SetActive(false);
     }
 
     /// <summary>
@@ -210,6 +225,29 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
     #endregion
+
+    private bool currentRadial = false;
+
+    public bool Current
+    {
+        get => currentRadial;
+    }
+
+    public void OnOpenMenu()
+    {
+        currentRadial = !radialMenuPanel.activeInHierarchy;
+        radialMenuPanel.SetActive(currentRadial);
+        Cursor.visible = currentRadial;
+
+        if (currentRadial)
+        {
+            Cursor.lockState = CursorLockMode.Confined;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+    }
 
     #region Hand
     /// <summary>

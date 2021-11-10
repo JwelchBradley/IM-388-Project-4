@@ -81,6 +81,14 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""OpenMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""39e6007d-1a41-49b1-a608-5b72a1b1fdfe"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -252,7 +260,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""5bf9e213-0192-468d-9dc9-b26330613b10"",
-                    ""path"": ""<Keyboard>/q"",
+                    ""path"": ""<Keyboard>/r"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -268,6 +276,17 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Eye"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a50257eb-744e-4ba2-96f0-7858ca3b9db1"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -341,6 +360,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
         m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
         m_Player_Hand = m_Player.FindAction("Hand", throwIfNotFound: true);
         m_Player_Eye = m_Player.FindAction("Eye", throwIfNotFound: true);
+        m_Player_OpenMenu = m_Player.FindAction("OpenMenu", throwIfNotFound: true);
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_Newaction = m_Menu.FindAction("New action", throwIfNotFound: true);
@@ -401,6 +421,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Crouch;
     private readonly InputAction m_Player_Hand;
     private readonly InputAction m_Player_Eye;
+    private readonly InputAction m_Player_OpenMenu;
     public struct PlayerActions
     {
         private @InputMaster m_Wrapper;
@@ -413,6 +434,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
         public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
         public InputAction @Hand => m_Wrapper.m_Player_Hand;
         public InputAction @Eye => m_Wrapper.m_Player_Eye;
+        public InputAction @OpenMenu => m_Wrapper.m_Player_OpenMenu;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -446,6 +468,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @Eye.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEye;
                 @Eye.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEye;
                 @Eye.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEye;
+                @OpenMenu.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenMenu;
+                @OpenMenu.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenMenu;
+                @OpenMenu.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenMenu;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -474,6 +499,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @Eye.started += instance.OnEye;
                 @Eye.performed += instance.OnEye;
                 @Eye.canceled += instance.OnEye;
+                @OpenMenu.started += instance.OnOpenMenu;
+                @OpenMenu.performed += instance.OnOpenMenu;
+                @OpenMenu.canceled += instance.OnOpenMenu;
             }
         }
     }
@@ -539,6 +567,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
         void OnCrouch(InputAction.CallbackContext context);
         void OnHand(InputAction.CallbackContext context);
         void OnEye(InputAction.CallbackContext context);
+        void OnOpenMenu(InputAction.CallbackContext context);
     }
     public interface IMenuActions
     {
