@@ -39,6 +39,7 @@ public class MenuBehavior : MonoBehaviour
     #region Functions
     private void Start()
     {
+        //PlayerPrefs.DeleteAll();
         InitalizeVolume();
     }
 

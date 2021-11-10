@@ -71,6 +71,24 @@ public class ThirdPersonMovement : MonoBehaviour
         cam = Camera.main.transform;
         mainCamBrain = Camera.main.GetComponent<CinemachineBrain>();
         cineCam = transform.parent.gameObject.GetComponentInChildren<CinemachineFreeLook>();
+        CinemachineCore.GetInputAxis = GetAxisCustom;
+
+        SetCameraSens();
+    }
+
+    private void SetCameraSens()
+    {
+        if (!PlayerPrefs.HasKey("X Sens Hand"))
+        {
+            PlayerPrefs.SetFloat("X Sens Hand", 300);
+            PlayerPrefs.SetFloat("Y Sens Hand", 5);
+        }
+
+        if (PlayerPrefs.GetFloat("X Sens Hand") != 0 && PlayerPrefs.GetFloat("Y Sens Hand") != 0)
+        {
+            cineCam.m_XAxis.m_MaxSpeed = PlayerPrefs.GetFloat("X Sens Hand");
+            cineCam.m_YAxis.m_MaxSpeed = PlayerPrefs.GetFloat("Y Sens Hand");
+        }
     }
 
     #region Input Calls
@@ -148,6 +166,7 @@ public class ThirdPersonMovement : MonoBehaviour
         controller.Move(moveSpeed * moveDir.normalized * Time.fixedDeltaTime);
     }
 
+    #region Climbing
     private bool isClimbing = false;
     private bool hasClimbed = false;
     float xMod = 1;
@@ -272,20 +291,23 @@ public class ThirdPersonMovement : MonoBehaviour
             MovePlayerOverride();
 
             
+            /*
             while(!Physics.CheckSphere(groundCheckPos.transform.position, groundCheckDist, groundMask))
             {
                 transform.position += visuals.transform.up * -0.01f;
-            }
+            }*/
 
         }
 
         isClimbTransitioning = false;
 
+        /*
         while (!Physics.CheckSphere(groundCheckPos.transform.position, groundCheckDist, groundMask))
         {
             transform.position += visuals.transform.up * -0.01f;
-        }
+        }*/
     }
+    #endregion
 
     /// <summary>
     /// Applyes gravity to the player.
@@ -295,6 +317,7 @@ public class ThirdPersonMovement : MonoBehaviour
         if (isClimbing)
         {
             jumpVel = 0;
+            controller.Move(-transform.up * Time.fixedDeltaTime);
         }
         else if (!isGrounded)
         {
@@ -302,6 +325,15 @@ public class ThirdPersonMovement : MonoBehaviour
         }
 
         controller.Move(new Vector3(0, jumpVel, 0) * Time.fixedDeltaTime);
+    }
+    #endregion
+
+    #region Camera Limitation
+    private float GetAxisCustom(string axisName)
+    {
+        if (mainCamBrain.IsBlending)
+            return 0;
+        return Input.GetAxis(axisName);
     }
     #endregion
 }

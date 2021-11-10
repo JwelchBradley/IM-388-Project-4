@@ -158,6 +158,24 @@ public class PlayerMovement : MonoBehaviour
         mainCamBrain = Camera.main.GetComponent<CinemachineBrain>();
         walkCam = GameObject.Find("Walk vcam").GetComponent<CinemachineVirtualCamera>();
         walkCamPOV = walkCam.GetCinemachineComponent<CinemachinePOV>();
+        CinemachineCore.GetInputAxis = GetAxisCustom;
+
+        SetCameraSens();
+    }
+
+    private void SetCameraSens()
+    {
+        if (!PlayerPrefs.HasKey("X Sens"))
+        {
+            PlayerPrefs.SetFloat("X Sens", 600);
+            PlayerPrefs.SetFloat("Y Sens", 400);
+        }
+
+        if (PlayerPrefs.GetFloat("X Sens") != 0 && PlayerPrefs.GetFloat("Y Sens") != 0)
+        {
+            walkCamPOV.m_HorizontalAxis.m_MaxSpeed = PlayerPrefs.GetFloat("X Sens");
+            walkCamPOV.m_VerticalAxis.m_MaxSpeed = PlayerPrefs.GetFloat("Y Sens");
+        }
     }
     #endregion
 
@@ -332,6 +350,15 @@ public class PlayerMovement : MonoBehaviour
             // Apply the push
             body.velocity = pushDir * pushPower;
         }
+    }
+    #endregion
+
+    #region Camera Limitation
+    private float GetAxisCustom(string axisName)
+    {
+        if (mainCamBrain.IsBlending)
+            return 0;
+        return Input.GetAxis(axisName);
     }
     #endregion
     #endregion
