@@ -19,6 +19,11 @@ public class EyeController : MonoBehaviour
 
     private bool isGroundCeiling = false;
 
+    public GameObject Eye
+    {
+        get => gameObject;
+    }
+
     private void Awake()
     {
         InitializeAngle(transform.rotation);

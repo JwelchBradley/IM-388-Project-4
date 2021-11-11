@@ -7,6 +7,7 @@
                        different controllers.
 *****************************************************************************/
 using Cinemachine;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -80,6 +81,28 @@ public class PlayerController : MonoBehaviour
     private GameObject radialMenuPanel;
 
     private GameObject radialMenu;
+
+
+    private bool currentRadial = false;
+
+    public bool Current
+    {
+        get => currentRadial;
+    }
+    #endregion
+
+    #region Pickup
+    [Header("Pickup")]
+    [SerializeField]
+    private float maxDist = 10;
+    [SerializeField]
+    private LayerMask pickUpSurface;
+    private TextMeshProUGUI pickUpText;
+    private bool canPickUp = false;
+    #endregion
+
+    #region Crosshair
+    private GameObject crosshair;
     #endregion
     #endregion
 
@@ -105,6 +128,10 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = false;
 
         InitializeRadialMenu();
+
+        pickUpText = GameObject.Find("Pickup Text").GetComponent<TextMeshProUGUI>();
+
+        crosshair = GameObject.Find("Crosshair");
     }
 
     private void InitializeRadialMenu()
@@ -226,13 +253,7 @@ public class PlayerController : MonoBehaviour
     #endregion
     #endregion
 
-    private bool currentRadial = false;
-
-    public bool Current
-    {
-        get => currentRadial;
-    }
-
+    #region Radial Menu
     public void OnOpenMenu()
     {
         currentRadial = !radialMenuPanel.activeInHierarchy;
@@ -248,12 +269,94 @@ public class PlayerController : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
         }
     }
+    #endregion
+
+    #region Pickup
+    private void FixedUpdate()
+    {
+        DisplayPickupText();
+    }
+
+    private void DisplayPickupText()
+    {
+        if (currentActive.Equals(activeController.PERSON) && !mainCamBrain.IsBlending)
+        {
+            RaycastHit hit;
+            canPickUp = Physics.BoxCast(Camera.main.transform.position, Vector3.one * 3, Camera.main.transform.forward, out hit, Camera.main.transform.rotation, maxDist, pickUpSurface);
+
+            if (!canPickUp)
+            {
+                canPickUp = Physics.BoxCast(Camera.main.transform.position, Vector3.one * 1f, Camera.main.transform.forward, out hit, Camera.main.transform.rotation, maxDist, pickUpSurface);
+            }
+
+            if (!canPickUp)
+            {
+                canPickUp = Physics.BoxCast(Camera.main.transform.position, Vector3.one * 0.5f, Camera.main.transform.forward, out hit, Camera.main.transform.rotation, maxDist, pickUpSurface);
+            }
+
+            if (canPickUp)
+            {
+                pickUpText.text = "Press F to pickup " + hit.transform.gameObject.tag;
+            }
+            else
+            {
+                pickUpText.text = "";
+            }
+        }
+        else
+        {
+            pickUpText.text = "";
+        }
+    }
+
+    public void OnResetEye()
+    {
+        if (canPickUp && ec != null)
+        {
+            Destroy(ec.Eye);
+            ec = null;
+            eyeCam = null;
+        }
+    }
+
+    public void OnResetHand()
+    {
+        if(canPickUp && tpm != null)
+        {
+            Destroy(tpm.Hand);
+            tpm = null;
+            handCam = null;
+        }
+    }
+    #endregion
+
+    #region Body
+    private void OnBody()
+    {
+        crosshair.SetActive(true);
+        switch (currentActive)
+        {
+            case activeController.HAND:
+                UpdateHandCam(0, CinemachineBrain.UpdateMethod.LateUpdate, CinemachineBrain.BrainUpdateMethod.FixedUpdate, activeController.PERSON);
+                fpsMesh.SetActive(false);
+                tpm.MovePlayer(Vector2.zero);
+                break;
+            case activeController.EYE:
+                eyeCam.Priority = 0;
+                currentActive = activeController.PERSON;
+                mainCamBrain.m_UpdateMethod = CinemachineBrain.UpdateMethod.LateUpdate;
+                mainCamBrain.m_BlendUpdateMethod = CinemachineBrain.BrainUpdateMethod.FixedUpdate;
+                fpsMesh.SetActive(false);
+                break;
+        }
+    }
+    #endregion
 
     #region Hand
     /// <summary>
     /// Handles changes to and from the hand.
     /// </summary>
-    public void OnHand()
+    private void OnHand()
     {
         switch (currentActive)
         {
@@ -262,13 +365,14 @@ public class PlayerController : MonoBehaviour
                 ToHandFromPerson();
                 break;
 
+                /*
             // To the person from the hand
             case activeController.HAND:
                 UpdateHandCam(0, CinemachineBrain.UpdateMethod.LateUpdate, CinemachineBrain.BrainUpdateMethod.FixedUpdate, activeController.PERSON);
                 fpsMesh.SetActive(false);
                 tpm.MovePlayer(Vector2.zero);
                 break;
-
+                */
             // To the hand from the eye
             case activeController.EYE:
                 if (tpm != null)
@@ -299,6 +403,8 @@ public class PlayerController : MonoBehaviour
 
         fpsMesh.SetActive(true);
 
+        crosshair.SetActive(false);
+
         UpdateHandCam(100, CinemachineBrain.UpdateMethod.FixedUpdate, CinemachineBrain.BrainUpdateMethod.FixedUpdate, activeController.HAND);
         pm.MovePlayer(Vector2.zero, false);
     }
@@ -316,7 +422,7 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// Changes to and from the eye.
     /// </summary>
-    public void OnEye()
+    private void OnEye()
     {
         switch (currentActive)
         {
@@ -328,6 +434,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
+                    crosshair.SetActive(false);
                     fpsMesh.SetActive(true);
                     pm.MovePlayer(Vector2.zero, false);
                     eyeCam.Priority = 100;
@@ -335,6 +442,7 @@ public class PlayerController : MonoBehaviour
                 }
                 break;
 
+                
             // Changes to the eye from the hand
             case activeController.HAND:
                 if(ec != null)
@@ -344,7 +452,7 @@ public class PlayerController : MonoBehaviour
                     currentActive = activeController.EYE;
                 }
                 break;
-
+                /*
             // Changes from the eye to the player
             case activeController.EYE:
                 eyeCam.Priority = 0;
@@ -352,7 +460,7 @@ public class PlayerController : MonoBehaviour
                 mainCamBrain.m_UpdateMethod = CinemachineBrain.UpdateMethod.LateUpdate;
                 mainCamBrain.m_BlendUpdateMethod = CinemachineBrain.BrainUpdateMethod.FixedUpdate;
                 fpsMesh.SetActive(false);
-                break;
+                break;*/
         }
     }
 
@@ -362,6 +470,7 @@ public class PlayerController : MonoBehaviour
     private void NoLongerCastingEye()
     {
         eCaster.IsCasting = !eCaster.IsCasting;
+        crosshair.SetActive(!crosshair.activeInHierarchy);
     }
 
     /// <summary>
@@ -372,7 +481,7 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 inputVec = input.Get<Vector2>();
 
-        if (currentActive.Equals(activeController.EYE) && !mainCamBrain.IsBlending)
+        if (currentActive.Equals(activeController.EYE) && !mainCamBrain.IsBlending && !radialMenu.activeInHierarchy)
         {
             ec.Look(inputVec);
         }
@@ -383,11 +492,29 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void OnClick()
     {
-        if (eCaster.IsCasting && eCaster.CanCast && Time.timeScale != 0)
+        if (eCaster.IsCasting && eCaster.CanCast && Time.timeScale != 0 && !radialMenuPanel.activeInHierarchy)
         {
             eCaster.IsCasting = false;
             GameObject eye = eCaster.SpawnEye();
+            crosshair.SetActive(false);
             InitializeEye(eye);
+        }
+        else if (radialMenuPanel.activeInHierarchy && Time.timeScale != 0)
+        {
+            switch (radialMenu.GetComponent<RadialMenuController>().Im.sprite.name)
+            {
+                case "RadialMenuNewAtlas_5":
+                    OnBody();
+                    break;
+                case "RadialMenuNewAtlas_6":
+                    OnEye();
+                    break;
+                case "RadialMenuNewAtlas_7":
+                    OnHand();
+                    break;
+            }
+
+            OnOpenMenu();
         }
     }
     #endregion

@@ -65,6 +65,11 @@ public class ThirdPersonMovement : MonoBehaviour
 
     private CinemachineFreeLook cineCam;
 
+    public GameObject Hand
+    {
+        get => gameObject;
+    }
+
     private void Awake()
     {
         controller = GetComponent<CharacterController>();

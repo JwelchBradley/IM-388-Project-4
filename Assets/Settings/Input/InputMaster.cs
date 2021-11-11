@@ -89,6 +89,22 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""ResetEye"",
+                    ""type"": ""Button"",
+                    ""id"": ""7ea5bc18-8b06-41f7-ac2c-f81861b991c2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""ResetHand"",
+                    ""type"": ""Button"",
+                    ""id"": ""f209e27c-0024-4cea-a89c-478d35abd39b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -259,34 +275,34 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""5bf9e213-0192-468d-9dc9-b26330613b10"",
-                    ""path"": ""<Keyboard>/r"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Hand"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b353e9e1-084f-443c-abd0-dc014bc45e36"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Eye"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""a50257eb-744e-4ba2-96f0-7858ca3b9db1"",
                     ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""OpenMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4225d3b8-917c-467a-b771-0a2ac48a4ef5"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ResetEye"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""eb22238f-79f6-4926-a5c8-bf6f88dde33e"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ResetHand"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -361,6 +377,8 @@ public class @InputMaster : IInputActionCollection, IDisposable
         m_Player_Hand = m_Player.FindAction("Hand", throwIfNotFound: true);
         m_Player_Eye = m_Player.FindAction("Eye", throwIfNotFound: true);
         m_Player_OpenMenu = m_Player.FindAction("OpenMenu", throwIfNotFound: true);
+        m_Player_ResetEye = m_Player.FindAction("ResetEye", throwIfNotFound: true);
+        m_Player_ResetHand = m_Player.FindAction("ResetHand", throwIfNotFound: true);
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_Newaction = m_Menu.FindAction("New action", throwIfNotFound: true);
@@ -422,6 +440,8 @@ public class @InputMaster : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Hand;
     private readonly InputAction m_Player_Eye;
     private readonly InputAction m_Player_OpenMenu;
+    private readonly InputAction m_Player_ResetEye;
+    private readonly InputAction m_Player_ResetHand;
     public struct PlayerActions
     {
         private @InputMaster m_Wrapper;
@@ -435,6 +455,8 @@ public class @InputMaster : IInputActionCollection, IDisposable
         public InputAction @Hand => m_Wrapper.m_Player_Hand;
         public InputAction @Eye => m_Wrapper.m_Player_Eye;
         public InputAction @OpenMenu => m_Wrapper.m_Player_OpenMenu;
+        public InputAction @ResetEye => m_Wrapper.m_Player_ResetEye;
+        public InputAction @ResetHand => m_Wrapper.m_Player_ResetHand;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -471,6 +493,12 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @OpenMenu.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenMenu;
                 @OpenMenu.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenMenu;
                 @OpenMenu.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenMenu;
+                @ResetEye.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnResetEye;
+                @ResetEye.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnResetEye;
+                @ResetEye.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnResetEye;
+                @ResetHand.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnResetHand;
+                @ResetHand.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnResetHand;
+                @ResetHand.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnResetHand;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -502,6 +530,12 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @OpenMenu.started += instance.OnOpenMenu;
                 @OpenMenu.performed += instance.OnOpenMenu;
                 @OpenMenu.canceled += instance.OnOpenMenu;
+                @ResetEye.started += instance.OnResetEye;
+                @ResetEye.performed += instance.OnResetEye;
+                @ResetEye.canceled += instance.OnResetEye;
+                @ResetHand.started += instance.OnResetHand;
+                @ResetHand.performed += instance.OnResetHand;
+                @ResetHand.canceled += instance.OnResetHand;
             }
         }
     }
@@ -568,6 +602,8 @@ public class @InputMaster : IInputActionCollection, IDisposable
         void OnHand(InputAction.CallbackContext context);
         void OnEye(InputAction.CallbackContext context);
         void OnOpenMenu(InputAction.CallbackContext context);
+        void OnResetEye(InputAction.CallbackContext context);
+        void OnResetHand(InputAction.CallbackContext context);
     }
     public interface IMenuActions
     {
