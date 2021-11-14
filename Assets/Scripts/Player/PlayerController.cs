@@ -23,12 +23,17 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// List of controllers.
     /// </summary>
-    private enum activeController { HAND, PERSON, EYE };
+    public enum activeController { HAND, PERSON, EYE };
 
     /// <summary>
     /// The currently active controller;
     /// </summary>
     private activeController currentActive = activeController.PERSON;
+
+    public activeController CurrentActive
+    {
+        get => currentActive;
+    }
 
     #region Controllers
     /// <summary>
@@ -102,6 +107,11 @@ public class PlayerController : MonoBehaviour
     /// The cinemachine brain on the main camera.
     /// </summary>
     private CinemachineBrain mainCamBrain;
+
+    /// <summary>
+    /// The main camera in the scene.
+    /// </summary>
+    private Camera mainCam;
     #endregion
 
     #region FPS Visuals
@@ -131,7 +141,11 @@ public class PlayerController : MonoBehaviour
     private float maxDist = 10;
     [SerializeField]
     private LayerMask pickUpSurface;
+    [SerializeField]
+    private LayerMask interactableMask;
     private TextMeshProUGUI pickUpText;
+    [SerializeField]
+    private LayerMask wallCheckMask;
     private bool canPickUp = false;
     private IInteractable interactable;
     #endregion
@@ -152,7 +166,8 @@ public class PlayerController : MonoBehaviour
         pmb = GameObject.Find("Pause Menu Templates Canvas").GetComponent<PauseMenuBehavior>();
         pm = GetComponent<PlayerMovement>();
         eCaster = GetComponent<EyeCaster>();
-        mainCamBrain = Camera.main.GetComponent<CinemachineBrain>();
+        mainCam = Camera.main;
+        mainCamBrain = mainCam.GetComponent<CinemachineBrain>();
 
         // Gets the hand if the scenes starts with it
         GameObject hand = GameObject.Find("Third Person Player");
@@ -314,20 +329,38 @@ public class PlayerController : MonoBehaviour
 
     private void DisplayPickupText()
     {
-        if (currentActive.Equals(activeController.PERSON) && !mainCamBrain.IsBlending)
+        if (!mainCamBrain.IsBlending)
         {
             bool changed = canPickUp;
             RaycastHit hit;
-            canPickUp = Physics.BoxCast(Camera.main.transform.position, Vector3.one * 3, Camera.main.transform.forward, out hit, Camera.main.transform.rotation, maxDist, pickUpSurface);
+            LayerMask currentMask = pickUpSurface;
+
+            if(currentActive != activeController.PERSON)
+            {
+                currentMask = interactableMask;
+            }
+
+            canPickUp = Physics.BoxCast(mainCam.transform.position, Vector3.one * 3, mainCam.transform.forward, out hit, mainCam.transform.rotation, maxDist, currentMask);
 
             if (!canPickUp)
             {
-                canPickUp = Physics.BoxCast(Camera.main.transform.position, Vector3.one * 1f, Camera.main.transform.forward, out hit, Camera.main.transform.rotation, maxDist, pickUpSurface);
+                canPickUp = Physics.BoxCast(mainCam.transform.position, Vector3.one * 1f, mainCam.transform.forward, out hit, mainCam.transform.rotation, maxDist, currentMask);
             }
 
             if (!canPickUp)
             {
-                canPickUp = Physics.BoxCast(Camera.main.transform.position, Vector3.one * 0.5f, Camera.main.transform.forward, out hit, Camera.main.transform.rotation, maxDist, pickUpSurface);
+                canPickUp = Physics.BoxCast(mainCam.transform.position, Vector3.one * 0.5f, mainCam.transform.forward, out hit, mainCam.transform.rotation, maxDist, currentMask);
+            }
+
+            if (canPickUp)
+            {
+                RaycastHit hitTemp;
+                Physics.Raycast(mainCam.transform.position, mainCam.transform.forward, out hitTemp, maxDist, wallCheckMask);
+
+                if(Vector3.Distance(hitTemp.point, mainCam.transform.position) < Vector3.Distance(hit.point, mainCam.transform.position))
+                {
+                    canPickUp = false;
+                }
             }
 
             if (canPickUp)

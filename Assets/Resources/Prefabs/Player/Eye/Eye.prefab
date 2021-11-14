@@ -126,6 +126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayText: Press F to pickup Eye
+  displayTextControllers: 01000000
 --- !u!1 &5808411182558845223
 GameObject:
   m_ObjectHideFlags: 0

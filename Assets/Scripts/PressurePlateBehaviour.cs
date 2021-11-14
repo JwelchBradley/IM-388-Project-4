@@ -48,7 +48,6 @@ public class PressurePlateBehaviour : MonoBehaviour
             StopAllCoroutines();
             StartCoroutine(ChangeState(false));
             door.ChangeState(-1);
-
         }
     }
 

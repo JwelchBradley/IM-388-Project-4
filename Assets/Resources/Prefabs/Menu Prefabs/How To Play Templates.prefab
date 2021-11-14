@@ -174,7 +174,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_RaycastPadding: {x: -10, y: -5, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -361,15 +361,19 @@ MonoBehaviour:
 
     <b>Jump:</b> Space
 
-    <b>Grapple:</b>
-    Left Click
+    <b>Crouch:</b>
+    Shift
 
-    <b>Direct Pull Grapple:</b> Right Click
+    <b>Interact:</b> F
+
+    <b>Change State:</b> Q
+
+    <b>Cast Eye:</b>
+    Left click
 
     <b>Aim:</b> Mouse
 
-    <b>Open
-    Pause:</b> - Esc
+    <b>Open Pause:</b> - Esc
 
 '
   m_isRightToLeft: 0

@@ -49,6 +49,7 @@ public class ThirdPersonMovement : MonoBehaviour
     [Tooltip("The layer mask of the ground")]
     private LayerMask groundMask;
 
+    #region Climbing
     [Header("Climb")]
     [SerializeField]
     [Tooltip("How far away the player will they start climbing")]
@@ -57,6 +58,9 @@ public class ThirdPersonMovement : MonoBehaviour
 
     [SerializeField]
     private LayerMask wallMask;
+
+    private bool jumpOffWall = false;
+    #endregion
 
     /// <summary>
     /// The cinemachine brain on the main camera.
@@ -101,10 +105,25 @@ public class ThirdPersonMovement : MonoBehaviour
     /// </summary>
     public void Jump()
     {
-        if (isGrounded)
+        if (isClimbing && !isClimbTransitioning)
+        {
+            jumpVel = Mathf.Sqrt(jumpHeight * -8f * gravity);
+            jumpOffWall = true;
+            isClimbing = false;
+            jumpOffWallUp = visuals.transform.up;
+            StartCoroutine(ClimbJumpTransition());
+            Invoke("NotJumpOffWall", 1);
+        }
+        else if (isGrounded)
         {
             jumpVel = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
+    }
+
+    Vector3 jumpOffWallUp;
+    private void NotJumpOffWall()
+    {
+        jumpOffWall = false;
     }
 
     public void MovePlayer(Vector2 input)
@@ -126,12 +145,21 @@ public class ThirdPersonMovement : MonoBehaviour
         }
     }
 
+    bool canFallOffWall = false;
     /// <summary>
     /// Checks if the player is on the ground.
     /// </summary>
     private void IsGrounded()
     {
         isGrounded = Physics.CheckSphere(groundCheckPos.transform.position, groundCheckDist, groundMask);
+
+        if(!isGrounded && !isClimbTransitioning && isClimbing && canFallOffWall)
+        {
+            jumpOffWall = true;
+            isClimbing = false;
+            StartCoroutine(ClimbJumpTransition());
+            Invoke("NotJumpOffWall", 1);
+        }
     }
 
     [SerializeField]
@@ -179,7 +207,7 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         bool canClimb = Physics.Raycast(transform.position, visuals.transform.forward, out hit, climbDist, wallMask);
 
-        if (canClimb)
+        if (canClimb && !jumpOffWall)
         {
             isClimbing = true;
             if (hit.normal.x != 0 || hit.normal.z != 0)
@@ -243,6 +271,7 @@ public class ThirdPersonMovement : MonoBehaviour
     float climbTransitionSpeed = 1;
     private IEnumerator ClimbTransition()
     {
+        canFallOffWall = false;
         isClimbTransitioning = true;
         Vector3 pos = transform.position;
         transform.parent.position = pos;
@@ -276,6 +305,10 @@ public class ThirdPersonMovement : MonoBehaviour
                     }
                     break;
             }
+        }
+        else
+        {
+            Invoke("CanFallOffWall", 1.5f);
         }
 
             while (transform.parent.rotation != newParentRot)
@@ -311,6 +344,76 @@ public class ThirdPersonMovement : MonoBehaviour
             transform.position += visuals.transform.up * -0.01f;
         }*/
     }
+
+    private IEnumerator ClimbJumpTransition()
+    {
+        xAngle = 0;
+        xMod = 0;
+
+        //isClimbTransitioning = true;
+        Vector3 pos = transform.position;
+        transform.parent.position = pos;
+        transform.position = pos;
+
+        float t = 0;
+        Quaternion newParentRot = Quaternion.Euler(xAngle, 0, 180 * xMod);
+        Quaternion oldParentRot = transform.parent.rotation;
+        Vector3 localUp = visuals.transform.up;
+        localUp.x = xAngle / 90;
+        Vector3 oldforward = visuals.transform.forward;
+        float oldCineCamXValue = cineCam.m_XAxis.Value;
+        RaycastHit tempHit;
+        Physics.Raycast(visuals.transform.position, -visuals.transform.up, out tempHit, climbDist, groundMask);
+        float newCineCamXValue = 0;
+
+        if (true)
+        {
+            switch (tempHit.normal.x)
+            {
+                case 1:
+                    jumpVel *= 1.05f;
+                    newCineCamXValue = 90;
+                    break;
+                case -1:
+                    jumpVel *= 1.05f;
+                    newCineCamXValue = -90;
+                    break;
+                case 0:
+                    if (tempHit.normal.z == -1)
+                    {
+                        jumpVel *= 1.05f;
+                        newCineCamXValue = 180;
+                    }
+                    break;
+            }
+        }
+
+        while (transform.parent.rotation != newParentRot)
+        {
+            t += Time.fixedDeltaTime * climbTransitionSpeed;
+            t = Mathf.Clamp(t, 0, 1);
+            transform.parent.rotation = Quaternion.Lerp(oldParentRot, newParentRot, t);
+            RotatePlayer(Vector3.zero);
+            cineCam.m_XAxis.Value = Mathf.Lerp(oldCineCamXValue, newCineCamXValue, t);
+            yield return new WaitForFixedUpdate();
+
+            if (t == 1)
+            {
+                transform.parent.rotation = Quaternion.Euler(xAngle, 0, 180 * xMod);
+            }
+
+            //controller.Move(transform.up * 10 *Time.fixedDeltaTime);
+
+            //MovePlayerOverride();
+        }
+
+        isClimbTransitioning = false;
+    }
+
+    private void CanFallOffWall()
+    {
+        canFallOffWall = true;
+    }
     #endregion
 
     /// <summary>
@@ -318,7 +421,12 @@ public class ThirdPersonMovement : MonoBehaviour
     /// </summary>
     private void GravityCalculation()
     {
-        if (isClimbing)
+        if (jumpOffWall)
+        {
+            jumpVel += gravity * Time.fixedDeltaTime;
+            controller.Move(jumpOffWallUp * Time.fixedDeltaTime * jumpVel);
+        }
+        else if (isClimbing)
         {
             jumpVel = 0;
             controller.Move(-transform.up * Time.fixedDeltaTime);

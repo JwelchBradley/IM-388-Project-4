@@ -23,14 +23,28 @@ public class Interactable : MonoBehaviour, IInteractable
 
     private TextMeshProUGUI text;
 
+    protected PlayerController pc;
+
+    [SerializeField]
+    protected PlayerController.activeController[] displayTextControllers;
+
     private void Awake()
     {
         text = GameObject.Find("Pickup Text").GetComponent<TextMeshProUGUI>();
+
+        pc = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
-    public void DisplayInteractText()
+    public virtual void DisplayInteractText()
     {
-        text.text = displayText;
+        foreach(PlayerController.activeController ac in displayTextControllers)
+        {
+            if(ac.Equals(pc.CurrentActive))
+            {
+                text.text = displayText;
+                break;
+            }
+        }
     }
 
     public virtual void Interact()
