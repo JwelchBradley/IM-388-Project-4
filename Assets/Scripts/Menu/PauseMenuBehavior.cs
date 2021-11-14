@@ -66,6 +66,7 @@ public class PauseMenuBehavior : MenuBehavior
         canPause = true;
     }
 
+    bool wasActiveBefore = false;
     /// <summary>
     /// If the player hits the pause game key, the game is paused.
     /// </summary>
@@ -84,12 +85,20 @@ public class PauseMenuBehavior : MenuBehavior
             AudioListener.pause = isPaused;
             Time.timeScale = Convert.ToInt32(!isPaused);
 
-            if (Cursor.lockState == CursorLockMode.Locked)
+            if (isPaused)
             {
+                if(Cursor.lockState == CursorLockMode.Confined)
+                {
+                    wasActiveBefore = true;
+                }
+                else
+                {
+                    wasActiveBefore = false;
+                }
                 Cursor.lockState = CursorLockMode.Confined;
                 Cursor.visible = true;
             }
-            else
+            else if(!wasActiveBefore)
             {
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
