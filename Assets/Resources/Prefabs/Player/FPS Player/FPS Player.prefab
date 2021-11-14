@@ -63,6 +63,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1119962704054421393, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
+      propertyPath: m_VerticalAxis.m_MaxValue
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 1119962704054421393, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
+      propertyPath: m_VerticalAxis.m_MinValue
+      value: -80
+      objectReference: {fileID: 0}
     - target: {fileID: 1119962704054421395, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -77,7 +85,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704133113646, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.4361258
+      value: 4.2061257
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704133113646, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_LocalPosition.z

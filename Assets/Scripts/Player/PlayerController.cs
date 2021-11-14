@@ -41,10 +41,28 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private ThirdPersonMovement tpm;
 
+    public ThirdPersonMovement TPM
+    {
+        get => tpm;
+        set
+        {
+            tpm = value;
+        }
+    }
+
     /// <summary>
     /// The current active eyecontroller.
     /// </summary>
     private EyeController ec;
+
+    public EyeController EC
+    {
+        get => ec;
+        set
+        {
+            ec = value;
+        }
+    }
 
     /// <summary>
     /// The eye casting component.
@@ -59,10 +77,26 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private CinemachineFreeLook handCam;
 
+    public CinemachineFreeLook HandCam
+    {
+        set
+        {
+            handCam = value;
+        }
+    }
+
     /// <summary>
     /// The virtual camera for the eye.
     /// </summary>
     private CinemachineVirtualCamera eyeCam;
+
+    public CinemachineVirtualCamera EyeCam
+    {
+        set
+        {
+            eyeCam = value;
+        }
+    }
 
     /// <summary>
     /// The cinemachine brain on the main camera.
@@ -99,6 +133,7 @@ public class PlayerController : MonoBehaviour
     private LayerMask pickUpSurface;
     private TextMeshProUGUI pickUpText;
     private bool canPickUp = false;
+    private IInteractable interactable;
     #endregion
 
     #region Crosshair
@@ -281,6 +316,7 @@ public class PlayerController : MonoBehaviour
     {
         if (currentActive.Equals(activeController.PERSON) && !mainCamBrain.IsBlending)
         {
+            bool changed = canPickUp;
             RaycastHit hit;
             canPickUp = Physics.BoxCast(Camera.main.transform.position, Vector3.one * 3, Camera.main.transform.forward, out hit, Camera.main.transform.rotation, maxDist, pickUpSurface);
 
@@ -296,37 +332,48 @@ public class PlayerController : MonoBehaviour
 
             if (canPickUp)
             {
-                pickUpText.text = "Press F to pickup " + hit.transform.gameObject.tag;
+                if (!changed && hit.transform.gameObject.name!="Player")
+                {
+                    interactable = hit.transform.gameObject.GetComponent<IInteractable>();
+                    interactable.DisplayInteractText();
+                }
+                //pickUpText.text = "Press F to pickup " + hit.transform.gameObject.tag;
             }
             else
             {
+                interactable = null;
                 pickUpText.text = "";
             }
         }
         else
         {
+            interactable = null;
+            canPickUp = false;
             pickUpText.text = "";
         }
     }
 
     public void OnResetEye()
     {
+        interactable.Interact();
+        /*
         if (canPickUp && ec != null)
         {
             Destroy(ec.Eye);
             ec = null;
             eyeCam = null;
-        }
+        }*/
     }
 
     public void OnResetHand()
     {
+        /*
         if(canPickUp && tpm != null)
         {
             Destroy(tpm.Hand);
             tpm = null;
             handCam = null;
-        }
+        }*/
     }
     #endregion
 
