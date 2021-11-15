@@ -14,6 +14,15 @@ public class YellowSlowLight : MonoBehaviour
     float decSize;
     float incSize;
 
+    public float maxSizeLow;
+    public float maxSizeHigh;
+    public float minSizeLow;
+    public float minSizeHigh;
+    public float decSizeLow;
+    public float decSizeHigh;
+    public float incSizeLow;
+    public float incSizeHigh;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,10 +33,10 @@ public class YellowSlowLight : MonoBehaviour
     void Update()
     {
 
-        maxSize = Random.Range(20f, 30f);
-        minSize = Random.Range(14f, 18f);
-        decSize = Random.Range(50f, 75f);
-        incSize = Random.Range(14f, 18f);
+        maxSize = Random.Range(maxSizeLow, maxSizeHigh);
+        minSize = Random.Range(minSizeLow, minSizeHigh);
+        decSize = Random.Range(decSizeLow, decSizeHigh); // 50 75
+        incSize = Random.Range(incSizeLow, incSizeHigh); // 40 60
 
         if(swap)
         {
