@@ -148,6 +148,7 @@ public class PlayerController : MonoBehaviour
     private LayerMask wallCheckMask;
     private bool canPickUp = false;
     private IInteractable interactable;
+    private RaycastHit hit;
     #endregion
 
     #region Crosshair
@@ -332,7 +333,11 @@ public class PlayerController : MonoBehaviour
         if (!mainCamBrain.IsBlending)
         {
             bool changed = canPickUp;
-            RaycastHit hit;
+            GameObject past = null;
+            if(hit.transform != null)
+            {
+                past = hit.transform.gameObject;
+            }
             LayerMask currentMask = pickUpSurface;
 
             if(currentActive != activeController.PERSON)
@@ -365,6 +370,14 @@ public class PlayerController : MonoBehaviour
 
             if (canPickUp)
             {
+                if (hit.transform != null && past != null && past.Equals(hit.transform.gameObject))
+                {
+                    changed = false;
+                }
+            }
+
+            if (canPickUp)
+            {
                 if (!changed && hit.transform.gameObject.name!="Player")
                 {
                     interactable = hit.transform.gameObject.GetComponent<IInteractable>();
@@ -388,7 +401,10 @@ public class PlayerController : MonoBehaviour
 
     public void OnResetEye()
     {
-        interactable.Interact();
+        if(interactable != null)
+        {
+            interactable.Interact();
+        }
         /*
         if (canPickUp && ec != null)
         {

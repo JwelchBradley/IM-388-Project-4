@@ -319,7 +319,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
       propertyPath: pickUpSurface.m_Bits
-      value: 520
+      value: 776
       objectReference: {fileID: 0}
     - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
       propertyPath: wallCheckMask.m_Bits
