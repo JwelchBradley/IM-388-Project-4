@@ -13,6 +13,8 @@ public class FlickerLight : MonoBehaviour
     float decSize;
     float incSize;
 
+    public float maxRange;
+
     public float waitTime;
     public int chanceMin;
     public int chanceMax;
@@ -33,7 +35,7 @@ public class FlickerLight : MonoBehaviour
 
         if(flicker != 1)
         {
-            mainLight.range = 30;
+            mainLight.range = maxRange;
         }
         else
         {
