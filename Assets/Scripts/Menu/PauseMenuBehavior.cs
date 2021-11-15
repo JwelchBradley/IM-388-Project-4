@@ -48,6 +48,13 @@ public class PauseMenuBehavior : MenuBehavior
     [SerializeField]
     [Tooltip("The pause menu gameobject")]
     private GameObject pauseMenu = null;
+
+    private GameObject note;
+
+    public GameObject Note
+    {
+        get => note;
+    }
     #endregion
 
     #region Functions
@@ -56,6 +63,8 @@ public class PauseMenuBehavior : MenuBehavior
     /// </summary>
     private void Awake()
     {
+        note = GameObject.Find("Note");
+        note.SetActive(false);
         StartCoroutine(WaitFadeIn());
     }
 
@@ -73,7 +82,7 @@ public class PauseMenuBehavior : MenuBehavior
     public void PauseGame()
     {
         // Opens pause menu and pauses the game
-        if (canPause && canClosePauseMenu)
+        if (canPause && canClosePauseMenu && !note.activeInHierarchy)
         {
             if (isPaused)
             {

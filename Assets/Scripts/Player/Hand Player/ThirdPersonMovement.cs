@@ -60,6 +60,9 @@ public class ThirdPersonMovement : MonoBehaviour
     private LayerMask wallMask;
 
     private bool jumpOffWall = false;
+
+    [SerializeField]
+    private Animator anim;
     #endregion
 
     /// <summary>
@@ -139,6 +142,11 @@ public class ThirdPersonMovement : MonoBehaviour
 
         GravityCalculation();
 
+        if (moveVec == Vector3.zero)
+        {
+            anim.SetBool("Crawling", false);
+        }
+
         if (moveVec.magnitude >= 0.1f && !mainCamBrain.IsBlending && !isClimbTransitioning)
         {
             RotatePlayer(moveVec);
@@ -188,7 +196,14 @@ public class ThirdPersonMovement : MonoBehaviour
     private void MovePlayer()
     {
         Vector3 moveDir = visuals.transform.forward;
-        controller.Move(moveSpeed * moveDir.normalized * Time.fixedDeltaTime);
+        Vector3 move = moveSpeed * moveDir.normalized * Time.fixedDeltaTime;
+
+        controller.Move(move);
+
+        if(move != Vector3.zero)
+        {
+            anim.SetBool("Crawling", true);
+        }
 
         ClimbObject();
     }
@@ -246,31 +261,11 @@ public class ThirdPersonMovement : MonoBehaviour
                     isClimbing = false;
                 }
 
-                //ClimbOld(camAngle);
                 StartCoroutine(ClimbTransition());
-                //hasClimbed = true;
             }
         }
     }
 
-    private void ClimbOld(float camAngle)
-    {
-        Vector3 pos = transform.position;
-        Vector3 localUp = visuals.transform.up;
-        localUp.x = xAngle/90;
-        transform.parent.position = pos;
-        transform.position = pos;
-
-        transform.parent.rotation = Quaternion.Euler(xAngle, 0, 180 * xMod);
-        visuals.transform.forward = localUp;
-        cineCam.m_XAxis.Value = 0;
-
-        
-        while (!Physics.CheckSphere(groundCheckPos.transform.position, groundCheckDist, groundMask))
-        {
-            transform.position += visuals.transform.up * -0.01f;
-        }
-    }
 
     bool isClimbTransitioning = false;
     float climbTransitionSpeed = 1;
@@ -356,8 +351,6 @@ public class ThirdPersonMovement : MonoBehaviour
         RaycastHit tempHit;
         Physics.Raycast(visuals.transform.position, -visuals.transform.up, out tempHit, climbDist, groundMask);
         float newCineCamXValue = 0;
-
-        Debug.Log(currentSurface.x);
 
         if (true)
         {    
@@ -475,6 +468,7 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             jumpVel += gravity * Time.fixedDeltaTime;
             controller.Move(jumpOffWallUp * Time.fixedDeltaTime * jumpVel);
+            anim.SetBool("isJumping", true);
         }
         else if (isClimbing)
         {
@@ -484,6 +478,11 @@ public class ThirdPersonMovement : MonoBehaviour
         else if (!isGrounded)
         {
             jumpVel += gravity * Time.fixedDeltaTime;
+            anim.SetBool("isJumping", true);
+        }
+        else
+        { 
+            anim.SetBool("isJumping", false);
         }
 
         controller.Move(new Vector3(0, jumpVel, 0) * Time.fixedDeltaTime);

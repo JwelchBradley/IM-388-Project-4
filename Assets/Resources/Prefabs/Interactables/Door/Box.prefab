@@ -125,6 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a43ce6fb27215b46a8b46058059ed91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayText: Press F to pull Box
+  displayText: Hold left click to pull Box
   displayTextControllers: 01000000
   pullDist: 6
+  pullSpeed: 20

@@ -322,7 +322,7 @@ public class PlayerController : MonoBehaviour
     #region Radial Menu
     public void OnOpenMenu()
     {
-        if (canOpenRadial)
+        if (canOpenRadial && Time.timeScale != 0)
         {
             currentRadial = !radialMenuPanel.activeInHierarchy;
             radialMenuPanel.SetActive(currentRadial);

@@ -51,7 +51,7 @@ public class BoxBehaviour : Interactable
 
     private IEnumerator PullBox()
     {
-        while (Input.GetKey(KeyCode.F) && canPull)
+        while ((Input.GetKey(KeyCode.F) || Input.GetKey(KeyCode.Mouse0)) && canPull)
         {
             Vector3 velocity = (player.transform.position - transform.position).normalized * pullSpeed;
             velocity.y = 0;

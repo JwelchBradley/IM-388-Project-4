@@ -297,6 +297,17 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""5d40d005-c5cf-46c3-a243-ac17c6b2b723"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ResetEye"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""eb22238f-79f6-4926-a5c8-bf6f88dde33e"",
                     ""path"": ""<Keyboard>/f"",
                     ""interactions"": """",

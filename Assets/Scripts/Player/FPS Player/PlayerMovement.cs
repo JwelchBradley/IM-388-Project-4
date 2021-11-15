@@ -131,6 +131,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private GameObject mesh;
     #endregion
+
+    private PauseMenuBehavior pauseMenu;
     #endregion
 
     #region Functions
@@ -145,6 +147,8 @@ public class PlayerMovement : MonoBehaviour
 
         controller = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
+
+        pauseMenu = GameObject.Find("Pause Menu Templates Canvas").GetComponent<PauseMenuBehavior>();
 
         GetCameras();
     }
@@ -254,7 +258,7 @@ public class PlayerMovement : MonoBehaviour
     #region Calculations
     private void FixedUpdate()
     {
-        if (!mainCamBrain.IsBlending)
+        if (!mainCamBrain.IsBlending && !pauseMenu.Note.activeInHierarchy)
             MoveCalculation();
 
         GravityCalculation();
@@ -357,7 +361,7 @@ public class PlayerMovement : MonoBehaviour
 
     private float GetAxisCustom(string axisName)
     {
-        if (mainCamBrain.IsBlending || GetComponent<PlayerController>().Current)
+        if (mainCamBrain.IsBlending || GetComponent<PlayerController>().Current || pauseMenu.Note.activeInHierarchy)
             return 0;
         return Input.GetAxis(axisName);
     }

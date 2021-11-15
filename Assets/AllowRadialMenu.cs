@@ -19,7 +19,6 @@ public class AllowRadialMenu : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Debug.Log(true);
             pc.CanOpenRadial = allow;
         }
     }
