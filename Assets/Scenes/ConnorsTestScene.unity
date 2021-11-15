@@ -681,7 +681,7 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!1001 &1819580868
+--- !u!1001 &1879961706
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -690,7 +690,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7009832485947406090, guid: a81dba9859d65f14cb287bc9e1e7c2b9, type: 3}
       propertyPath: m_Name
-      value: ZombieHandRigV3 (1)
+      value: ZombieHandRig
       objectReference: {fileID: 0}
     - target: {fileID: 7641549931245940144, guid: a81dba9859d65f14cb287bc9e1e7c2b9, type: 3}
       propertyPath: m_RootOrder
@@ -698,15 +698,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7641549931245940144, guid: a81dba9859d65f14cb287bc9e1e7c2b9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -19.63
+      value: -19.014002
       objectReference: {fileID: 0}
     - target: {fileID: 7641549931245940144, guid: a81dba9859d65f14cb287bc9e1e7c2b9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.37
+      value: -0.61
       objectReference: {fileID: 0}
     - target: {fileID: 7641549931245940144, guid: a81dba9859d65f14cb287bc9e1e7c2b9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -20.47
+      value: -25.362303
       objectReference: {fileID: 0}
     - target: {fileID: 7641549931245940144, guid: a81dba9859d65f14cb287bc9e1e7c2b9, type: 3}
       propertyPath: m_LocalRotation.w
