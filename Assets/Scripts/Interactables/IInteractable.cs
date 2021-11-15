@@ -19,9 +19,9 @@ public class Interactable : MonoBehaviour, IInteractable
 {
     [SerializeField]
     [Tooltip("The text that will be displayed when this object can be interacted with")]
-    private string displayText = "Press F to pickup Hand";
+    protected string displayText = "Press F to pickup Hand";
 
-    private TextMeshProUGUI text;
+    protected TextMeshProUGUI text;
 
     protected PlayerController pc;
 

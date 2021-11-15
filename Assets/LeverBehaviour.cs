@@ -7,7 +7,7 @@ public class LeverBehaviour : Interactable
 {
     [SerializeField]
     [Tooltip("The door that this pressure plate opens")]
-    private DoorBehaviour door;
+    private DoorBehaviour[] door;
 
     [SerializeField]
     private GameObject lever;
@@ -48,7 +48,10 @@ public class LeverBehaviour : Interactable
 
         StopAllCoroutines();
         StartCoroutine(ChangeState(change));
-        door.ChangeState(change);
+        foreach(DoorBehaviour db in door)
+        {
+            db.ChangeState(change);
+        }
     }
 
     private IEnumerator ChangeState(int mod)

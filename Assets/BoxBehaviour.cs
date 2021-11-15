@@ -10,31 +10,35 @@ public class BoxBehaviour : Interactable
     [SerializeField]
     private float pullDist = 1;
     private bool canPull = false;
+    private IInteractable interactable;
+
+    [SerializeField]
+    private float pullSpeed = 20;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         player = GameObject.Find("Player");
+        interactable = GetComponent<Interactable>();
     }
 
     private void FixedUpdate()
     {
-        if(Vector3.Distance(player.transform.position, transform.position) < pullDist)
-        {
-            canPull = true;
-        }
-        else
-        {
-            canPull = false;
-        }
+        canPull = Vector3.Distance(player.transform.position, transform.position) < pullDist;
     }
 
     public override void DisplayInteractText()
     {
+        //base.DisplayInteractText();
+        //StartCoroutine(DisplayInteractTextHelper());
         if (canPull)
         {
             base.DisplayInteractText();
+        }
+        else
+        {
+            text.text = "";
         }
     }
 
@@ -42,20 +46,20 @@ public class BoxBehaviour : Interactable
     {
         offset = transform.position - player.transform.position;
         StartCoroutine(PullBox());
+
     }
 
     private IEnumerator PullBox()
     {
-        while (true)
+        while (Input.GetKey(KeyCode.F) && canPull)
         {
-            if (Input.GetKeyUp(KeyCode.F))
-            {
-                StopAllCoroutines();
-            }
+            Vector3 velocity = (player.transform.position - transform.position).normalized * pullSpeed;
+            velocity.y = 0;
+            rb.velocity = velocity;
 
-            //rb.velocity = transform.position;
-
-            yield return new WaitForEndOfFrame();
+            yield return null;
         }
+
+        rb.velocity = Vector3.zero;
     }
 }

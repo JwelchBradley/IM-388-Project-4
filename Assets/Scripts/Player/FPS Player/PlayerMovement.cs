@@ -73,7 +73,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField]
     [Tooltip("The rate at which gravity scales")]
-    [Range(-50, 0)]
+    [Range(-100, 0)]
     private float gravity = -9.8f;
 
     [Space]

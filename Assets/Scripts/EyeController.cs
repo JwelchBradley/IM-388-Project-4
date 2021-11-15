@@ -19,6 +19,9 @@ public class EyeController : MonoBehaviour
 
     private bool isGroundCeiling = false;
 
+    [SerializeField]
+    private GameObject eye;
+
     public GameObject Eye
     {
         get => gameObject;
@@ -34,11 +37,12 @@ public class EyeController : MonoBehaviour
         if(transform.eulerAngles.x > 20 || transform.eulerAngles.x < -20)
         {
             isGroundCeiling = true;
-            Debug.Log(transform.eulerAngles.x);
         }
-        transform.rotation = rotation;
+        eye.transform.rotation = rotation;
         startingXRotation = transform.eulerAngles.x;
         startingYRotation = transform.eulerAngles.y;
+        xRotation = startingXRotation;
+        yRotation = startingYRotation;
     }
 
     public void Look(Vector2 input)
@@ -65,7 +69,7 @@ public class EyeController : MonoBehaviour
         yRotation = Mathf.Clamp(yRotation, -yDegreesOfFreedom+startingXRotation, yDegreesOfFreedom+startingXRotation);
 
         //rotates the player and the camera.
-        transform.localRotation = Quaternion.Euler(yRotation, xRotation, 0f);
+        eye.transform.rotation = Quaternion.Euler(yRotation, xRotation, 0f);
     }
 
 

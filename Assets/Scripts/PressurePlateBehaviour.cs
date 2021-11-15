@@ -22,18 +22,21 @@ public class PressurePlateBehaviour : MonoBehaviour
     [SerializeField]
     float moveSpeed = 3;
 
+    [SerializeField]
+    float downDist = 2f;
+
     // Start is called before the first frame update
     void Awake()
     {
         startPos = transform.position;
         bc = GetComponent<BoxCollider>();
-        pushedPos = bc.bounds.extents.y * 0.8f* -transform.up + transform.position;
+        pushedPos = bc.bounds.extents.y * downDist * -transform.up + transform.position;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        bool shouldHoldDown = Physics.BoxCast(transform.position - transform.up.normalized, bc.bounds.extents / 2, transform.up, out hit, Quaternion.identity, 2, playerMask);
+        bool shouldHoldDown = Physics.BoxCast(transform.position - transform.up.normalized, bc.bounds.extents, transform.up, out hit, Quaternion.identity, 4, playerMask);
 
         if (shouldHoldDown && !hit.transform.gameObject.CompareTag("Hand") && !heldDown)
         {

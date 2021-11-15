@@ -157,6 +157,7 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             jumpOffWall = true;
             isClimbing = false;
+            jumpOffWallUp = Vector3.zero;
             StartCoroutine(ClimbJumpTransition());
             Invoke("NotJumpOffWall", 1);
         }
@@ -203,6 +204,7 @@ public class ThirdPersonMovement : MonoBehaviour
     private bool hasClimbed = false;
     float xMod = 1;
     private float yAngle = 0;
+    private Vector3 currentSurface = Vector3.zero;
     private void ClimbObject()
     {
         bool canClimb = Physics.Raycast(transform.position, visuals.transform.forward, out hit, climbDist, wallMask);
@@ -210,25 +212,28 @@ public class ThirdPersonMovement : MonoBehaviour
         if (canClimb && !jumpOffWall)
         {
             isClimbing = true;
-            if (hit.normal.x != 0 || hit.normal.z != 0)
+            currentSurface = hit.normal;
+            if (hit.normal.x > 0.1f || hit.normal.x < -0.1f || hit.normal.z > 0.1f || hit.normal.z < -0.1f)
                 xAngle = -90;
             mainCamBrain.m_WorldUpOverride = transform.parent;
             if (!hasClimbed)
             {
-                if(hit.normal.x > 0)
+                if(hit.normal.x > 0.1f)
                 {
                     xMod = 1.5f;
                 }
-                else if(hit.normal.x < 0)
+                else if(hit.normal.x < -0.1f)
                 {
                     xMod = -1.5f;
                 }
                 else
                 {
-                    if (hit.normal.z == 1)
+                    if (hit.normal.z >= 0.5f)
                         xMod = hit.normal.z;
                     else
+                    {
                         xMod = 0;
+                    }
                 }
 
                 float camAngle = 0;
@@ -326,23 +331,9 @@ public class ThirdPersonMovement : MonoBehaviour
             }
 
             MovePlayerOverride();
-
-            
-            /*
-            while(!Physics.CheckSphere(groundCheckPos.transform.position, groundCheckDist, groundMask))
-            {
-                transform.position += visuals.transform.up * -0.01f;
-            }*/
-
         }
 
         isClimbTransitioning = false;
-
-        /*
-        while (!Physics.CheckSphere(groundCheckPos.transform.position, groundCheckDist, groundMask))
-        {
-            transform.position += visuals.transform.up * -0.01f;
-        }*/
     }
 
     private IEnumerator ClimbJumpTransition()
@@ -366,26 +357,85 @@ public class ThirdPersonMovement : MonoBehaviour
         Physics.Raycast(visuals.transform.position, -visuals.transform.up, out tempHit, climbDist, groundMask);
         float newCineCamXValue = 0;
 
+        Debug.Log(currentSurface.x);
+
         if (true)
-        {
-            switch (tempHit.normal.x)
+        {    
+            if(currentSurface.x > 0.1f)
+            {
+                jumpVel *= 1.05f;
+                newCineCamXValue = 90;
+
+                if (jumpOffWallUp == Vector3.zero)
+                {
+                    newCineCamXValue = -90;
+                }
+            }
+            else if(currentSurface.x < -0.1f)
+            {
+                jumpVel *= 1.05f;
+                newCineCamXValue = -90;
+
+                if (jumpOffWallUp == Vector3.zero)
+                {
+                    newCineCamXValue = 90;
+                }
+            }
+            else
+            {
+                if (currentSurface.z > -0.1f)
+                {
+                    jumpVel *= 1.05f;
+                    newCineCamXValue = 180;
+
+                    if (jumpOffWallUp == Vector3.zero)
+                    {
+                        newCineCamXValue = -180;
+                    }
+                }
+                else if (jumpOffWallUp == Vector3.zero)
+                {
+                    newCineCamXValue = 0;
+                }
+            }
+
+            /*
+            switch (currentSurface.x)
             {
                 case 1:
                     jumpVel *= 1.05f;
                     newCineCamXValue = 90;
+
+                    if(jumpOffWallUp == Vector3.zero) {
+                        newCineCamXValue = -90;
+                    }
                     break;
                 case -1:
                     jumpVel *= 1.05f;
                     newCineCamXValue = -90;
+
+                    if (jumpOffWallUp == Vector3.zero)
+                    {
+                        newCineCamXValue = -90;
+                    }
                     break;
                 case 0:
-                    if (tempHit.normal.z == -1)
+                    if (currentSurface.z == -1)
                     {
                         jumpVel *= 1.05f;
                         newCineCamXValue = 180;
+
+                        if (jumpOffWallUp == Vector3.zero)
+                        {
+                            newCineCamXValue = 0;
+                        }
+                    }
+                    else if (jumpOffWallUp == Vector3.zero)
+                    {
+                        newCineCamXValue = 180;
                     }
                     break;
-            }
+            }*/
         }
 
         while (transform.parent.rotation != newParentRot)

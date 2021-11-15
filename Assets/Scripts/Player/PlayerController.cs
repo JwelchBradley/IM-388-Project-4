@@ -129,6 +129,16 @@ public class PlayerController : MonoBehaviour
 
     private bool currentRadial = false;
 
+    private bool canOpenRadial = false;
+
+    public bool CanOpenRadial
+    {
+        set
+        {
+            canOpenRadial = value;
+        }
+    }
+
     public bool Current
     {
         get => currentRadial;
@@ -148,6 +158,11 @@ public class PlayerController : MonoBehaviour
     private LayerMask wallCheckMask;
     private bool canPickUp = false;
     private IInteractable interactable;
+    public IInteractable InteractableObject
+    {
+        get => interactable;
+    }
+
     private RaycastHit hit;
     #endregion
 
@@ -307,17 +322,20 @@ public class PlayerController : MonoBehaviour
     #region Radial Menu
     public void OnOpenMenu()
     {
-        currentRadial = !radialMenuPanel.activeInHierarchy;
-        radialMenuPanel.SetActive(currentRadial);
-        Cursor.visible = currentRadial;
+        if (canOpenRadial)
+        {
+            currentRadial = !radialMenuPanel.activeInHierarchy;
+            radialMenuPanel.SetActive(currentRadial);
+            Cursor.visible = currentRadial;
 
-        if (currentRadial)
-        {
-            Cursor.lockState = CursorLockMode.Confined;
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.Locked;
+            if (currentRadial)
+            {
+                Cursor.lockState = CursorLockMode.Confined;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+            }
         }
     }
     #endregion

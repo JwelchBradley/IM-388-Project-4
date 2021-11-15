@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1832924149811330358}
   m_Layer: 3
   m_Name: FPS Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 1832924149811330359}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 7191196123188311176}
   - {fileID: 1649780813911805111}
@@ -85,7 +85,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704133113646, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.2061257
+      value: 3.4361258
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704133113646, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_LocalPosition.z
@@ -277,6 +277,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1832924149811330358}
     m_Modifications:
+    - target: {fileID: 2424963, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
+      propertyPath: castableMask.m_Bits
+      value: 2005
+      objectReference: {fileID: 0}
+    - target: {fileID: 2424963, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
+      propertyPath: landableMask.m_Bits
+      value: 405
+      objectReference: {fileID: 0}
     - target: {fileID: 3231328740819557374, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.3
@@ -373,8 +381,28 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8837074069219185252, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
+      propertyPath: gravity
+      value: -75
+      objectReference: {fileID: 0}
+    - target: {fileID: 8837074069219185252, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
+      propertyPath: pushPower
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8837074069219185252, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
+      propertyPath: walkSpeed
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8837074069219185252, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
+      propertyPath: jumpHeight
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 8837074069219185263, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
       propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8837074069219185263, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
+      propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
