@@ -29,20 +29,21 @@ public class EyeController : MonoBehaviour
 
     private void Awake()
     {
-        InitializeAngle(transform.rotation);
+        InitializeAngle();
     }
 
-    public void InitializeAngle(Quaternion rotation)
+    public void InitializeAngle()
     {
         if(transform.eulerAngles.x > 20 || transform.eulerAngles.x < -20)
         {
             isGroundCeiling = true;
         }
-        eye.transform.rotation = rotation;
+
+        eye.transform.rotation = transform.rotation;
         startingXRotation = transform.eulerAngles.x;
         startingYRotation = transform.eulerAngles.y;
-        xRotation = startingXRotation;
-        yRotation = startingYRotation;
+        xRotation = eye.transform.eulerAngles.y;
+        yRotation = eye.transform.eulerAngles.x;
     }
 
     public void Look(Vector2 input)

@@ -58,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Jump")]
     [SerializeField]
     [Tooltip("How much velocity the player has when jumping")]
-    [Range(0, 5)]
+    [Range(0, 10)]
     private float jumpHeight = 3;
 
     [SerializeField]

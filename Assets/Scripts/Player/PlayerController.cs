@@ -236,6 +236,7 @@ public class PlayerController : MonoBehaviour
     {
         ec = eye.GetComponentInChildren<EyeController>();
         eyeCam = eye.GetComponentInChildren<CinemachineVirtualCamera>();
+        fpsMesh.SetActive(true);
         pm.MovePlayer(Vector2.zero, false);
         eyeCam.Priority = 100;
         currentActive = activeController.EYE;

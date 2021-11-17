@@ -24,6 +24,10 @@ public class LeverBehaviour : Interactable
 
     float t = 0;
 
+    [SerializeField]
+    [Tooltip("Set to -1 if the second state is the correct one")]
+    int startingIter = 1;
+
     private void Start()
     {
         startPos = lever.transform.localPosition;
@@ -31,6 +35,14 @@ public class LeverBehaviour : Interactable
 
         pushedPos = new Vector3(-startPos.x, startPos.y, 0);
         pushedRotation = lever.transform.localRotation * Quaternion.Euler(new Vector3(0, 0, -40));
+
+        if(startingIter == -1)
+        {
+            foreach (DoorBehaviour db in door)
+            {
+                db.ChangeState(1);
+            }
+        }
     }
 
     public override void Interact()
@@ -50,7 +62,7 @@ public class LeverBehaviour : Interactable
         StartCoroutine(ChangeState(change));
         foreach(DoorBehaviour db in door)
         {
-            db.ChangeState(change);
+            db.ChangeState(change*startingIter);
         }
     }
 

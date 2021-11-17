@@ -414,6 +414,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Eyeball
       objectReference: {fileID: 0}
+    - target: {fileID: 4424396828587804706, guid: df78cbaf360bcf04387f152e53a9de52, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df78cbaf360bcf04387f152e53a9de52, type: 3}
 --- !u!4 &4947266393379629721 stripped

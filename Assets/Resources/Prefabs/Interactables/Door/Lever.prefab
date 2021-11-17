@@ -148,7 +148,7 @@ Transform:
   m_GameObject: {fileID: 4319829671298724172}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6.0727563, y: 0.018, z: 6.438241}
-  m_LocalScale: {x: 0.13101, y: 0.13101, z: 0.13101}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 344921248339243155}
   - {fileID: 3977373238939716559}
@@ -182,7 +182,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayText: Press F to pull lever
   displayTextControllers: 0000000001000000
-  door: {fileID: 0}
+  door:
+  - {fileID: 0}
   lever: {fileID: 3977373238939716592}
 --- !u!1 &4376958355738787449
 GameObject:
