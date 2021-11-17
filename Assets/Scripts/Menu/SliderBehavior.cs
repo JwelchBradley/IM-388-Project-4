@@ -101,16 +101,16 @@ public class SliderBehavior : MonoBehaviour
                 switch (variableName)
                 {
                     case "X Sens":
-                            PlayerPrefs.SetFloat(variableName, 600);
+                            PlayerPrefs.SetFloat(variableName, 400);
                             break;
                     case "Y Sens":
                             PlayerPrefs.SetFloat(variableName, 400);
                             break;
                     case "X Sens Hand":
-                        PlayerPrefs.SetFloat(variableName, 300);
+                        PlayerPrefs.SetFloat(variableName, 200);
                         break;
                     case "Y Sens Hand":
-                        PlayerPrefs.SetFloat(variableName, 5);
+                        PlayerPrefs.SetFloat(variableName, 2);
                         break;
                     default:
                             break;

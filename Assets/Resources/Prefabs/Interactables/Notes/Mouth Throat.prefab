@@ -58,11 +58,10 @@ PrefabInstance:
     - target: {fileID: 4949702944181134572, guid: ad5704d15e38f3d4bbe6a9ed3803756b, type: 3}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: 4a5e69ec98cd2f342af70c8bdfa59a7d, type: 3}
+      objectReference: {fileID: 8300000, guid: dced227933e88be428c4365043b42de3, type: 3}
     - target: {fileID: 4949702944181134573, guid: ad5704d15e38f3d4bbe6a9ed3803756b, type: 3}
       propertyPath: noteString
-      value: How can a mouth like me talk without a throat and all that? Talk about
-        bad design.
+      value: I wish my mouth was still attached so I could put bees in it.
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad5704d15e38f3d4bbe6a9ed3803756b, type: 3}

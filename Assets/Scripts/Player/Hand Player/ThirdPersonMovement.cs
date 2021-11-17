@@ -91,8 +91,8 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         if (!PlayerPrefs.HasKey("X Sens Hand"))
         {
-            PlayerPrefs.SetFloat("X Sens Hand", 300);
-            PlayerPrefs.SetFloat("Y Sens Hand", 5);
+            PlayerPrefs.SetFloat("X Sens Hand", 200);
+            PlayerPrefs.SetFloat("Y Sens Hand", 2);
         }
 
         if (PlayerPrefs.GetFloat("X Sens Hand") != 0 && PlayerPrefs.GetFloat("Y Sens Hand") != 0)

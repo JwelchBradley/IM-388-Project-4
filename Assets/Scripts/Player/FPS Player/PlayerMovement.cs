@@ -171,7 +171,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!PlayerPrefs.HasKey("X Sens"))
         {
-            PlayerPrefs.SetFloat("X Sens", 600);
+            PlayerPrefs.SetFloat("X Sens", 400);
             PlayerPrefs.SetFloat("Y Sens", 400);
         }
 
