@@ -108,6 +108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 860571d28bdae404f92ed0d499316749, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorSnd: {fileID: 8300000, guid: 86d08cb005ed1c2408e05cc3bcd425c3, type: 3}
   moveSpeed: 3
   objectivesNeeded: 1
   currentObjectTally: 0
