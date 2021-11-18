@@ -93,7 +93,7 @@ SphereCollider:
   m_GameObject: {fileID: 7510359909094696357}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
@@ -171,3 +171,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a10ffe4446aec804a8f47bc9d44968b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxSizeLow: 0
+  maxSizeHigh: 0
+  minSizeLow: 0
+  minSizeHigh: 0
+  decSizeLow: 0
+  decSizeHigh: 0
+  incSizeLow: 0
+  incSizeHigh: 0

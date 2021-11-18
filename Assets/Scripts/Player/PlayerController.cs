@@ -420,7 +420,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnResetEye()
     {
-        if(interactable != null)
+        if(interactable != null && !radialMenu.activeInHierarchy)
         {
             interactable.Interact();
         }
@@ -632,7 +632,8 @@ public class PlayerController : MonoBehaviour
                     break;
             }
 
-            OnOpenMenu();
+            Invoke("OnOpenMenu", 0.05f);
+            //OnOpenMenu();
         }
     }
     #endregion
