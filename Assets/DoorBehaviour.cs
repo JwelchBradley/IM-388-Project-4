@@ -9,6 +9,8 @@ public class DoorBehaviour : MonoBehaviour
     Vector3 startPos;
     Vector3 openPos;
 
+    public AudioClip doorSnd;
+
     [SerializeField]
     float moveSpeed = 3;
 
@@ -49,6 +51,8 @@ public class DoorBehaviour : MonoBehaviour
         if (open)
         {
             target = openPos;
+
+            AudioSource.PlayClipAtPoint(doorSnd, target);
         }
 
         while(transform.position != target)
