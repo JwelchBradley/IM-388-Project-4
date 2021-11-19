@@ -11,6 +11,7 @@ public class EyeInteractable : Interactable
             Destroy(pc.EC.Eye, 0.01f);
             pc.EC = null;
             pc.EyeCam = null;
+            pc.EyeMesh.SetActive(true);
         }
     }
 }

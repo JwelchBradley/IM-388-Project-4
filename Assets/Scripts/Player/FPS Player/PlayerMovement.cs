@@ -26,6 +26,14 @@ public class PlayerMovement : MonoBehaviour
 
     private bool active = true;
 
+    [SerializeField]
+    private GameObject pullPos;
+
+    public GameObject PullPos
+    {
+        get => pullPos;
+    }
+
     #region Movement
     [Header("Move Speed")]
     [SerializeField]
@@ -37,6 +45,11 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip("The speed the player moves while crouching")]
     [Range(0, 40)]
     private float crouchWalkSpeed = 6;
+
+    /// <summary>
+    /// The audiosource with the walk loop.
+    /// </summary>
+    private AudioSource aud;
 
     /// <summary>
     /// Holds the current movement speed of the player.
@@ -99,10 +112,8 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private bool isGrounded = false;
 
-    /// <summary>
-    /// Holds reference to interactable objects that the player is on.
-    /// </summary>
-    public static Collider[] playerIsOn;
+    [HideInInspector]
+    public float pullMod = 1;
     #endregion
 
     #region Cameras
@@ -147,6 +158,7 @@ public class PlayerMovement : MonoBehaviour
 
         controller = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
+        aud = GetComponent<AudioSource>();
 
         pauseMenu = GameObject.Find("Pause Menu Templates Canvas").GetComponent<PauseMenuBehavior>();
 
@@ -199,10 +211,11 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     public void Jump()
     {
+        /*
         if (isGrounded)
         {
             velocity.y = Mathf.Sqrt(currentJumpHeight * -2f * gravity);
-        }
+        }*/
     }
 
     /// <summary>
@@ -260,6 +273,10 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!mainCamBrain.IsBlending && !pauseMenu.Note.activeInHierarchy)
             MoveCalculation();
+        else
+        {
+            aud.Stop();
+        }
 
         GravityCalculation();
 
@@ -293,11 +310,20 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private void MoveCalculation()
     {
+        if(move != Vector3.zero)
+        {
+            if(!aud.isPlaying)
+            aud.Play();
+        }
+        else
+        {
+            aud.Stop();
+        }
         Vector3 currentMove = cameraTransform.right * move.x + cameraTransform.forward * move.z;
         currentMove.y = 0f;
         currentMove.Normalize();
 
-        controller.Move(currentMove * currentSpeed * Time.fixedDeltaTime);
+        controller.Move(currentMove * currentSpeed * pullMod * Time.fixedDeltaTime);
     }
 
     
@@ -351,8 +377,12 @@ public class PlayerMovement : MonoBehaviour
             // If you know how fast your character is trying to move,
             // then you can also multiply the push velocity by that.
 
+            Vector3 velocity = pushDir * pushPower;
+
+            //velocity = Vector3.ClampMagnitude(velocity, 5);
+
             // Apply the push
-            body.velocity = pushDir * pushPower;
+            body.velocity = velocity;
         }
     }
     #endregion

@@ -22,6 +22,13 @@ public class EyeController : MonoBehaviour
     [SerializeField]
     private GameObject eye;
 
+    private Outline outline;
+
+    public Outline OutlineScript
+    {
+        get => outline;
+    }
+
     public GameObject Eye
     {
         get => gameObject;
@@ -29,6 +36,7 @@ public class EyeController : MonoBehaviour
 
     private void Awake()
     {
+        outline = GetComponentInChildren<Outline>();
         InitializeAngle();
     }
 
@@ -73,5 +81,13 @@ public class EyeController : MonoBehaviour
         eye.transform.rotation = Quaternion.Euler(yRotation, xRotation, 0f);
     }
 
+    private void OnBecameVisible()
+    {
+        outline.enabled = false;
+    }
 
+    private void OnBecameInvisible()
+    {
+        outline.enabled = true;
+    }
 }

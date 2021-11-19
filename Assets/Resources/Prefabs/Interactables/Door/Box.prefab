@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 7000273707795863682}
   m_LocalRotation: {x: -0.7069834, y: 0, z: 0, w: 0.7072302}
   m_LocalPosition: {x: 9.83, y: 1.04, z: 4.1130056}
-  m_LocalScale: {x: 196.07431, y: 196.07431, z: 196.07431}
+  m_LocalScale: {x: 277.2687, y: 277.2687, z: 277.2687}
   m_Children:
   - {fileID: 6350203630827443922}
   m_Father: {fileID: 0}
@@ -99,8 +99,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 116
-  m_CollisionDetection: 1
+  m_Constraints: 112
+  m_CollisionDetection: 3
 --- !u!65 &7918627805370312142
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -128,8 +128,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayText: Hold left click to pull Box
   displayTextControllers: 01000000
-  pullDist: 6
-  pullSpeed: 20
+  pullDist: 10
+  maxPushSpeed: 5
+  pullSpeed: 100
 --- !u!1001 &6893548626633617721
 PrefabInstance:
   m_ObjectHideFlags: 0

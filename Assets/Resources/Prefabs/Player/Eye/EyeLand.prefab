@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 537339545}
   - component: {fileID: 537339548}
   - component: {fileID: 537339547}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cylinder (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 1136037157096753774}
   - component: {fileID: 1136037157096753769}
   - component: {fileID: 1136037157096753768}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: EyeLand
   m_TagString: Untagged
   m_Icon: {fileID: 0}

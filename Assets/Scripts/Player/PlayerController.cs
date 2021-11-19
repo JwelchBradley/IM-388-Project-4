@@ -119,6 +119,24 @@ public class PlayerController : MonoBehaviour
     [Tooltip("The mesh of the fps player")]
     [SerializeField]
     private GameObject fpsMesh;
+
+    [Tooltip("The mesh of the fps player eye")]
+    [SerializeField]
+    private GameObject eyeMesh;
+
+    public GameObject EyeMesh
+    {
+        get => eyeMesh;
+    }
+
+    [Tooltip("The mesh of the fps player hand")]
+    [SerializeField]
+    private GameObject handMesh;
+
+    public GameObject HandMesh
+    {
+        get => handMesh;
+    }
     #endregion
 
     #region Radial Menu
@@ -223,6 +241,7 @@ public class PlayerController : MonoBehaviour
     {
         if (hand != null)
         {
+            handMesh.SetActive(false);
             tpm = hand.GetComponentInChildren<ThirdPersonMovement>();
             handCam = hand.GetComponentInChildren<CinemachineFreeLook>();
         }
@@ -234,6 +253,7 @@ public class PlayerController : MonoBehaviour
     /// <param name="eye"></param>
     private void InitializeEye(GameObject eye)
     {
+        eyeMesh.SetActive(false);
         ec = eye.GetComponentInChildren<EyeController>();
         eyeCam = eye.GetComponentInChildren<CinemachineVirtualCamera>();
         fpsMesh.SetActive(true);
@@ -379,7 +399,7 @@ public class PlayerController : MonoBehaviour
             if (canPickUp)
             {
                 RaycastHit hitTemp;
-                Physics.Raycast(mainCam.transform.position, mainCam.transform.forward, out hitTemp, maxDist, wallCheckMask);
+                Physics.Raycast(mainCam.transform.position, hit.point - mainCam.transform.position, out hitTemp, maxDist, wallCheckMask);
 
                 if(Vector3.Distance(hitTemp.point, mainCam.transform.position) < Vector3.Distance(hit.point, mainCam.transform.position))
                 {
@@ -449,6 +469,17 @@ public class PlayerController : MonoBehaviour
     private void OnBody()
     {
         crosshair.SetActive(true);
+
+        if(tpm != null)
+        {
+            tpm.OutlineScript.enabled = true;
+        }
+
+        if(ec != null)
+        {
+            ec.OutlineScript.enabled = true;
+        }
+
         switch (currentActive)
         {
             case activeController.HAND:
@@ -497,6 +528,7 @@ public class PlayerController : MonoBehaviour
                     //UpdateHandCam(100, CinemachineBrain.UpdateMethod.FixedUpdate, CinemachineBrain.BrainUpdateMethod.FixedUpdate, activeController.HAND);
                     eyeCam.Priority = 0;
                     pm.MovePlayer(Vector2.zero, false);
+                    tpm.OutlineScript.enabled = false;
                 }
                 break;
         }
@@ -525,6 +557,7 @@ public class PlayerController : MonoBehaviour
         UpdateHandCam(100, CinemachineBrain.UpdateMethod.LateUpdate, CinemachineBrain.BrainUpdateMethod.FixedUpdate, activeController.HAND);
         //UpdateHandCam(100, CinemachineBrain.UpdateMethod.FixedUpdate, CinemachineBrain.BrainUpdateMethod.FixedUpdate, activeController.HAND);
         pm.MovePlayer(Vector2.zero, false);
+        tpm.OutlineScript.enabled = false;
     }
 
     private void UpdateHandCam(int priority, CinemachineBrain.UpdateMethod camUpdateMethod, CinemachineBrain.BrainUpdateMethod camBlendUpdate, activeController newActive)
@@ -557,6 +590,7 @@ public class PlayerController : MonoBehaviour
                     pm.MovePlayer(Vector2.zero, false);
                     eyeCam.Priority = 100;
                     currentActive = activeController.EYE;
+                    ec.OutlineScript.enabled = false;
                 }
                 break;
 
@@ -616,6 +650,7 @@ public class PlayerController : MonoBehaviour
             GameObject eye = eCaster.SpawnEye();
             crosshair.SetActive(false);
             InitializeEye(eye);
+            ec.OutlineScript.enabled = false;
         }
         else if (radialMenuPanel.activeInHierarchy && Time.timeScale != 0)
         {

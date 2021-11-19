@@ -77,12 +77,26 @@ public class ThirdPersonMovement : MonoBehaviour
         get => gameObject;
     }
 
+    /// <summary>
+    /// The outline script for the hands sillouette.
+    /// </summary>
+    private Outline outline;
+
+    /// <summary>
+    /// The outline script for the hands sillouette.
+    /// </summary>
+    public Outline OutlineScript
+    {
+        get => outline;
+    }
+
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
         cam = Camera.main.transform;
         mainCamBrain = Camera.main.GetComponent<CinemachineBrain>();
         cineCam = transform.parent.gameObject.GetComponentInChildren<CinemachineFreeLook>();
+        outline = GetComponentInChildren<Outline>();
 
         SetCameraSens();
     }

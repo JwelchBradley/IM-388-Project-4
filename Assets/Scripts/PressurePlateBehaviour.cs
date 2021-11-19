@@ -23,7 +23,7 @@ public class PressurePlateBehaviour : MonoBehaviour
     float moveSpeed = 3;
 
     [SerializeField]
-    float downDist = 2f;
+    float downDist = 1f;
 
     // Start is called before the first frame update
     void Awake()

@@ -9,5 +9,6 @@ public class HandInteractable : Interactable
         Destroy(pc.TPM.Hand, 0.01f);
         pc.TPM = null;
         pc.HandCam = null;
+        pc.HandMesh.SetActive(true);
     }
 }
