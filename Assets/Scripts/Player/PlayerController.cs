@@ -486,6 +486,7 @@ public class PlayerController : MonoBehaviour
                 UpdateHandCam(0, CinemachineBrain.UpdateMethod.LateUpdate, CinemachineBrain.BrainUpdateMethod.FixedUpdate, activeController.PERSON);
                 fpsMesh.SetActive(false);
                 tpm.MovePlayer(Vector2.zero);
+                tpm.SwitchCameras();
                 break;
             case activeController.EYE:
                 eyeCam.Priority = 0;
@@ -523,7 +524,7 @@ public class PlayerController : MonoBehaviour
             case activeController.EYE:
                 if (tpm != null)
                 {
-
+                    tpm.SwitchCameras();
                         UpdateHandCam(100, CinemachineBrain.UpdateMethod.LateUpdate, CinemachineBrain.BrainUpdateMethod.FixedUpdate, activeController.HAND);
                     //UpdateHandCam(100, CinemachineBrain.UpdateMethod.FixedUpdate, CinemachineBrain.BrainUpdateMethod.FixedUpdate, activeController.HAND);
                     eyeCam.Priority = 0;
@@ -544,6 +545,10 @@ public class PlayerController : MonoBehaviour
             GameObject hand = (GameObject)Instantiate(Resources.Load("Prefabs/Player/Third Person Player/Third Person Player", typeof(GameObject)), transform.position + Camera.main.transform.forward * 2, transform.rotation);
             InitializeHand(hand);
         }
+        else
+        {
+            tpm.SwitchCameras();
+        }
 
         if (ec == null && eCaster.IsCasting)
         {
@@ -562,7 +567,7 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateHandCam(int priority, CinemachineBrain.UpdateMethod camUpdateMethod, CinemachineBrain.BrainUpdateMethod camBlendUpdate, activeController newActive)
     {
-        handCam.Priority = priority;
+        //handCam.Priority = priority;
         mainCamBrain.m_UpdateMethod = camUpdateMethod;
         mainCamBrain.m_BlendUpdateMethod = camBlendUpdate;
         currentActive = newActive;
@@ -602,6 +607,7 @@ public class PlayerController : MonoBehaviour
                     tpm.MovePlayer(Vector2.zero);
                     eyeCam.Priority = 100;
                     currentActive = activeController.EYE;
+                    tpm.SwitchCameras();
                 }
                 break;
                 /*

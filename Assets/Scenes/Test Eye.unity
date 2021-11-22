@@ -2414,7 +2414,7 @@ GameObject:
   - component: {fileID: 1380713958}
   - component: {fileID: 1380713957}
   - component: {fileID: 1380713956}
-  m_Layer: 7
+  m_Layer: 2
   m_Name: CanOpenRadialTrigger (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3731,11 +3731,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1649780813842875754, guid: 5aa4b027023a1a340a5ea58e89d8f90c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.9054458
+      value: 0.90544575
       objectReference: {fileID: 0}
     - target: {fileID: 1649780813842875754, guid: 5aa4b027023a1a340a5ea58e89d8f90c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.4361258
+      value: 3.4361255
       objectReference: {fileID: 0}
     - target: {fileID: 1649780813842875754, guid: 5aa4b027023a1a340a5ea58e89d8f90c, type: 3}
       propertyPath: m_LocalPosition.z

@@ -185,6 +185,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7191196124853812182}
     - target: {fileID: 1119962703066126360, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
+      propertyPath: m_Priority
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1119962703066126360, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_Lens.NearClipPlane
       value: 0.2
       objectReference: {fileID: 0}
@@ -215,6 +219,10 @@ PrefabInstance:
     - target: {fileID: 1119962704133113636, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_Layer
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1119962704133113642, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
+      propertyPath: m_DefaultBlend.m_Time
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704133113646, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_LocalPosition.x
@@ -348,6 +356,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -27.995
       objectReference: {fileID: 0}
+    - target: {fileID: 8551010155405698437, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8590528333533986250, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.3
@@ -400,7 +412,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -18.22
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8551010155405698437, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
 --- !u!4 &1649780813911805111 stripped
 Transform:
