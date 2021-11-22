@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 5907146178510372559}
   - component: {fileID: 8511400251913554437}
   - component: {fileID: 7052360828034012814}
-  - component: {fileID: 7052360828034012815}
   m_Layer: 0
   m_Name: WallV204
   m_TagString: Untagged
@@ -27,7 +26,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7862841980333976528}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2000, y: 2000, z: 2000}
   m_Children: []
@@ -96,16 +95,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.00018721883, y: 0.010000011, z: 0.010000011}
   m_Center: {x: 0.00006198557, y: -0.0025008374, z: -0.0050000055}
---- !u!65 &7052360828034012815
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7862841980333976528}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.00042614856, y: 0.0006873789, z: 0.010000011}
-  m_Center: {x: -0.000057479323, y: -0.0028166724, z: -0.0050000055}

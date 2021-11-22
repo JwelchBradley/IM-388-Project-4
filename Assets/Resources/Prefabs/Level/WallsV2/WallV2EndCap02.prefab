@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 6633796568447381178}
   - component: {fileID: 8929245654364068464}
   - component: {fileID: 7794209492311246577}
-  - component: {fileID: 7794209492311246582}
   m_Layer: 0
   m_Name: WallV2EndCap02
   m_TagString: Untagged
@@ -27,7 +26,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6983941648354753445}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2000, y: 2000, z: 2000}
   m_Children: []
@@ -96,16 +95,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.00065099564, y: 0.010000011, z: 0.0002844801}
   m_Center: {x: 0.0003018448, y: -0.0025008374, z: -0.010142255}
---- !u!65 &7794209492311246582
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6983941648354753445}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.0011266744, y: 0.00064175203, z: 0.00040762904}
-  m_Center: {x: 0.00030369265, y: -0.0027972213, z: -0.010203822}

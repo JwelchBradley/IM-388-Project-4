@@ -12,9 +12,7 @@ GameObject:
   - component: {fileID: 2565999826145743845}
   - component: {fileID: 322205795631589167}
   - component: {fileID: 1421204365176470481}
-  - component: {fileID: 1421204365176470480}
   - component: {fileID: 1421204365176470487}
-  - component: {fileID: 1421204365176470486}
   - component: {fileID: 1421204365176470485}
   m_Layer: 0
   m_Name: WallV2Doorway
@@ -99,19 +97,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.00066723826, y: 0.010023999, z: 0.0030154835}
   m_Center: {x: 0.00030105305, y: -0.0024889756, z: -0.0015077417}
---- !u!65 &1421204365176470480
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2267641607276644090}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.0010835603, y: 0.0007578011, z: 0.0030231478}
-  m_Center: {x: 0.0002928045, y: -0.0028185102, z: -0.0015115739}
 --- !u!65 &1421204365176470487
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -125,19 +110,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.0007434868, y: 0.010000011, z: 0.0030170386}
   m_Center: {x: 0.00029614754, y: -0.0025008374, z: -0.008491575}
---- !u!65 &1421204365176470486
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2267641607276644090}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.0011515849, y: 0.0007036658, z: 0.0030243655}
-  m_Center: {x: 0.0003193759, y: -0.0028008472, z: -0.008487883}
 --- !u!65 &1421204365176470485
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -13,8 +13,6 @@ GameObject:
   - component: {fileID: 1860220563877025733}
   - component: {fileID: 1013662992189279054}
   - component: {fileID: 1013662992189279053}
-  - component: {fileID: 1013662992189279052}
-  - component: {fileID: 1013662992189279043}
   m_Layer: 0
   m_Name: WallV2Corner
   m_TagString: Untagged
@@ -111,29 +109,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.010045524, y: 0.010000011, z: 0.00017688882}
   m_Center: {x: -0.0049772407, y: -0.0025008374, z: -0.000060436647}
---- !u!65 &1013662992189279052
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 202706853013747216}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.00040633083, y: 0.00071290496, z: 0.010237921}
-  m_Center: {x: 0.00004578363, y: -0.0028138629, z: -0.0048810416}
---- !u!65 &1013662992189279043
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 202706853013747216}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.010253425, y: 0.00074177986, z: 0.00039832387}
-  m_Center: {x: -0.00487329, y: -0.0028162748, z: 0.00004979842}
