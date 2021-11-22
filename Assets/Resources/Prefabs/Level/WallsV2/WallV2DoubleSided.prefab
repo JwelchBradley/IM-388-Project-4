@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 356301886853112315}
   - component: {fileID: 2527964030262220081}
   - component: {fileID: 3806865796133292472}
-  - component: {fileID: 3806865796133292475}
   m_Layer: 0
   m_Name: WallV2DoubleSided
   m_TagString: Untagged
@@ -96,16 +95,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.0006600609, y: 0.010000011, z: 0.010000011}
   m_Center: {x: 0.00030780604, y: -0.0025008374, z: -0.0050000055}
---- !u!65 &3806865796133292475
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4041379870407734500}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.0011418953, y: 0.00070624833, z: 0.010000011}
-  m_Center: {x: 0.00028172685, y: -0.002812697, z: -0.0050000055}

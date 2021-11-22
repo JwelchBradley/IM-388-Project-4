@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1988725957898115549}
   - component: {fileID: 4358825768446160151}
   - component: {fileID: 3151461257030136212}
-  - component: {fileID: 3151461257030136213}
   m_Layer: 0
   m_Name: WallV205
   m_TagString: Untagged
@@ -96,16 +95,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.00033063907, y: 0.010000011, z: 0.010000011}
   m_Center: {x: 0.0001359006, y: -0.0025008374, z: -0.0050000055}
---- !u!65 &3151461257030136213
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2845523452740422850}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.00042565074, y: 0.0007456756, z: 0.010000012}
-  m_Center: {x: -0.00005723041, y: -0.0028415807, z: -0.005000002}
