@@ -24,6 +24,9 @@ public class PressurePlateBehaviour : MonoBehaviour
 
     [SerializeField]
     float downDist = 1f;
+    //
+    public GameObject Wire;
+    Material OriginalColor;
 
     // Start is called before the first frame update
     void Awake()
@@ -31,6 +34,10 @@ public class PressurePlateBehaviour : MonoBehaviour
         startPos = transform.position;
         bc = GetComponent<BoxCollider>();
         pushedPos = bc.bounds.extents.y * downDist * -transform.up + transform.position;
+        //
+        OriginalColor = Wire.GetComponent<Renderer>().material;
+        OriginalColor.EnableKeyword("_EMISSION");
+        SetEmission(Color.black);
     }
 
     // Update is called once per frame
@@ -44,6 +51,8 @@ public class PressurePlateBehaviour : MonoBehaviour
             StopAllCoroutines();
             StartCoroutine(ChangeState(true));
             door.ChangeState(1);
+            //
+            SetEmission(Color.yellow);
         }
         else if(!shouldHoldDown && heldDown)
         {
@@ -51,6 +60,8 @@ public class PressurePlateBehaviour : MonoBehaviour
             StopAllCoroutines();
             StartCoroutine(ChangeState(false));
             door.ChangeState(-1);
+            //
+            SetEmission(Color.black);
         }
     }
 
@@ -68,5 +79,10 @@ public class PressurePlateBehaviour : MonoBehaviour
 
             yield return new WaitForEndOfFrame();
         }
+    }
+    //
+    void SetEmission(Color hue)
+    {
+        OriginalColor.SetColor("_EmissionColor", hue);
     }
 }

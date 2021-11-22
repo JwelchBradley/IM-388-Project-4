@@ -4159,6 +4159,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4447492461780712678, guid: 5be84c8f7d5dba843844fe69e6b7b0a9, type: 3}
+      propertyPath: Wire
+      value: 
+      objectReference: {fileID: 818684523}
+    - target: {fileID: 4447492461780712678, guid: 5be84c8f7d5dba843844fe69e6b7b0a9, type: 3}
       propertyPath: door
       value: 
       objectReference: {fileID: 1241822381}
@@ -4361,7 +4365,7 @@ GameObject:
   - component: {fileID: 818684525}
   - component: {fileID: 818684524}
   m_Layer: 0
-  m_Name: Cube (2)
+  m_Name: WireObj
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4376,7 +4380,7 @@ MeshCollider:
   m_GameObject: {fileID: 818684523}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
@@ -5134,7 +5138,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 818684523}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -42.3, y: 3.63, z: 5.88}
+  m_LocalPosition: {x: -42.3, y: 3.93, z: 5.88}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -5576,7 +5580,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh57048
+  m_Name: pb_Mesh22826
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
