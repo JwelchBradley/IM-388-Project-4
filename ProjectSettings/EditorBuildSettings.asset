@@ -15,6 +15,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Test Eye.unity
     guid: 00f46dc21f13cbc408923d9fe8f256a5
   - enabled: 1
-    path: Assets/Scenes/Probuilder Test level.unity
+    path: Assets/Scenes/Main Level.unity
     guid: c51bcaa03f3560644ade37329c59aa14
   m_configObjects: {}
