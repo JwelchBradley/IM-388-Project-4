@@ -147,7 +147,7 @@ public class PlayerController : MonoBehaviour
 
     private bool currentRadial = false;
 
-    private bool canOpenRadial = false;
+    private bool canOpenRadial = true;
 
     public bool CanOpenRadial
     {

@@ -209,7 +209,6 @@ public class ThirdPersonMovement : MonoBehaviour
             isClimbing = false;
             jumpOffWallUp = Vector3.zero;
             StartCoroutine(NewFallOffWall());
-            hit.normal = new Vector3(0, 1, 0);
             xMod = 0;
             xAngle = 0;
             Invoke("NotJumpOffWall", 1);
@@ -408,23 +407,6 @@ public class ThirdPersonMovement : MonoBehaviour
                 {
                     curClimb = 150;
                     climbCineCam.Priority = 150;
-
-                    if (hit.normal.x < -0.8f)
-                    {
-                        climbCineCam.m_XAxis.Value = 90;
-                    }
-                    else if (hit.normal.x > 0.8f)
-                    {
-                        climbCineCam.m_XAxis.Value = 270;
-                    }
-                    else if (hit.normal.z > 0.8f)
-                    {
-                        climbCineCam.m_XAxis.Value = 180;
-                    }
-                    else
-                    {
-                        climbCineCam.m_XAxis.Value = 0;
-                    }
                 }
                 
                 StartCoroutine(NewClimbTransition());
@@ -432,6 +414,7 @@ public class ThirdPersonMovement : MonoBehaviour
         }
     }
 
+    #region Climb Transition
     float climbTransitionSpeed = 1;
     private bool isClimbTransitioning = false;
     private IEnumerator NewClimbTransition()
@@ -445,9 +428,44 @@ public class ThirdPersonMovement : MonoBehaviour
         Quaternion newParentRot = Quaternion.Euler(xAngle, 0, 180 * xMod);
         Quaternion oldParentRot = visuals.transform.localRotation;
 
+        float oldCamValue = climbCineCam.m_XAxis.Value;
+        float newCamValue = 0;
+
+        if (hit.normal.x < -0.8f)
+        {
+            newCamValue = 90;
+            //climbCineCam.m_XAxis.Value = 90;
+        }
+        else if (hit.normal.x > 0.8f)
+        {
+            newCamValue = 270;
+            //climbCineCam.m_XAxis.Value = 270;
+        }
+        else if (hit.normal.z > 0.8f)
+        {
+            newCamValue = 180;
+            //climbCineCam.m_XAxis.Value = 180;
+        }
+        else
+        {
+            //climbCineCam.m_XAxis.Value = 0;
+        }
+
+        float camLerpCheck = oldCamValue - newCamValue;
+
+        if(camLerpCheck < 0)
+        {
+            camLerpCheck = -camLerpCheck;
+        }
+
+        if(camLerpCheck > 190)
+        {
+            newCamValue -= 360;
+        }
+
         RaycastHit tempHit;
         Physics.Raycast(visuals.transform.position, -visuals.transform.up, out tempHit, climbDist, groundMask);
-        Debug.Log(tempHit.normal.z);
+
         if (hit.normal.y == 1 || hit.normal.y == -1)
         {
             switch (tempHit.normal.x)
@@ -488,6 +506,28 @@ public class ThirdPersonMovement : MonoBehaviour
 
             hasClimbed = false;
         }
+        else
+        {
+            if (!hasClimbed)
+            {
+                oldCamValue = newCamValue;
+                climbCineCam.m_XAxis.Value = newCamValue;
+                hasClimbed = true;
+            }
+            else
+            {
+                if(visuals.transform.localEulerAngles.z >= 269)
+                {
+                    newParentRot = Quaternion.Euler(0, visuals.transform.localEulerAngles.y + 90, visuals.transform.localEulerAngles.z);
+                    xRotChange += 90;
+                }
+                else
+                {
+                    newParentRot = Quaternion.Euler(0, visuals.transform.localEulerAngles.y - 90, visuals.transform.localEulerAngles.z);
+                    xRotChange -= 90;
+                }
+            }
+        }
 
         yield return new WaitForFixedUpdate();
         yield return new WaitForFixedUpdate();
@@ -497,6 +537,12 @@ public class ThirdPersonMovement : MonoBehaviour
             t += Time.fixedDeltaTime * climbTransitionSpeed;
             t = Mathf.Clamp(t, 0, 1);
             visuals.transform.localRotation = Quaternion.Lerp(oldParentRot, newParentRot, t);
+
+            if(hit.normal.y > -0.5f && hit.normal.y < 0.5f)
+            {
+                climbCineCam.m_XAxis.Value = Mathf.Lerp(oldCamValue, newCamValue, t);
+            }
+
             yield return new WaitForFixedUpdate();
 
             if (t == 1)
@@ -510,56 +556,51 @@ public class ThirdPersonMovement : MonoBehaviour
         canFallOffWall = true;
         isClimbTransitioning = false;
     }
+    #endregion
 
     private IEnumerator NewFallOffWall()
     {
+        isClimbTransitioning = true;
         anim.SetBool("Crawling", true);
         anim.SetBool("isJumping", false);
         xRotChange = 0;
         float t = 0;
-        Quaternion newParentRot = Quaternion.Euler(0, 0, 0);
+
+        Quaternion newParentRot = Quaternion.Euler(0, 180, 0);
         Quaternion oldParentRot = visuals.transform.localRotation;
         curClimb = 0;
         climbCineCam.Priority = 0;
 
         RaycastHit tempHit;
         Physics.Raycast(visuals.transform.position, -visuals.transform.up, out tempHit, climbDist, groundMask);
-        if (hit.normal.y == 1 || hit.normal.y == -1)
+        if(currentSurface.x > 0.5f)
         {
-            switch (tempHit.normal.x)
-            {
-                case 1:
-                    cineCam.m_XAxis.Value = 90;
-                    newParentRot *= Quaternion.Euler(0, 90, 0);
-                    break;
-                case -1:
-                    cineCam.m_XAxis.Value = -90;
-                    newParentRot *= Quaternion.Euler(0, -90, 0);
-                    break;
-                case 0:
-                    if (tempHit.normal.z == -1)
-                    {
-                        cineCam.m_XAxis.Value = 180;
-                        newParentRot *= Quaternion.Euler(0, 180, 0);
-                    }
-                    break;
-            }
-
-            hasClimbed = false;
+            cineCam.m_XAxis.Value = -90;
+            newParentRot = Quaternion.Euler(0, -90, 0);
+        }
+        else if(currentSurface.x < -0.5f)
+        {
+            cineCam.m_XAxis.Value = 90;
+            newParentRot = Quaternion.Euler(0, 90, 0);
+        }
+        else if (currentSurface.z < -0.5f)
+        {
+            cineCam.m_XAxis.Value = 0;
+            newParentRot = Quaternion.Euler(0, 0, 0);
         }
         else
         {
-            hasClimbed = true;
+            cineCam.m_XAxis.Value = 180;
         }
+
+        hasClimbed = false;
 
         yield return new WaitForFixedUpdate();
         yield return new WaitForFixedUpdate();
-        Debug.Log(mainCamBrain.IsBlending);
 
         while (visuals.transform.localRotation != newParentRot || mainCamBrain.IsBlending)
         {
-            Debug.Log(true);
-            t += Time.fixedDeltaTime * 100;
+            t += Time.fixedDeltaTime * 1;
             t = Mathf.Clamp(t, 0, 1);
             visuals.transform.localRotation = Quaternion.Lerp(oldParentRot, newParentRot, t);
             yield return new WaitForFixedUpdate();
@@ -574,6 +615,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
         canFallOffWall = true;
         isClimbTransitioning = false;
+        hasClimbed = false;
     }
 
     #region Old Climb
