@@ -7,6 +7,7 @@
                        different controllers.
 *****************************************************************************/
 using Cinemachine;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -112,6 +113,9 @@ public class PlayerController : MonoBehaviour
     /// The main camera in the scene.
     /// </summary>
     private Camera mainCam;
+
+    [SerializeField]
+    private GameObject eyeImageRenderer;
     #endregion
 
     #region FPS Visuals
@@ -167,6 +171,8 @@ public class PlayerController : MonoBehaviour
     [Header("Pickup")]
     [SerializeField]
     private float maxDist = 10;
+    [SerializeField]
+    private float maxHandDist = 20;
     [SerializeField]
     private LayerMask pickUpSurface;
     [SerializeField]
@@ -253,6 +259,7 @@ public class PlayerController : MonoBehaviour
     /// <param name="eye"></param>
     private void InitializeEye(GameObject eye)
     {
+        StartCoroutine(SetEyeImageRenderer());
         eyeMesh.SetActive(false);
         ec = eye.GetComponentInChildren<EyeController>();
         eyeCam = eye.GetComponentInChildren<CinemachineVirtualCamera>();
@@ -378,28 +385,30 @@ public class PlayerController : MonoBehaviour
                 past = hit.transform.gameObject;
             }
             LayerMask currentMask = pickUpSurface;
+            float currentDist = maxDist;
 
             if(currentActive != activeController.PERSON)
             {
                 currentMask = interactableMask;
+                currentDist = maxHandDist;
             }
 
-            canPickUp = Physics.BoxCast(mainCam.transform.position, Vector3.one * 3, mainCam.transform.forward, out hit, mainCam.transform.rotation, maxDist, currentMask);
+            canPickUp = Physics.BoxCast(mainCam.transform.position, Vector3.one * 3, mainCam.transform.forward, out hit, mainCam.transform.rotation, currentDist, currentMask);
 
             if (!canPickUp)
             {
-                canPickUp = Physics.BoxCast(mainCam.transform.position, Vector3.one * 1f, mainCam.transform.forward, out hit, mainCam.transform.rotation, maxDist, currentMask);
+                canPickUp = Physics.BoxCast(mainCam.transform.position, Vector3.one * 1f, mainCam.transform.forward, out hit, mainCam.transform.rotation, currentDist, currentMask);
             }
 
             if (!canPickUp)
             {
-                canPickUp = Physics.BoxCast(mainCam.transform.position, Vector3.one * 0.5f, mainCam.transform.forward, out hit, mainCam.transform.rotation, maxDist, currentMask);
+                canPickUp = Physics.BoxCast(mainCam.transform.position, Vector3.one * 0.5f, mainCam.transform.forward, out hit, mainCam.transform.rotation, currentDist, currentMask);
             }
 
             if (canPickUp)
             {
                 RaycastHit hitTemp;
-                Physics.Raycast(mainCam.transform.position, hit.point - mainCam.transform.position, out hitTemp, maxDist, wallCheckMask);
+                Physics.Raycast(mainCam.transform.position, hit.point - mainCam.transform.position, out hitTemp, currentDist, wallCheckMask);
 
                 if(Vector3.Distance(hitTemp.point, mainCam.transform.position) < Vector3.Distance(hit.point, mainCam.transform.position))
                 {
@@ -420,6 +429,7 @@ public class PlayerController : MonoBehaviour
                 if (!changed && hit.transform.gameObject.name!="Player")
                 {
                     interactable = hit.transform.gameObject.GetComponent<IInteractable>();
+
                     interactable.DisplayInteractText();
                 }
                 //pickUpText.text = "Press F to pickup " + hit.transform.gameObject.tag;
@@ -489,6 +499,7 @@ public class PlayerController : MonoBehaviour
                 tpm.SwitchCameras();
                 break;
             case activeController.EYE:
+                eyeImageRenderer.SetActive(false);
                 eyeCam.Priority = 0;
                 currentActive = activeController.PERSON;
                 mainCamBrain.m_UpdateMethod = CinemachineBrain.UpdateMethod.LateUpdate;
@@ -524,6 +535,7 @@ public class PlayerController : MonoBehaviour
             case activeController.EYE:
                 if (tpm != null)
                 {
+                    eyeImageRenderer.SetActive(false);
                     tpm.SwitchCameras();
                         UpdateHandCam(100, CinemachineBrain.UpdateMethod.LateUpdate, CinemachineBrain.BrainUpdateMethod.FixedUpdate, activeController.HAND);
                     //UpdateHandCam(100, CinemachineBrain.UpdateMethod.FixedUpdate, CinemachineBrain.BrainUpdateMethod.FixedUpdate, activeController.HAND);
@@ -584,6 +596,7 @@ public class PlayerController : MonoBehaviour
         {
             // Pulls out the eye to be place or changes from the person to the eye
             case activeController.PERSON:
+                StartCoroutine(SetEyeImageRenderer());
                 if(ec == null)
                 {
                     NoLongerCastingEye();
@@ -604,6 +617,7 @@ public class PlayerController : MonoBehaviour
             case activeController.HAND:
                 if(ec != null)
                 {
+                    StartCoroutine(SetEyeImageRenderer());
                     tpm.MovePlayer(Vector2.zero);
                     eyeCam.Priority = 100;
                     currentActive = activeController.EYE;
@@ -619,6 +633,22 @@ public class PlayerController : MonoBehaviour
                 mainCamBrain.m_BlendUpdateMethod = CinemachineBrain.BrainUpdateMethod.FixedUpdate;
                 fpsMesh.SetActive(false);
                 break;*/
+        }
+    }
+
+    private IEnumerator SetEyeImageRenderer()
+    {
+        yield return new WaitForFixedUpdate();
+        yield return new WaitForFixedUpdate();
+        while (mainCamBrain.IsBlending)
+        {
+            yield return new WaitForFixedUpdate();
+        }
+
+        Debug.Log(currentActive);
+        if (currentActive.Equals(activeController.EYE))
+        {
+            eyeImageRenderer.SetActive(true);
         }
     }
 

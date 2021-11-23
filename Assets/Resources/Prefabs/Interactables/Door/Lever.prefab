@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 7712628119055226412}
   - component: {fileID: 9028057472828748888}
   - component: {fileID: 6107422439403125442}
-  m_Layer: 9
+  - component: {fileID: 1910052999273760651}
+  m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -81,6 +82,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &1910052999273760651
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 399514672114811421}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 2534964839176971238, guid: 4dd673d7dc9de7646b3596b73f606135, type: 3}
 --- !u!1 &612213865796532763
 GameObject:
   m_ObjectHideFlags: 0
@@ -277,7 +292,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3977373238939716559}
   - component: {fileID: 3977373238939716556}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -354,8 +369,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.047247, y: 3.302009, z: 1}
-  m_Center: {x: 0.048245594, y: 1.7272476, z: 0}
+  m_Size: {x: 1.9766588, y: 0.6707655, z: 0.6706915}
+  m_Center: {x: 0.024866581, y: 0.41162568, z: -0.017384052}
 --- !u!114 &3977373238635187225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -385,7 +400,8 @@ GameObject:
   - component: {fileID: 344921248339243155}
   - component: {fileID: 9021899299866527245}
   - component: {fileID: 590592187058592466}
-  m_Layer: 9
+  - component: {fileID: 2440744557217928098}
+  m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -455,6 +471,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &2440744557217928098
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4376958355738787449}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 0.02, y: 0.009279733, z: 0.007195989}
+  m_Center: {x: 0, y: 0, z: -0.008363669}
 --- !u!1 &4659040090431915192
 GameObject:
   m_ObjectHideFlags: 0

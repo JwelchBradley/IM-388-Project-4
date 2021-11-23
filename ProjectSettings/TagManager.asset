@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Hand
   - Eye
+  - Pressure A
+  - Pressure B
+  - Pressure C
+  - Pressure D
   layers:
   - Default
   - TransparentFX
@@ -19,10 +23,10 @@ TagManager:
   - Interactable
   - Door
   - Eyecast Orb
-  - 
-  - 
-  - 
-  - 
+  - EyeImages
+  - PressurePlate
+  - Wire
+  - Lever
   - 
   - 
   - 

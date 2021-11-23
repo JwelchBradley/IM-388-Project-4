@@ -80,7 +80,6 @@ public class BoxBehaviour : Interactable
             yield return new WaitForFixedUpdate();
         }
 
-        Debug.Log(true);
         rb.velocity = Vector3.zero;
         isPulling = false;
         pm.pullMod = 1;

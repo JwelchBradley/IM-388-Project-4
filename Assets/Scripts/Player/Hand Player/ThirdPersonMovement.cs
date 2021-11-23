@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class ThirdPersonMovement : MonoBehaviour
 {
     private CharacterController controller;
+    private float startingStepOffset;
 
     private Transform cam;
     private RaycastHit hit;
@@ -97,6 +98,7 @@ public class ThirdPersonMovement : MonoBehaviour
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
+        startingStepOffset = controller.stepOffset;
         cam = Camera.main.transform;
         mainCamBrain = Camera.main.GetComponent<CinemachineBrain>();
         //cineCam = transform.parent.gameObject.GetComponentInChildren<CinemachineFreeLook>();
@@ -161,6 +163,7 @@ public class ThirdPersonMovement : MonoBehaviour
         }
         else if (isGrounded)
         {
+            controller.stepOffset = 0;
             jumpVel = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
     }
@@ -202,6 +205,11 @@ public class ThirdPersonMovement : MonoBehaviour
     private void IsGrounded()
     {
         isGrounded = Physics.CheckSphere(groundCheckPos.transform.position, groundCheckDist, groundMask);
+
+        if(isGrounded && !isClimbing)
+        {
+            controller.stepOffset = startingStepOffset;
+        }
 
         if(!isGrounded && !isClimbTransitioning && isClimbing && canFallOffWall)
         {
@@ -368,6 +376,7 @@ public class ThirdPersonMovement : MonoBehaviour
         if (canClimb && !jumpOffWall)
         {
             isClimbing = true;
+            controller.stepOffset = 0;
             currentSurface = hit.normal;
             if (hit.normal.x > 0.1f || hit.normal.x < -0.1f || hit.normal.z > 0.1f || hit.normal.z < -0.1f)
                 xAngle = -90;
@@ -396,6 +405,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
                 if(hit.normal.y >= 0.5f || hit.normal.y <= -0.5f)
                 {
+                    controller.stepOffset = startingStepOffset;
                     xAngle = 0;
                     yAngle = 0;
                     camAngle = cineCam.m_XAxis.Value;
@@ -570,6 +580,7 @@ public class ThirdPersonMovement : MonoBehaviour
         Quaternion oldParentRot = visuals.transform.localRotation;
         curClimb = 0;
         climbCineCam.Priority = 0;
+        controller.stepOffset = startingStepOffset;
 
         RaycastHit tempHit;
         Physics.Raycast(visuals.transform.position, -visuals.transform.up, out tempHit, climbDist, groundMask);

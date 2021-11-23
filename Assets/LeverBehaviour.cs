@@ -87,4 +87,12 @@ public class LeverBehaviour : Interactable
             yield return new WaitForEndOfFrame();
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Hand"))
+        {
+            //DisplayInteractText();
+        }
+    }
 }

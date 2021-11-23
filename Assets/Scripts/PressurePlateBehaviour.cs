@@ -5,8 +5,13 @@ using UnityEngine;
 public class PressurePlateBehaviour : MonoBehaviour
 {
     BoxCollider bc;
+
+    [Header("Hold Down Items")]
     [SerializeField]
     private LayerMask playerMask;
+
+    [SerializeField]
+    private string allowedTag = "";
 
     private RaycastHit hit;
 
@@ -15,18 +20,28 @@ public class PressurePlateBehaviour : MonoBehaviour
     Vector3 startPos;
     Vector3 pushedPos;
 
+    [Header("Activatables")]
     [SerializeField]
     [Tooltip("The door that this pressure plate opens")]
     private DoorBehaviour door;
 
+    [Header("Movement Values")]
     [SerializeField]
     float moveSpeed = 3;
 
     [SerializeField]
     float downDist = 1f;
+
+    [SerializeField]
+    private bool allowHand = false;
     //
-    public GameObject Wire;
-    Material OriginalColor;
+    [Header("Wires")]
+    [SerializeField]
+    private GameObject[] Wire;
+    List<Material> OriginalColor = new List<Material>();
+
+    [SerializeField]
+    private bool canShowWithoutEye = true;
 
     // Start is called before the first frame update
     void Awake()
@@ -35,9 +50,21 @@ public class PressurePlateBehaviour : MonoBehaviour
         bc = GetComponent<BoxCollider>();
         pushedPos = bc.bounds.extents.y * downDist * -transform.up + transform.position;
         //
-        OriginalColor = Wire.GetComponent<Renderer>().material;
-        OriginalColor.EnableKeyword("_EMISSION");
-        SetEmission(Color.black);
+        foreach(GameObject wire in Wire)
+        {
+            OriginalColor.Add(wire.GetComponent<Renderer>().material);
+        }
+
+        foreach(Material mat in OriginalColor)
+        {
+            mat.EnableKeyword("_EMISSION");
+        }
+
+        //OriginalColor.EnableKeyword("_EMISSION");
+        foreach (Material mat in OriginalColor)
+        {
+            mat.SetColor("_EmissionColor", Color.black);
+        }
     }
 
     // Update is called once per frame
@@ -45,11 +72,23 @@ public class PressurePlateBehaviour : MonoBehaviour
     {
         bool shouldHoldDown = Physics.BoxCast(transform.position - transform.up.normalized, bc.bounds.extents, transform.up, out hit, Quaternion.identity, 4, playerMask);
 
-        if (shouldHoldDown && !hit.transform.gameObject.CompareTag("Hand") && !heldDown)
+        if(!allowHand && shouldHoldDown && hit.transform.gameObject.CompareTag("Hand"))
+        {
+            shouldHoldDown = false;
+        }
+
+        if(allowedTag != "" && !heldDown && shouldHoldDown && !hit.transform.gameObject.CompareTag(allowedTag))
+        {
+            
+            shouldHoldDown = false;
+        }
+
+        if (shouldHoldDown && !heldDown)
         {
             heldDown = true;
             StopAllCoroutines();
             StartCoroutine(ChangeState(true));
+            if(door != null)
             door.ChangeState(1);
             //
             SetEmission(Color.yellow);
@@ -59,6 +98,7 @@ public class PressurePlateBehaviour : MonoBehaviour
             heldDown = false;
             StopAllCoroutines();
             StartCoroutine(ChangeState(false));
+            if(door != null)
             door.ChangeState(-1);
             //
             SetEmission(Color.black);
@@ -83,6 +123,12 @@ public class PressurePlateBehaviour : MonoBehaviour
     //
     void SetEmission(Color hue)
     {
-        OriginalColor.SetColor("_EmissionColor", hue);
+        if (canShowWithoutEye)
+        {
+            foreach (Material mat in OriginalColor)
+            {
+                mat.SetColor("_EmissionColor", hue);
+            }
+        }
     }
 }
