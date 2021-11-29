@@ -519,7 +519,7 @@ Transform:
   - {fileID: 245963850}
   - {fileID: 1790742159}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &17862953
 PrefabInstance:
@@ -2586,7 +2586,7 @@ PrefabInstance:
       objectReference: {fileID: 1611932534}
     - target: {fileID: 4479518134080619654, guid: f204383d75aa8a64981760d84fe94613, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4479518134080619654, guid: f204383d75aa8a64981760d84fe94613, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6594,6 +6594,74 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8d9dac8a9069e84f86627ac4bf626bd, type: 3}
+--- !u!1001 &550062443
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8921583585390428192, guid: a49ab572b8e07794fb5652aa909f0121, type: 3}
+      propertyPath: noteString
+      value: "Log 7. Reinback presiding                   Subjects 014 through 074
+        could not break through the next test. Whatever Dr. Menime\u2019s idea was
+        for this biowea\u2026 experimental viral technology was, it seems unlikely
+        to succeed. A detachable hand? Seems unrealistic, who\u2019s going to be
+        intimidated by a right hand coming off? In uh, in any case, the plate was
+        uncalibrated, so I went in and made it so that only the weight of an average
+        human hand can trip it. Let\u2019s see if this pays off.                Signed:
+        Dr. Reinback "
+      objectReference: {fileID: 0}
+    - target: {fileID: 8921583585390428202, guid: a49ab572b8e07794fb5652aa909f0121, type: 3}
+      propertyPath: m_Name
+      value: note_log_7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8921583585390428206, guid: a49ab572b8e07794fb5652aa909f0121, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8921583585390428206, guid: a49ab572b8e07794fb5652aa909f0121, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 132
+      objectReference: {fileID: 0}
+    - target: {fileID: 8921583585390428206, guid: a49ab572b8e07794fb5652aa909f0121, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 7.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 8921583585390428206, guid: a49ab572b8e07794fb5652aa909f0121, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -162.93503
+      objectReference: {fileID: 0}
+    - target: {fileID: 8921583585390428206, guid: a49ab572b8e07794fb5652aa909f0121, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8921583585390428206, guid: a49ab572b8e07794fb5652aa909f0121, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8921583585390428206, guid: a49ab572b8e07794fb5652aa909f0121, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8921583585390428206, guid: a49ab572b8e07794fb5652aa909f0121, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8921583585390428206, guid: a49ab572b8e07794fb5652aa909f0121, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8921583585390428206, guid: a49ab572b8e07794fb5652aa909f0121, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8921583585390428206, guid: a49ab572b8e07794fb5652aa909f0121, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a49ab572b8e07794fb5652aa909f0121, type: 3}
 --- !u!1 &565897701
 GameObject:
   m_ObjectHideFlags: 0
@@ -10125,7 +10193,7 @@ Transform:
   m_Children:
   - {fileID: 449149855}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &903472912
 GameObject:
@@ -13529,7 +13597,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8022658112280601204, guid: 1889d9abceb8bb34daca70bc9753f5c9, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8022658112280601204, guid: 1889d9abceb8bb34daca70bc9753f5c9, type: 3}
       propertyPath: m_AnchorMax.x
@@ -16998,7 +17066,7 @@ Transform:
   - {fileID: 306109897}
   - {fileID: 75844001}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1442342449
 GameObject:
@@ -21327,7 +21395,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3793108137386289385, guid: 1c8a4723629a01547bd98c1545a5028a, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 3793108137386289385, guid: 1c8a4723629a01547bd98c1545a5028a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -23796,7 +23864,7 @@ Transform:
   - {fileID: 53935512}
   - {fileID: 1912219036}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2041326574
 GameObject:
@@ -24206,6 +24274,71 @@ AudioSource:
   m_CorrespondingSourceObject: {fileID: 8022658113023137638, guid: 1889d9abceb8bb34daca70bc9753f5c9, type: 3}
   m_PrefabInstance: {fileID: 1168506688}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2080548098
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3483875121068463427, guid: b5333d9075945204ebca1a716e1e8a51, type: 3}
+      propertyPath: m_Name
+      value: note_log_4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3483875121068463431, guid: b5333d9075945204ebca1a716e1e8a51, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3483875121068463431, guid: b5333d9075945204ebca1a716e1e8a51, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 131.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3483875121068463431, guid: b5333d9075945204ebca1a716e1e8a51, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 7.72
+      objectReference: {fileID: 0}
+    - target: {fileID: 3483875121068463431, guid: b5333d9075945204ebca1a716e1e8a51, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -167.14696
+      objectReference: {fileID: 0}
+    - target: {fileID: 3483875121068463431, guid: b5333d9075945204ebca1a716e1e8a51, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3483875121068463431, guid: b5333d9075945204ebca1a716e1e8a51, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3483875121068463431, guid: b5333d9075945204ebca1a716e1e8a51, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3483875121068463431, guid: b5333d9075945204ebca1a716e1e8a51, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3483875121068463431, guid: b5333d9075945204ebca1a716e1e8a51, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3483875121068463431, guid: b5333d9075945204ebca1a716e1e8a51, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3483875121068463431, guid: b5333d9075945204ebca1a716e1e8a51, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3483875121068463433, guid: b5333d9075945204ebca1a716e1e8a51, type: 3}
+      propertyPath: noteString
+      value: 'Log 4. Dr. Reinback presiding.      Subjects 000 through 013 failed
+        the box/pressure plate test. Their higher brain functions had degraded to
+        the point of a near loss of sapience. However, with the new additions Dr.
+        Erd added in, we are anticipating Subject 014 can pass the test.                                      
+        Signed: Dr. Reinback '
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5333d9075945204ebca1a716e1e8a51, type: 3}
 --- !u!1001 &2082987125
 PrefabInstance:
   m_ObjectHideFlags: 0
