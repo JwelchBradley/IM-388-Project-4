@@ -206,6 +206,11 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         isGrounded = Physics.CheckSphere(groundCheckPos.transform.position, groundCheckDist, groundMask);
 
+        if (isClimbing)
+        {
+            isGrounded = Physics.CheckSphere(groundCheckPos.transform.position, groundCheckDist, wallMask);
+        }
+
         if(isGrounded && !isClimbing)
         {
             controller.stepOffset = startingStepOffset;

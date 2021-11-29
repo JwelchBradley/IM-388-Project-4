@@ -62,7 +62,7 @@ public class EyeController : MonoBehaviour
 
             if(yRotation < startingXRotation)
             {
-                mod = -1;
+                //mod = -1;
             }
 
             xRotation += input.x * mouseSensitivity * Time.deltaTime * mod;

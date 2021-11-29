@@ -5,12 +5,40 @@ using UnityEngine;
 
 public class LeverBehaviour : Interactable
 {
+    [Header("Scene Settings")]
     [SerializeField]
     [Tooltip("The door that this pressure plate opens")]
     private DoorBehaviour[] door;
 
     [SerializeField]
+    [Tooltip("Set to -1 if the second state is the correct one")]
+    int startingIter = 1;
+
+    [SerializeField]
+    [Tooltip("True means the lever can be actiavted")]
+    bool canActivate = true;
+
+    public bool CanActivate
+    {
+        set
+        {
+            canActivate = value;
+        }
+    }
+
+    [SerializeField]
+    [Tooltip("Holds true if the lever can be switched back to off")]
+    bool canUnactivate = false;
+
+    [Header("Lever Objects")]
+    [SerializeField]
     private GameObject lever;
+
+    [SerializeField]
+    private GameObject onLight;
+
+    [SerializeField]
+    private GameObject offLight;
 
     private bool activated = false;
 
@@ -24,10 +52,6 @@ public class LeverBehaviour : Interactable
 
     float t = 0;
 
-    [SerializeField]
-    [Tooltip("Set to -1 if the second state is the correct one")]
-    int startingIter = 1;
-
     private void Start()
     {
         startPos = lever.transform.localPosition;
@@ -38,6 +62,9 @@ public class LeverBehaviour : Interactable
 
         if(startingIter == -1)
         {
+            onLight.SetActive(true);
+            offLight.SetActive(false);
+
             foreach (DoorBehaviour db in door)
             {
                 db.ChangeState(1);
@@ -45,24 +72,53 @@ public class LeverBehaviour : Interactable
         }
     }
 
-    public override void Interact()
+    public override void DisplayInteractText()
     {
-        activated = !activated;
+        bool displayText = true;
 
-        //anim.SetBool("Active", activated);
-
-        int change = -1;
-
-        if (activated)
+        if(activated && !canUnactivate)
         {
-            change = 1;
+            displayText = false;
         }
 
-        StopAllCoroutines();
-        StartCoroutine(ChangeState(change));
-        foreach(DoorBehaviour db in door)
+        if(displayText && canActivate)
+        base.DisplayInteractText();
+    }
+
+    public override void Interact()
+    {
+        bool allowInteract = true;
+
+        if(activated && !canUnactivate)
         {
-            db.ChangeState(change*startingIter);
+            allowInteract = false;
+        }
+        else if(!activated && !canUnactivate)
+        {
+            text.text = "";
+        }
+
+        if (allowInteract && canActivate)
+        {
+            offLight.SetActive(activated);
+
+            activated = !activated;
+
+            onLight.SetActive(activated);
+
+            int change = -1;
+
+            if (activated)
+            {
+                change = 1;
+            }
+
+            StopAllCoroutines();
+            StartCoroutine(ChangeState(change));
+            foreach (DoorBehaviour db in door)
+            {
+                db.ChangeState(change * startingIter);
+            }
         }
     }
 
@@ -85,14 +141,6 @@ public class LeverBehaviour : Interactable
             lever.transform.localRotation = Quaternion.Lerp(startRotation, pushedRotation, t);
 
             yield return new WaitForEndOfFrame();
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Hand"))
-        {
-            //DisplayInteractText();
         }
     }
 }

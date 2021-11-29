@@ -11,6 +11,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Orange Flame
       objectReference: {fileID: 0}
+    - target: {fileID: 7510359909094696359, guid: 82a9651b2410f3849a94d98be4889d16, type: 3}
+      propertyPath: m_Range
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 7510359909094696359, guid: 82a9651b2410f3849a94d98be4889d16, type: 3}
+      propertyPath: m_Intensity
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 7510359909094696363, guid: 82a9651b2410f3849a94d98be4889d16, type: 3}
       propertyPath: m_RootOrder
       value: 0

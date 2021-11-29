@@ -6,6 +6,9 @@ public class PressurePlateBehaviour : MonoBehaviour
 {
     BoxCollider bc;
 
+    [SerializeField]
+    private PressurePlateGroupController ppgc;
+
     [Header("Hold Down Items")]
     [SerializeField]
     private LayerMask playerMask;
@@ -37,15 +40,20 @@ public class PressurePlateBehaviour : MonoBehaviour
     //
     [Header("Wires")]
     [SerializeField]
-    private GameObject[] Wire;
-    List<Material> OriginalColor = new List<Material>();
+    private bool canShowWithoutEye = true;
 
     [SerializeField]
-    private bool canShowWithoutEye = true;
+    private GameObject[] Wire;
+    List<Material> OriginalColor = new List<Material>();
 
     // Start is called before the first frame update
     void Awake()
     {
+        if(ppgc != null)
+        {
+            ppgc.pressurePlate.Add(gameObject.GetComponent<PressurePlateBehaviour>());
+        }
+
         startPos = transform.position;
         bc = GetComponent<BoxCollider>();
         pushedPos = bc.bounds.extents.y * downDist * -transform.up + transform.position;
@@ -90,6 +98,9 @@ public class PressurePlateBehaviour : MonoBehaviour
             StartCoroutine(ChangeState(true));
             if(door != null)
             door.ChangeState(1);
+
+            if(ppgc != null)
+            ppgc.UpdateActivated(1);
             //
             SetEmission(Color.yellow);
         }
@@ -100,6 +111,9 @@ public class PressurePlateBehaviour : MonoBehaviour
             StartCoroutine(ChangeState(false));
             if(door != null)
             door.ChangeState(-1);
+
+            if(ppgc != null)
+            ppgc.UpdateActivated(-1);
             //
             SetEmission(Color.black);
         }
@@ -128,6 +142,24 @@ public class PressurePlateBehaviour : MonoBehaviour
             foreach (Material mat in OriginalColor)
             {
                 mat.SetColor("_EmissionColor", hue);
+            }
+        }
+    }
+
+    public void AllowEmission(bool allow)
+    {
+        if (allow)
+        {
+            foreach (Material mat in OriginalColor)
+            {
+                mat.SetColor("_EmissionColor", Color.yellow);
+            }
+        }
+        else
+        {
+            foreach (Material mat in OriginalColor)
+            {
+                mat.SetColor("_EmissionColor", Color.black);
             }
         }
     }

@@ -119,7 +119,7 @@ public class EyeCaster : MonoBehaviour
     private Quaternion SpawnRotation()
     {
         float zMod = 1;
-        if(hit.normal.z == 0)
+        if(hit.normal.z > -0.1f && hit.normal.z < 0.1f)
         {
             zMod = 0;
         }
