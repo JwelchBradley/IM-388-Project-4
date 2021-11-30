@@ -206,10 +206,11 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         isGrounded = Physics.CheckSphere(groundCheckPos.transform.position, groundCheckDist, groundMask);
 
+        /*
         if (isClimbing)
         {
             isGrounded = Physics.CheckSphere(groundCheckPos.transform.position, groundCheckDist, wallMask);
-        }
+        }*/
 
         if(isGrounded && !isClimbing)
         {
@@ -481,7 +482,7 @@ public class ThirdPersonMovement : MonoBehaviour
         RaycastHit tempHit;
         Physics.Raycast(visuals.transform.position, -visuals.transform.up, out tempHit, climbDist, groundMask);
 
-        if (hit.normal.y == 1 || hit.normal.y == -1)
+        if (hit.normal.y > 0.5f || hit.normal.y < -0.5f)
         {
             switch (tempHit.normal.x)
             {
