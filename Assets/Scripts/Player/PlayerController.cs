@@ -141,6 +141,22 @@ public class PlayerController : MonoBehaviour
     {
         get => handMesh;
     }
+
+    [Tooltip("The mesh of the players arms")]
+    [SerializeField]
+    private GameObject armMesh;
+
+    [SerializeField]
+    private GameObject rightHandArmMesh;
+
+    public GameObject RightHandArmMesh
+    {
+        get => rightHandArmMesh;
+    }
+
+    [Tooltip("The animator of the players arms")]
+    [SerializeField]
+    private Animator armAnim;
     #endregion
 
     #region Radial Menu
@@ -248,6 +264,7 @@ public class PlayerController : MonoBehaviour
         if (hand != null)
         {
             handMesh.SetActive(false);
+            rightHandArmMesh.SetActive(false);
             tpm = hand.GetComponentInChildren<ThirdPersonMovement>();
             handCam = hand.GetComponentInChildren<CinemachineFreeLook>();
         }
@@ -261,6 +278,7 @@ public class PlayerController : MonoBehaviour
     {
         StartCoroutine(SetEyeImageRenderer());
         eyeMesh.SetActive(false);
+        armMesh.SetActive(false);
         ec = eye.GetComponentInChildren<EyeController>();
         eyeCam = eye.GetComponentInChildren<CinemachineVirtualCamera>();
         fpsMesh.SetActive(true);
@@ -492,6 +510,9 @@ public class PlayerController : MonoBehaviour
 
         switch (currentActive)
         {
+            case activeController.PERSON:
+                eCaster.IsCasting = false;
+                break;
             case activeController.HAND:
                 UpdateHandCam(0, CinemachineBrain.UpdateMethod.LateUpdate, CinemachineBrain.BrainUpdateMethod.FixedUpdate, activeController.PERSON);
                 fpsMesh.SetActive(false);
@@ -506,6 +527,23 @@ public class PlayerController : MonoBehaviour
                 mainCamBrain.m_BlendUpdateMethod = CinemachineBrain.BrainUpdateMethod.FixedUpdate;
                 fpsMesh.SetActive(false);
                 break;
+        }
+
+        StartCoroutine(EnableArms());
+    }
+
+    private IEnumerator EnableArms()
+    {
+        yield return new WaitForFixedUpdate();
+        yield return new WaitForFixedUpdate();
+        while (currentActive.Equals(activeController.PERSON) && mainCamBrain.IsBlending)
+        {
+            yield return new WaitForFixedUpdate();
+        }
+
+        if (currentActive.Equals(activeController.PERSON))
+        {
+            armMesh.SetActive(true);
         }
     }
     #endregion
@@ -545,6 +583,8 @@ public class PlayerController : MonoBehaviour
                 }
                 break;
         }
+
+        armMesh.SetActive(false);
     }
 
     /// <summary>
@@ -609,6 +649,7 @@ public class PlayerController : MonoBehaviour
                     eyeCam.Priority = 100;
                     currentActive = activeController.EYE;
                     ec.OutlineScript.enabled = false;
+                    armMesh.SetActive(false);
                 }
                 break;
 
@@ -622,6 +663,7 @@ public class PlayerController : MonoBehaviour
                     eyeCam.Priority = 100;
                     currentActive = activeController.EYE;
                     tpm.SwitchCameras();
+                    armMesh.SetActive(false);
                 }
                 break;
                 /*
@@ -645,7 +687,6 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
 
-        Debug.Log(currentActive);
         if (currentActive.Equals(activeController.EYE))
         {
             eyeImageRenderer.SetActive(true);

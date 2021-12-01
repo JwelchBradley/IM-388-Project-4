@@ -13,7 +13,7 @@ public class EyeController : MonoBehaviour
     private float startingXRotation = 0;
     private float startingYRotation = 0;
 
-    private float mouseSensitivity = 10;
+    private float mouseSensitivity = 5;
     float xRotation = 0f;
     float yRotation = 0f;
 
@@ -42,16 +42,21 @@ public class EyeController : MonoBehaviour
 
     public void InitializeAngle()
     {
-        if(transform.eulerAngles.x > 20 || transform.eulerAngles.x < -20)
+        //eye.transform.rotation = transform.rotation;
+        //startingXRotation = transform.eulerAngles.x;
+        //startingYRotation = transform.eulerAngles.y;
+        //xRotation = eye.transform.eulerAngles.y;
+        //yRotation = eye.transform.eulerAngles.x;
+
+        startingXRotation = eye.transform.localEulerAngles.x;
+        startingYRotation = eye.transform.localEulerAngles.y;
+        xRotation = eye.transform.localEulerAngles.y;
+        yRotation = eye.transform.localEulerAngles.x;
+
+        if (yRotation > 20 || yRotation < -20)
         {
             isGroundCeiling = true;
         }
-
-        eye.transform.rotation = transform.rotation;
-        startingXRotation = transform.eulerAngles.x;
-        startingYRotation = transform.eulerAngles.y;
-        xRotation = eye.transform.eulerAngles.y;
-        yRotation = eye.transform.eulerAngles.x;
     }
 
     public void Look(Vector2 input)
@@ -60,9 +65,9 @@ public class EyeController : MonoBehaviour
         {
             float mod = 1;
 
-            if(yRotation < startingXRotation)
+            if(yRotation > startingXRotation)
             {
-                //mod = -1;
+                mod = -1;
             }
 
             xRotation += input.x * mouseSensitivity * Time.deltaTime * mod;
@@ -78,7 +83,8 @@ public class EyeController : MonoBehaviour
         yRotation = Mathf.Clamp(yRotation, -yDegreesOfFreedom+startingXRotation, yDegreesOfFreedom+startingXRotation);
 
         //rotates the player and the camera.
-        eye.transform.rotation = Quaternion.Euler(yRotation, xRotation, 0f);
+        //eye.transform.rotation = Quaternion.Euler(yRotation, xRotation, 0f);
+        eye.transform.localRotation = Quaternion.Euler(yRotation, xRotation, 0f);
     }
 
     private void OnBecameVisible()

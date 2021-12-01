@@ -52,6 +52,13 @@ public class LeverBehaviour : Interactable
 
     float t = 0;
 
+    #region Level 3
+    [HideInInspector]
+    public Level3LeverController l3lc;
+
+    private LeverBehaviour lb;
+    #endregion
+
     private void Start()
     {
         startPos = lever.transform.localPosition;
@@ -59,6 +66,8 @@ public class LeverBehaviour : Interactable
 
         pushedPos = new Vector3(-startPos.x, startPos.y, 0);
         pushedRotation = lever.transform.localRotation * Quaternion.Euler(new Vector3(0, 0, -40));
+
+        lb = GetComponent<LeverBehaviour>();
 
         if(startingIter == -1)
         {
@@ -119,7 +128,20 @@ public class LeverBehaviour : Interactable
             {
                 db.ChangeState(change * startingIter);
             }
+
+            if(l3lc != null)
+            l3lc.CompareIndex(lb);
         }
+    }
+
+    public IEnumerator L3LCUnActivate()
+    {
+        yield return new WaitForSeconds(1);
+        StopAllCoroutines();
+        activated = false;
+        offLight.SetActive(true);
+        onLight.SetActive(false);
+        StartCoroutine(ChangeState(-1));
     }
 
     private IEnumerator ChangeState(int mod)

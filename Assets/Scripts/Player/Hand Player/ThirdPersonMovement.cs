@@ -206,11 +206,11 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         isGrounded = Physics.CheckSphere(groundCheckPos.transform.position, groundCheckDist, groundMask);
 
-        /*
+        
         if (isClimbing)
         {
             isGrounded = Physics.CheckSphere(groundCheckPos.transform.position, groundCheckDist, wallMask);
-        }*/
+        }
 
         if(isGrounded && !isClimbing)
         {
@@ -480,8 +480,8 @@ public class ThirdPersonMovement : MonoBehaviour
         }
 
         RaycastHit tempHit;
-        Physics.Raycast(visuals.transform.position, -visuals.transform.up, out tempHit, climbDist, groundMask);
-
+        //Physics.Raycast(visuals.transform.position, -visuals.transform.up, out tempHit, climbDist, groundMask);
+        Physics.Raycast(visuals.transform.position, -visuals.transform.up, out tempHit, climbDist, wallMask);
         if (hit.normal.y > 0.5f || hit.normal.y < -0.5f)
         {
             switch (tempHit.normal.x)
@@ -589,8 +589,9 @@ public class ThirdPersonMovement : MonoBehaviour
         controller.stepOffset = startingStepOffset;
 
         RaycastHit tempHit;
-        Physics.Raycast(visuals.transform.position, -visuals.transform.up, out tempHit, climbDist, groundMask);
-        if(currentSurface.x > 0.5f)
+        //Physics.Raycast(visuals.transform.position, -visuals.transform.up, out tempHit, climbDist, groundMask);
+        Physics.Raycast(visuals.transform.position, -visuals.transform.up, out tempHit, climbDist, wallMask);
+        if (currentSurface.x > 0.5f)
         {
             cineCam.m_XAxis.Value = -90;
             newParentRot = Quaternion.Euler(0, -90, 0);

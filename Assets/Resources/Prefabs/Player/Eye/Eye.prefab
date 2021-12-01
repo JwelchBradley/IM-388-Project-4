@@ -2434,6 +2434,26 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 666fc198e2fe6634cba20fb97cb5cea4, type: 2}
+    - target: {fileID: 8632055958874330854, guid: df78cbaf360bcf04387f152e53a9de52, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 8632055958874330854, guid: df78cbaf360bcf04387f152e53a9de52, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8632055958874330854, guid: df78cbaf360bcf04387f152e53a9de52, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 8632055958874330854, guid: df78cbaf360bcf04387f152e53a9de52, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8632055958874330854, guid: df78cbaf360bcf04387f152e53a9de52, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df78cbaf360bcf04387f152e53a9de52, type: 3}
 --- !u!4 &4947266393379629721 stripped

@@ -10,5 +10,6 @@ public class HandInteractable : Interactable
         pc.TPM = null;
         pc.HandCam = null;
         pc.HandMesh.SetActive(true);
+        pc.RightHandArmMesh.SetActive(true);
     }
 }

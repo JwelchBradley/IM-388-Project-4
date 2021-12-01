@@ -903,8 +903,8 @@ MonoBehaviour:
   groundCheckPos: {fileID: 5138946509709438048}
   groundMask:
     serializedVersion: 2
-    m_Bits: 9969
-  climbDist: 1
+    m_Bits: 9841
+  climbDist: 1.3
   wallMask:
     serializedVersion: 2
     m_Bits: 1216

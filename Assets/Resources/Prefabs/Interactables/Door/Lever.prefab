@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9028057472828748888}
   - component: {fileID: 6107422439403125442}
   - component: {fileID: 1910052999273760651}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -388,6 +388,7 @@ MonoBehaviour:
   door:
   - {fileID: 0}
   startingIter: 1
+  canActivate: 1
   canUnactivate: 0
   lever: {fileID: 3977373238939716592}
   onLight: {fileID: 4659040090431915192}
