@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!135 &1293575518359904239
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3674510489915560676}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.0100000035
+  m_Center: {x: 9.313217e-10, y: -0.000000001862645, z: 0}
 --- !u!114 &356035934322238455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2004,19 +2017,6 @@ MonoBehaviour:
     - {x: 0.0000012067113, y: 0.38265303, z: 0.92389214}
     - {x: 0.00000035897204, y: 0.19507277, z: 0.98078877}
     - {x: 0.038056906, y: 0.19132462, z: 0.98078877}
---- !u!135 &1293575518359904239
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3674510489915560676}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.0100000035
-  m_Center: {x: 9.313217e-10, y: -0.000000001862645, z: 0}
 --- !u!1 &5808411181917555995
 GameObject:
   m_ObjectHideFlags: 0
@@ -2028,6 +2028,7 @@ GameObject:
   - component: {fileID: 5808411181917555999}
   - component: {fileID: 5808411181917555998}
   - component: {fileID: 3540428906961972651}
+  - component: {fileID: 3669521073449467658}
   m_Layer: 3
   m_Name: Eye
   m_TagString: Eye
@@ -2081,6 +2082,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayText: Press F to pickup Eye
   displayTextControllers: 01000000
+--- !u!135 &3669521073449467658
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5808411181917555995}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5808411182558845223
 GameObject:
   m_ObjectHideFlags: 0
