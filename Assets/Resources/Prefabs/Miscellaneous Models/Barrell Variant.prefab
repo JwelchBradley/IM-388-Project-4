@@ -83,7 +83,11 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: ce0ab276ff00db447939a32e47543ee0, type: 2}
     - target: {fileID: 919132149155446097, guid: abbb000387e107548b5966132bf93a84, type: 3}
       propertyPath: m_Name
-      value: Barrell
+      value: Barrell Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: abbb000387e107548b5966132bf93a84, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: abbb000387e107548b5966132bf93a84, type: 3}
