@@ -79,6 +79,11 @@ public class PlayerController : MonoBehaviour
 
     #region Cameras
     /// <summary>
+    /// The virtual camera for when the player is standing.
+    /// </summary>
+    private CinemachineVirtualCamera walkCam;
+
+    /// <summary>
     /// The virtual camera for when the hand.
     /// </summary>
     private CinemachineFreeLook handCam;
@@ -156,7 +161,12 @@ public class PlayerController : MonoBehaviour
 
     [Tooltip("The animator of the players arms")]
     [SerializeField]
-    private Animator armAnim;
+    private Animator[] armAnim;
+
+    public Animator[] ArmAnim
+    {
+        get => armAnim;
+    }
     #endregion
 
     #region Radial Menu
@@ -194,6 +204,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private LayerMask interactableMask;
     private TextMeshProUGUI pickUpText;
+
     [SerializeField]
     private LayerMask wallCheckMask;
     private bool canPickUp = false;
@@ -222,6 +233,7 @@ public class PlayerController : MonoBehaviour
         pmb = GameObject.Find("Pause Menu Templates Canvas").GetComponent<PauseMenuBehavior>();
         pm = GetComponent<PlayerMovement>();
         eCaster = GetComponent<EyeCaster>();
+        walkCam = GameObject.Find("Walk vcam").GetComponent<CinemachineVirtualCamera>();
         mainCam = Camera.main;
         mainCamBrain = mainCam.GetComponent<CinemachineBrain>();
 
@@ -394,7 +406,7 @@ public class PlayerController : MonoBehaviour
 
     private void DisplayPickupText()
     {
-        if (!mainCamBrain.IsBlending)
+        if (!mainCamBrain.IsBlending && !eCaster.IsCasting)
         {
             bool changed = canPickUp;
             GameObject past = null;
@@ -458,6 +470,10 @@ public class PlayerController : MonoBehaviour
                 pickUpText.text = "";
             }
         }
+        else if (eCaster.IsCasting)
+        {
+            pickUpText.text = "Left click to cast eye";
+        }
         else
         {
             interactable = null;
@@ -514,14 +530,14 @@ public class PlayerController : MonoBehaviour
                 eCaster.IsCasting = false;
                 break;
             case activeController.HAND:
-                UpdateHandCam(0, CinemachineBrain.UpdateMethod.LateUpdate, CinemachineBrain.BrainUpdateMethod.FixedUpdate, activeController.PERSON);
+                UpdateHandCam(-5, CinemachineBrain.UpdateMethod.LateUpdate, CinemachineBrain.BrainUpdateMethod.FixedUpdate, activeController.PERSON);
                 fpsMesh.SetActive(false);
                 tpm.MovePlayer(Vector2.zero);
                 tpm.SwitchCameras();
                 break;
             case activeController.EYE:
                 eyeImageRenderer.SetActive(false);
-                eyeCam.Priority = 0;
+                eyeCam.Priority = -1;
                 currentActive = activeController.PERSON;
                 mainCamBrain.m_UpdateMethod = CinemachineBrain.UpdateMethod.LateUpdate;
                 mainCamBrain.m_BlendUpdateMethod = CinemachineBrain.BrainUpdateMethod.FixedUpdate;
@@ -534,8 +550,21 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator EnableArms()
     {
+        if (currentActive.Equals(activeController.PERSON))
+        {
+            if (walkCam.Priority == 50)
+            {
+                walkCam.Priority = 51;
+            }
+            else
+            {
+                walkCam.Priority = 50;
+            }
+        }
+
         yield return new WaitForFixedUpdate();
         yield return new WaitForFixedUpdate();
+
         while (currentActive.Equals(activeController.PERSON) && mainCamBrain.IsBlending)
         {
             yield return new WaitForFixedUpdate();
@@ -575,9 +604,9 @@ public class PlayerController : MonoBehaviour
                 {
                     eyeImageRenderer.SetActive(false);
                     tpm.SwitchCameras();
-                        UpdateHandCam(100, CinemachineBrain.UpdateMethod.LateUpdate, CinemachineBrain.BrainUpdateMethod.FixedUpdate, activeController.HAND);
+                    UpdateHandCam(100, CinemachineBrain.UpdateMethod.LateUpdate, CinemachineBrain.BrainUpdateMethod.FixedUpdate, activeController.HAND);
                     //UpdateHandCam(100, CinemachineBrain.UpdateMethod.FixedUpdate, CinemachineBrain.BrainUpdateMethod.FixedUpdate, activeController.HAND);
-                    eyeCam.Priority = 0;
+                    eyeCam.Priority = -1;
                     pm.MovePlayer(Vector2.zero, false);
                     tpm.OutlineScript.enabled = false;
                 }
@@ -636,13 +665,14 @@ public class PlayerController : MonoBehaviour
         {
             // Pulls out the eye to be place or changes from the person to the eye
             case activeController.PERSON:
-                StartCoroutine(SetEyeImageRenderer());
+                
                 if(ec == null)
                 {
                     NoLongerCastingEye();
                 }
                 else
                 {
+                    StartCoroutine(SetEyeImageRenderer());
                     crosshair.SetActive(false);
                     fpsMesh.SetActive(true);
                     pm.MovePlayer(Vector2.zero, false);

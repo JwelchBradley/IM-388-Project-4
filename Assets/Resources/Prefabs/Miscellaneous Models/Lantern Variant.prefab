@@ -4853,6 +4853,14 @@ PrefabInstance:
       propertyPath: m_Intensity
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 7510359909094696359, guid: 82a9651b2410f3849a94d98be4889d16, type: 3}
+      propertyPath: m_RenderMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7510359909094696359, guid: 82a9651b2410f3849a94d98be4889d16, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 255949
+      objectReference: {fileID: 0}
     - target: {fileID: 7510359909094696361, guid: 82a9651b2410f3849a94d98be4889d16, type: 3}
       propertyPath: m_Enabled
       value: 0

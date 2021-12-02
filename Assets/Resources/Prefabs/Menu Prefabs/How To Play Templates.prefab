@@ -359,21 +359,17 @@ MonoBehaviour:
 
     <B>Move:</b> WASD
 
-    <b>Jump:</b> Space
+    <b>Crouch:</b> Shift
 
-    <b>Crouch:</b>
-    Shift
-
-    <b>Interact:</b> F
+    <b>Interact:</b>
+    F
 
     <b>Change State:</b> Q
 
-    <b>Cast Eye:</b>
-    Left click
-
     <b>Aim:</b> Mouse
 
-    <b>Open Pause:</b> - Esc
+    <b>Open Pause:</b>
+    - Esc
 
 '
   m_isRightToLeft: 0

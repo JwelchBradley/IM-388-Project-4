@@ -34,6 +34,8 @@ public class PlayerMovement : MonoBehaviour
         get => pullPos;
     }
 
+    private PlayerController pc;
+
     #region Movement
     [Header("Move Speed")]
     [SerializeField]
@@ -65,6 +67,10 @@ public class PlayerMovement : MonoBehaviour
     /// The Character Controller of the player. (used to move the player)
     /// </summary>
     private CharacterController controller;
+
+    private string armWalkString = "isWalking";
+
+    private int armWalkStringHash;
     #endregion
 
     #region Air Movement
@@ -159,8 +165,11 @@ public class PlayerMovement : MonoBehaviour
         controller = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
         aud = GetComponent<AudioSource>();
+        pc = GetComponent<PlayerController>();
 
         pauseMenu = GameObject.Find("Pause Menu Templates Canvas").GetComponent<PauseMenuBehavior>();
+        
+        armWalkStringHash = Animator.StringToHash(armWalkString);
 
         GetCameras();
     }
@@ -313,10 +322,21 @@ public class PlayerMovement : MonoBehaviour
         if(move != Vector3.zero)
         {
             if(!aud.isPlaying)
-            aud.Play();
+            {
+                foreach (Animator animArm in pc.ArmAnim)
+                {
+                    animArm.SetBool(armWalkStringHash, true);
+                }
+
+                aud.Play();
+            }
         }
         else
         {
+            foreach (Animator animArm in pc.ArmAnim)
+            {
+                animArm.SetBool(armWalkStringHash, false);
+            }
             aud.Stop();
         }
         Vector3 currentMove = cameraTransform.right * move.x + cameraTransform.forward * move.z;

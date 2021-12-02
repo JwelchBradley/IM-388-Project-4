@@ -81,7 +81,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 255949
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
@@ -106,6 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0b0e20f0f957894ca0fd0770c79b98c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxRange: 0
   waitTime: 0.1
   chanceMin: 1
   chanceMax: 20

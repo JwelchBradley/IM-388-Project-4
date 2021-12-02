@@ -141,7 +141,7 @@ public class ThirdPersonMovement : MonoBehaviour
             }
             else
             {
-                climbCineCam.m_Priority = -1;
+                climbCineCam.m_Priority = -2;
             }
         }
     }

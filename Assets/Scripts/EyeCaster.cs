@@ -5,7 +5,7 @@ using UnityEngine;
 public class EyeCaster : MonoBehaviour
 {
     private GameObject eyeLandIndicator;
-    private float eyeSizeMod = 3;
+    private float eyeSizeMod = 1.5f;
     private float maxDist = 30;
     private Transform cam;
     private RaycastHit hit;

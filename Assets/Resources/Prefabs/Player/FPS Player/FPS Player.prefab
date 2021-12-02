@@ -180,6 +180,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 180892963907084570, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
+      propertyPath: m_OcclusionCulling
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 180892963907084570, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 128909
+      objectReference: {fileID: 0}
     - target: {fileID: 1119962703066126360, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_Follow
       value: 
@@ -190,7 +198,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1119962703066126360, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_Lens.FarClipPlane
-      value: 400
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 1119962703066126360, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_Lens.NearClipPlane
@@ -246,15 +254,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704133113646, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 140.45157
+      value: 2.0419135
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704133113646, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.389369
+      value: 7.748969
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704133113646, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -323.96506
+      value: 21.918106
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704133113646, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_LocalRotation.w
@@ -282,7 +290,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704133113647, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: far clip plane
-      value: 400
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704133113647, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: near clip plane
@@ -290,11 +298,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704133113647, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_BackGroundColor.b
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704133113647, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_BackGroundColor.g
-      value: 0.20553756
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704133113647, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_BackGroundColor.r
@@ -302,7 +310,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704133113647, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_CullingMask.m_Bits
-      value: 124927
+      value: 387071
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704201748204, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_Name
@@ -551,6 +559,16 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4461994831412319950, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
   m_PrefabInstance: {fileID: 1832924149578089028}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &2631204326957140770 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4461994831145994598, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
+  m_PrefabInstance: {fileID: 1832924149578089028}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &2631204328416645973 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4461994832644591889, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
+  m_PrefabInstance: {fileID: 1832924149578089028}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7775481316947051678 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8252799872412321498, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
@@ -574,7 +592,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2424963, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
       propertyPath: landableMask.m_Bits
-      value: 405
+      value: 65665
       objectReference: {fileID: 0}
     - target: {fileID: 1642259634243894089, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
       propertyPath: m_Layer
@@ -641,6 +659,10 @@ PrefabInstance:
       value: -0.3
       objectReference: {fileID: 0}
     - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
+      propertyPath: armAnim
+      value: 
+      objectReference: {fileID: 2631204326957140770}
+    - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
       propertyPath: armMesh
       value: 
       objectReference: {fileID: 2631204327097865354}
@@ -665,6 +687,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7775481316947051678}
     - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
+      propertyPath: armAnim.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
       propertyPath: pickUpSurface.m_Bits
       value: 776
       objectReference: {fileID: 0}
@@ -672,6 +698,14 @@ PrefabInstance:
       propertyPath: wallCheckMask.m_Bits
       value: 1153
       objectReference: {fileID: 0}
+    - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
+      propertyPath: armAnim.Array.data[0]
+      value: 
+      objectReference: {fileID: 2631204326957140770}
+    - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
+      propertyPath: armAnim.Array.data[1]
+      value: 
+      objectReference: {fileID: 2631204328416645973}
     - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
       propertyPath: interactableMask.m_Bits
       value: 512
