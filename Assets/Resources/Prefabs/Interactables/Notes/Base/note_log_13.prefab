@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &4575434686179321037
+--- !u!1001 &6604542670309867806
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -53,18 +53,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4949702944181134567, guid: ad5704d15e38f3d4bbe6a9ed3803756b, type: 3}
       propertyPath: m_Name
-      value: note_log_7
+      value: note_log_13
       objectReference: {fileID: 0}
     - target: {fileID: 4949702944181134573, guid: ad5704d15e38f3d4bbe6a9ed3803756b, type: 3}
       propertyPath: noteString
-      value: "Log 7. Dr. Reinback presiding Subjects 014 through 074 could not break
-        through the next test. Subject 042 was too smart, kept screaming, so we had
-        to\u2026 put him down. Whatever Dr. Menime\u2019s idea was for this biowea\u2026
-        experimental viral technology was, it seems unlikely to succeed. A detachable
-        hand? Seems unrealistic, who\u2019s going to be intimidated by a hand coming
-        off? In uh, in any case, the plate was uncalibrated, so I went in and made
-        it so that only the weight of an average human hand can trip it. Let\u2019s
-        see if this pays off.  Signed: Reinback "
+      value: "Log 13. If you\u2019re reading this, I\u2019m already dead. They\u2019re
+        part of a cult, of some god of death. I\u2019m not blameless, for fucks sake
+        we were making a bioweapon so we could infiltrate foreign countries but this?!
+        Trying to summon a god of Death?! I can\u2019t let this pass. If you\u2019ve
+        made it to the final room, you NEED to stop this, I beg you. Use what we
+        gave you, both the hand and eye in tandem, look on top of the boxes and try
+        and activate the pressure plates. Get out, just run away. If they find you,
+        they\u2019ll have their avatar. Don\u2019t let them win.                    
+        Jeff Reinback "
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad5704d15e38f3d4bbe6a9ed3803756b, type: 3}
