@@ -74,6 +74,11 @@ public class PlayerController : MonoBehaviour
     /// The eye casting component.
     /// </summary>
     private EyeCaster eCaster;
+
+    public EyeCaster ECaster
+    {
+        get => eCaster;
+    }
     #endregion
     #endregion
 
@@ -121,6 +126,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private GameObject eyeImageRenderer;
+    [SerializeField]
+    private LayerMask eyeImageRendererMask;
+    private LayerMask startingRendererMask;
     #endregion
 
     #region FPS Visuals
@@ -236,6 +244,7 @@ public class PlayerController : MonoBehaviour
         walkCam = GameObject.Find("Walk vcam").GetComponent<CinemachineVirtualCamera>();
         mainCam = Camera.main;
         mainCamBrain = mainCam.GetComponent<CinemachineBrain>();
+        startingRendererMask = mainCam.cullingMask;
 
         // Gets the hand if the scenes starts with it
         GameObject hand = GameObject.Find("Third Person Player");
@@ -297,6 +306,7 @@ public class PlayerController : MonoBehaviour
         pm.MovePlayer(Vector2.zero, false);
         eyeCam.Priority = 100;
         currentActive = activeController.EYE;
+        pmb.PickUpBodyPartReminder.SetActive(false);
     }
     #endregion
 
@@ -380,7 +390,7 @@ public class PlayerController : MonoBehaviour
     #region Radial Menu
     public void OnOpenMenu()
     {
-        if (canOpenRadial && Time.timeScale != 0)
+        if (canOpenRadial && Time.timeScale != 0 && !pmb.Note.activeInHierarchy)
         {
             currentRadial = !radialMenuPanel.activeInHierarchy;
             radialMenuPanel.SetActive(currentRadial);
@@ -534,18 +544,29 @@ public class PlayerController : MonoBehaviour
                 fpsMesh.SetActive(false);
                 tpm.MovePlayer(Vector2.zero);
                 tpm.SwitchCameras();
+
+                pmb.PickUpBodyPartReminder.SetActive(true);
                 break;
             case activeController.EYE:
-                eyeImageRenderer.SetActive(false);
+                //eyeImageRenderer.SetActive(false);
+                mainCam.cullingMask = startingRendererMask;
                 eyeCam.Priority = -1;
                 currentActive = activeController.PERSON;
                 mainCamBrain.m_UpdateMethod = CinemachineBrain.UpdateMethod.LateUpdate;
                 mainCamBrain.m_BlendUpdateMethod = CinemachineBrain.BrainUpdateMethod.FixedUpdate;
                 fpsMesh.SetActive(false);
+
+                pmb.PickUpBodyPartReminder.SetActive(true);
                 break;
         }
 
         StartCoroutine(EnableArms());
+    }
+
+    public void RemovePickupBodyPartReminder()
+    {
+        if(ec == null && tpm == null)
+        pmb.PickUpBodyPartReminder.SetActive(false);
     }
 
     private IEnumerator EnableArms()
@@ -588,6 +609,8 @@ public class PlayerController : MonoBehaviour
             // To the hand from the person
             case activeController.PERSON:
                 ToHandFromPerson();
+
+                pmb.PickUpBodyPartReminder.SetActive(false);
                 break;
 
                 /*
@@ -602,7 +625,8 @@ public class PlayerController : MonoBehaviour
             case activeController.EYE:
                 if (tpm != null)
                 {
-                    eyeImageRenderer.SetActive(false);
+                    //eyeImageRenderer.SetActive(false);
+                    mainCam.cullingMask = startingRendererMask;
                     tpm.SwitchCameras();
                     UpdateHandCam(100, CinemachineBrain.UpdateMethod.LateUpdate, CinemachineBrain.BrainUpdateMethod.FixedUpdate, activeController.HAND);
                     //UpdateHandCam(100, CinemachineBrain.UpdateMethod.FixedUpdate, CinemachineBrain.BrainUpdateMethod.FixedUpdate, activeController.HAND);
@@ -680,6 +704,8 @@ public class PlayerController : MonoBehaviour
                     currentActive = activeController.EYE;
                     ec.OutlineScript.enabled = false;
                     armMesh.SetActive(false);
+
+                    pmb.PickUpBodyPartReminder.SetActive(false);
                 }
                 break;
 
@@ -719,7 +745,8 @@ public class PlayerController : MonoBehaviour
 
         if (currentActive.Equals(activeController.EYE))
         {
-            eyeImageRenderer.SetActive(true);
+            mainCam.cullingMask = eyeImageRendererMask;
+            //eyeImageRenderer.SetActive(true);
         }
     }
 

@@ -55,6 +55,14 @@ public class PauseMenuBehavior : MenuBehavior
     {
         get => note;
     }
+
+    [SerializeField]
+    private GameObject pickUpBodyPartReminder;
+
+    public GameObject PickUpBodyPartReminder
+    {
+        get => pickUpBodyPartReminder;
+    }
     #endregion
 
     #region Functions

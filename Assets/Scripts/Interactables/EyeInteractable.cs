@@ -12,6 +12,7 @@ public class EyeInteractable : Interactable
             pc.EC = null;
             pc.EyeCam = null;
             pc.EyeMesh.SetActive(true);
+            pc.RemovePickupBodyPartReminder();
         }
     }
 }

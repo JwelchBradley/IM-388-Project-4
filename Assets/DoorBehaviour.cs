@@ -52,7 +52,7 @@ public class DoorBehaviour : MonoBehaviour
         {
             target = openPos;
 
-            AudioSource.PlayClipAtPoint(doorSnd, target);
+            AudioSource.PlayClipAtPoint(doorSnd, target, 1000);
         }
 
         while(transform.position != target)

@@ -57,6 +57,11 @@ public class LeverBehaviour : Interactable
     public Level3LeverController l3lc;
 
     private LeverBehaviour lb;
+
+    private Light greenYellowLight;
+
+    [SerializeField]
+    private bool yellowCheck = true;
     #endregion
 
     private void Start()
@@ -68,6 +73,8 @@ public class LeverBehaviour : Interactable
         pushedRotation = lever.transform.localRotation * Quaternion.Euler(new Vector3(0, 0, -40));
 
         lb = GetComponent<LeverBehaviour>();
+
+        greenYellowLight = onLight.GetComponentInChildren<Light>();
 
         if(startingIter == -1)
         {
@@ -113,6 +120,12 @@ public class LeverBehaviour : Interactable
 
             activated = !activated;
 
+            if (activated && yellowCheck)
+            {
+                greenYellowLight.color = Color.yellow;
+
+                Invoke("TurnGreen", 1.01f);
+            }
             onLight.SetActive(activated);
 
             int change = -1;
@@ -132,6 +145,11 @@ public class LeverBehaviour : Interactable
             if(l3lc != null)
             l3lc.CompareIndex(lb);
         }
+    }
+
+    private void TurnGreen()
+    {
+        greenYellowLight.color = Color.green;
     }
 
     public IEnumerator L3LCUnActivate()

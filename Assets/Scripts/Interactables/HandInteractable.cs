@@ -11,5 +11,6 @@ public class HandInteractable : Interactable
         pc.HandCam = null;
         pc.HandMesh.SetActive(true);
         pc.RightHandArmMesh.SetActive(true);
+        pc.RemovePickupBodyPartReminder();
     }
 }

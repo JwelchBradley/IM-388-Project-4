@@ -7,6 +7,7 @@ public class NoteBehaviour : Interactable
 {
     PauseMenuBehavior pm;
     TextMeshProUGUI noteText;
+    TextMeshPro myText;
 
     [SerializeField]
     string noteString = "";
@@ -19,6 +20,7 @@ public class NoteBehaviour : Interactable
         //pm.Note = GameObject.Find("Note");
         pm = GameObject.Find("Pause Menu Templates Canvas").GetComponent<PauseMenuBehavior>();
         noteText = pm.Note.GetComponentInChildren<TextMeshProUGUI>();
+        myText = GetComponent<TextMeshPro>();
 
         aud = GetComponent<AudioSource>();
     }
@@ -29,16 +31,21 @@ public class NoteBehaviour : Interactable
         {
             if (ac.Equals(pc.CurrentActive))
             {
-                if (!pm.Note.activeInHierarchy && Time.timeScale != 0)
+                if (!pm.Note.activeInHierarchy && Time.timeScale != 0 && !pc.ECaster.IsCasting)
                 {
+                    Cursor.visible = true;
+                    Cursor.lockState = CursorLockMode.Confined;
                     pm.Note.SetActive(true);
-                    noteText.text = noteString;
+                    //noteText.text = noteString;
+                    noteText.text = myText.text;
 
                     if (!aud.isPlaying)
                         aud.Play();
                 }
                 else
                 {
+                    Cursor.visible = false;
+                    Cursor.lockState = CursorLockMode.Locked;
                     aud.Stop();
                     pm.Note.SetActive(false);
                 }
@@ -48,8 +55,10 @@ public class NoteBehaviour : Interactable
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && pm.Note.activeInHierarchy)
         {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
             aud.Stop();
             pm.Note.SetActive(false);
         }
