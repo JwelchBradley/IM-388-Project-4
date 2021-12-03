@@ -9746,8 +9746,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 103619301292495425, guid: 85cae2c1dea0a4943b9597d31a9be488, type: 3}
       propertyPath: m_Name
-      value: note_morgan_1
+      value: log_11
       objectReference: {fileID: 0}
+    - target: {fileID: 103619301292495434, guid: 85cae2c1dea0a4943b9597d31a9be488, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: fda4380bc5373454e8b236f68d19bcb0, type: 3}
     - target: {fileID: 584599001433606168, guid: 85cae2c1dea0a4943b9597d31a9be488, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -9831,6 +9835,13 @@ PrefabInstance:
     - target: {fileID: 584599001433606168, guid: 85cae2c1dea0a4943b9597d31a9be488, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5814730661435969303, guid: 85cae2c1dea0a4943b9597d31a9be488, type: 3}
+      propertyPath: m_text
+      value: "Log 11. Dr. Reinback presiding\r\n\r\nThis next room should be easy.
+        All the subjects need to do is count the strokes they see on the floor, and
+        pull the levers in that sequence. Shouldn\u2019t be too hard. \r\n\r\nSigned:
+        Dr. Reinback\r"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85cae2c1dea0a4943b9597d31a9be488, type: 3}
