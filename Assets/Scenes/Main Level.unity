@@ -2184,9 +2184,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2934196349100057699, guid: 3c308ce0e8b63eb4bae814687fb49a85, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 89f375190dc13c944a7864729decedc4, type: 3}
     - target: {fileID: 2934196349100057704, guid: 3c308ce0e8b63eb4bae814687fb49a85, type: 3}
       propertyPath: m_Name
       value: log_7_cont
+      objectReference: {fileID: 0}
+    - target: {fileID: 8753431449736329534, guid: 3c308ce0e8b63eb4bae814687fb49a85, type: 3}
+      propertyPath: m_text
+      value: "Log 8. Dr. Reinback presiding \n\nA detachable hand? Seems unrealistic,
+        who\u2019s going to be intimidated by a hand coming off? In uh, in any case,
+        the plate was uncalibrated, so I went in and made it so that only the weight
+        of an average human hand can trip it. Let\u2019s see if this pays off.\n\nSigned:
+        Dr. Reinback "
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c308ce0e8b63eb4bae814687fb49a85, type: 3}
@@ -12135,7 +12147,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-3752
+  m_Name: pb_Mesh-11626
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -15741,7 +15753,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-5008
+  m_Name: pb_Mesh-12882
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -18903,6 +18915,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Log_9_Jacob_Temp
       objectReference: {fileID: 0}
+    - target: {fileID: 2157442873979003099, guid: cbc7ba83c3b146b418047d0d1f503335, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 775f418b1fd865742b79e0f66d7f6e3f, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbc7ba83c3b146b418047d0d1f503335, type: 3}
 --- !u!1001 &686859833
@@ -21758,7 +21774,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-3632
+  m_Name: pb_Mesh-11506
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -23429,6 +23445,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9181002330884099569, guid: 74957c5889f64304db6bf906733431b3, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: b0f05ec8e6b6dfc4c91c4872bdda0f4a, type: 3}
     - target: {fileID: 9181002330884099578, guid: 74957c5889f64304db6bf906733431b3, type: 3}
       propertyPath: m_Name
       value: RANDOM SHIT
@@ -23718,6 +23738,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: note _ name of note
       objectReference: {fileID: 0}
+    - target: {fileID: 4949702944181134572, guid: ad5704d15e38f3d4bbe6a9ed3803756b, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 69007e43f4202004da1acba9a250198a, type: 3}
     - target: {fileID: 5610403350320873150, guid: ad5704d15e38f3d4bbe6a9ed3803756b, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -24163,7 +24187,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-5032
+  m_Name: pb_Mesh-12906
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -28186,7 +28210,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-3800
+  m_Name: pb_Mesh-11674
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -29119,6 +29143,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: note_log_4
       objectReference: {fileID: 0}
+    - target: {fileID: 3483875121068463432, guid: b5333d9075945204ebca1a716e1e8a51, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: cdd4e9882f148604999f85f3d9b71384, type: 3}
     - target: {fileID: 4122479706640289562, guid: b5333d9075945204ebca1a716e1e8a51, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -30562,7 +30590,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-3698
+  m_Name: pb_Mesh-11572
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -33844,9 +33872,23 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4431223972151494004, guid: 45683643c5bf72a40a8910a51673f877, type: 3}
+      propertyPath: noteString
+      value: Videt te cum dormis, scit cum vigilas, scit cum malus fueris, vel bonus
+        sic esse bonum propter bonitatem.
+      objectReference: {fileID: 0}
+    - target: {fileID: 4431223972151494005, guid: 45683643c5bf72a40a8910a51673f877, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 70ef72f8e62dbf84a9b42c8969b01be5, type: 3}
     - target: {fileID: 4431223972151494014, guid: 45683643c5bf72a40a8910a51673f877, type: 3}
       propertyPath: m_Name
       value: note_creepy_latin_chant
+      objectReference: {fileID: 0}
+    - target: {fileID: 7835398274651936808, guid: 45683643c5bf72a40a8910a51673f877, type: 3}
+      propertyPath: m_text
+      value: Videt te cum dormis, scit cum vigilas, scit cum malus fueris, vel bonus
+        sic esse bonum propter bonitatem.
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45683643c5bf72a40a8910a51673f877, type: 3}
@@ -36245,7 +36287,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh27152
+  m_Name: pb_Mesh34560
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -40839,6 +40881,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Log_ 39_Jacob
       objectReference: {fileID: 0}
+    - target: {fileID: 1703578547064307432, guid: 2d27d864b9d0d584bbbdf98b953e5ef2, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: eccc4d1964010204d8d7077a4673c90b, type: 3}
     - target: {fileID: 2218193433882272954, guid: 2d27d864b9d0d584bbbdf98b953e5ef2, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -40922,6 +40968,13 @@ PrefabInstance:
     - target: {fileID: 2218193433882272954, guid: 2d27d864b9d0d584bbbdf98b953e5ef2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5072847753829229493, guid: 2d27d864b9d0d584bbbdf98b953e5ef2, type: 3}
+      propertyPath: m_text
+      value: "Log 39. Dr. Reinback presiding \n\nThe final puzzle combines the eye
+        and the hand. This should be... interesting. We'll see how long it takes
+        to find a successful subject. 057 is showing promise though. He noticed there
+        were matching pairs of symbols at least.\n\nSigned: Dr. Reinback "
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d27d864b9d0d584bbbdf98b953e5ef2, type: 3}
@@ -43843,7 +43896,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-5020
+  m_Name: pb_Mesh-12894
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -44507,7 +44560,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh24584
+  m_Name: pb_Mesh31788
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -44671,7 +44724,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-3764
+  m_Name: pb_Mesh-11638
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -45164,6 +45217,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Log_24_Jacob
       objectReference: {fileID: 0}
+    - target: {fileID: 2197337205802351805, guid: 2ff183589581bee4683cf273f4fd8560, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 00c377bce1aacaf418c7aed60b46b4fd, type: 3}
+    - target: {fileID: 5745661863904305632, guid: 2ff183589581bee4683cf273f4fd8560, type: 3}
+      propertyPath: m_text
+      value: 'Log 24. Dr. Reinback presiding.
+
+
+        1, 2, 3, 4, 5, 6... 1, 2,
+        3, 4, 5, 6... 1, 2, 3, 4, 5, 6...
+
+
+        I don''t know how many times
+        I must say this before zombies learn to count!
+
+
+        Signed: Dr. Reinback '
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2ff183589581bee4683cf273f4fd8560, type: 3}
 --- !u!1001 &1563748773
@@ -45311,6 +45383,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 52055931}
     m_Modifications:
+    - target: {fileID: 2675210697830019714, guid: 233b0552cf690164d87a3c960429d61a, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: e868e249cb6f9ba46bb70f20f43127e5, type: 3}
     - target: {fileID: 2675210697830019721, guid: 233b0552cf690164d87a3c960429d61a, type: 3}
       propertyPath: m_Name
       value: Log_10_Jacob
@@ -45398,6 +45474,19 @@ PrefabInstance:
     - target: {fileID: 3192077358524655824, guid: 233b0552cf690164d87a3c960429d61a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8422420124155572191, guid: 233b0552cf690164d87a3c960429d61a, type: 3}
+      propertyPath: m_text
+      value: 'Log 10. Dr. Reinback presiding.
+
+
+        Patients kept complaining
+        that their eyes felt useless. We injected them with... a special serum. They
+        should now be able to see things at our specially marked eye locations.
+
+
+        Signed:
+        Dr. Reinback '
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 233b0552cf690164d87a3c960429d61a, type: 3}
@@ -46689,7 +46778,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-3572
+  m_Name: pb_Mesh-11446
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -47883,7 +47972,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-3788
+  m_Name: pb_Mesh-11662
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -56390,6 +56479,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 52055931}
     m_Modifications:
+    - target: {fileID: 3030331624387009916, guid: a49ab572b8e07794fb5652aa909f0121, type: 3}
+      propertyPath: m_text
+      value: "Log 7. Dr. Reinback presiding \n\nSubjects 014 through 049 could not
+        break through the next test. Subject 042 was too smart, kept screaming about
+        pressing Q to remove his hand, so we had to\u2026 put him down. Whatever
+        Dr. Menime\u2019s idea was for this biowea\u2026 experimental viral technology
+        was, it seems unlikely to succeed.\n\nSigned: Dr. Reinback "
+      objectReference: {fileID: 0}
     - target: {fileID: 8260478602021263987, guid: a49ab572b8e07794fb5652aa909f0121, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -56474,6 +56571,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8921583585390428193, guid: a49ab572b8e07794fb5652aa909f0121, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: f3898b7c77189cf41bfb55623a148f22, type: 3}
     - target: {fileID: 8921583585390428202, guid: a49ab572b8e07794fb5652aa909f0121, type: 3}
       propertyPath: m_Name
       value: note_log_7
@@ -59474,7 +59575,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-3776
+  m_Name: pb_Mesh-11650
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
