@@ -42,7 +42,7 @@ public class NoteBehaviour : Interactable
                     if (!aud.isPlaying)
                         aud.Play();
                 }
-                else
+                else if(Time.timeScale != 0)
                 {
                     Cursor.visible = false;
                     Cursor.lockState = CursorLockMode.Locked;
