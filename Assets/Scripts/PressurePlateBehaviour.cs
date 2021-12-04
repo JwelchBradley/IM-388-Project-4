@@ -125,6 +125,8 @@ public class PressurePlateBehaviour : MonoBehaviour
         if (shouldChange)
         {
             target = pushedPos;
+
+            Debug.Log("Help");
         }
 
         while (transform.position != target)
