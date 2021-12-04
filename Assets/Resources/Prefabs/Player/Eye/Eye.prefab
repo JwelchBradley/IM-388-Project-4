@@ -2052,8 +2052,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ef85dc80cb740d4d851c06552a2cffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yDegreesOfFreedom: 60
-  xDegreesOfFreedom: 60
+  yDegreesOfFreedom: 90
+  xDegreesOfFreedom: 90
   eye: {fileID: 3674510489915560676}
 --- !u!114 &3540428906961972651
 MonoBehaviour:
