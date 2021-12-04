@@ -13,7 +13,7 @@ public class EyeController : MonoBehaviour
     private float startingXRotation = 0;
     private float startingYRotation = 0;
 
-    private float mouseSensitivity = 5;
+    private float mouseSensitivity = 2.5f;
     float xRotation = 0f;
     float yRotation = 0f;
 
@@ -48,15 +48,22 @@ public class EyeController : MonoBehaviour
         //xRotation = eye.transform.eulerAngles.y;
         //yRotation = eye.transform.eulerAngles.x;
 
+        SetStartValues();
+
+        if (transform.eulerAngles.x > 20 || transform.eulerAngles.x < -20)
+        {
+            isGroundCeiling = true;
+            eye.transform.Rotate(new Vector3(-45, 0, 0));
+            yRotation = -45;
+        }
+    }
+
+    private void SetStartValues()
+    {
         startingXRotation = eye.transform.localEulerAngles.x;
         startingYRotation = eye.transform.localEulerAngles.y;
         xRotation = eye.transform.localEulerAngles.y;
         yRotation = eye.transform.localEulerAngles.x;
-
-        if (yRotation > 20 || yRotation < -20)
-        {
-            isGroundCeiling = true;
-        }
     }
 
     public void Look(Vector2 input)
@@ -67,11 +74,23 @@ public class EyeController : MonoBehaviour
 
             if(yRotation > startingXRotation)
             {
-                mod = -1;
+                //mod = -1;
             }
 
-            xRotation += input.x * mouseSensitivity * Time.deltaTime * mod;
+            if(input.y > 0)
+            {
+                //transform.RotateAround(eye.transform.position, Vector3.down, input.y * 1);
+            }
+            else
+            {
+                //transform.RotateAround(eye.transform.position, Vector3.down, -1);
+            }
+
+            transform.RotateAround(eye.transform.position, Vector3.down, -input.x*mouseSensitivity*Time.deltaTime);
+            //xRotation += input.x * mouseSensitivity * Time.deltaTime * mod;
             yRotation -= input.y * mouseSensitivity * Time.deltaTime;
+
+            yRotation = Mathf.Clamp(yRotation, -90, 0);
         }
         else
         {
