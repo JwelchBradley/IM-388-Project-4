@@ -628,7 +628,7 @@ public class PlayerController : MonoBehaviour
                     //eyeImageRenderer.SetActive(false);
                     mainCam.cullingMask = startingRendererMask;
                     tpm.SwitchCameras();
-                    UpdateHandCam(100, CinemachineBrain.UpdateMethod.LateUpdate, CinemachineBrain.BrainUpdateMethod.FixedUpdate, activeController.HAND);
+                    UpdateHandCam(100, CinemachineBrain.UpdateMethod.FixedUpdate, CinemachineBrain.BrainUpdateMethod.FixedUpdate, activeController.HAND);
                     //UpdateHandCam(100, CinemachineBrain.UpdateMethod.FixedUpdate, CinemachineBrain.BrainUpdateMethod.FixedUpdate, activeController.HAND);
                     eyeCam.Priority = -1;
                     pm.MovePlayer(Vector2.zero, false);
@@ -664,7 +664,7 @@ public class PlayerController : MonoBehaviour
 
         crosshair.SetActive(false);
 
-        UpdateHandCam(100, CinemachineBrain.UpdateMethod.LateUpdate, CinemachineBrain.BrainUpdateMethod.FixedUpdate, activeController.HAND);
+        UpdateHandCam(100, CinemachineBrain.UpdateMethod.FixedUpdate, CinemachineBrain.BrainUpdateMethod.FixedUpdate, activeController.HAND);
         //UpdateHandCam(100, CinemachineBrain.UpdateMethod.FixedUpdate, CinemachineBrain.BrainUpdateMethod.FixedUpdate, activeController.HAND);
         pm.MovePlayer(Vector2.zero, false);
         tpm.OutlineScript.enabled = false;

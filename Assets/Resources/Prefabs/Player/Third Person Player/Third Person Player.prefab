@@ -186,8 +186,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TrackedObjectOffset: {x: 0, y: 0, z: 0}
-  m_LookaheadTime: 1
-  m_LookaheadSmoothing: 5
+  m_LookaheadTime: 0.2
+  m_LookaheadSmoothing: 3
   m_LookaheadIgnoreY: 0
   m_HorizontalDamping: 0
   m_VerticalDamping: 0
@@ -195,7 +195,7 @@ MonoBehaviour:
   m_ScreenY: 0.5
   m_DeadZoneWidth: 0
   m_DeadZoneHeight: 0
-  m_SoftZoneWidth: 0.4
+  m_SoftZoneWidth: 0.2
   m_SoftZoneHeight: 0.4
   m_BiasX: 0
   m_BiasY: 0
@@ -899,7 +899,7 @@ MonoBehaviour:
   turnSmoothTime: 0.1
   jumpHeight: 3
   gravity: -15
-  groundCheckDist: 0.9
+  groundCheckDist: 1
   groundCheckPos: {fileID: 5138946509709438048}
   groundMask:
     serializedVersion: 2
