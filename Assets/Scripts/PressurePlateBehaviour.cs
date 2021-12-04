@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
+[RequireComponent(typeof(AudioSource))]
 public class PressurePlateBehaviour : MonoBehaviour
 {
     BoxCollider bc;
+
+    AudioSource aud;
 
     [SerializeField]
     private PressurePlateGroupController ppgc;
@@ -46,6 +50,20 @@ public class PressurePlateBehaviour : MonoBehaviour
     private GameObject[] Wire;
     List<Material> OriginalColor = new List<Material>();
 
+#if UNITY_EDITOR
+    private void Reset()
+    {
+        AudioMixer mixer = Resources.Load("AudioMaster") as AudioMixer;
+        aud = GetComponent<AudioSource>();
+        aud.outputAudioMixerGroup = mixer.FindMatchingGroups("SFX")[0];
+        aud.playOnAwake = false;
+        aud.spatialBlend = 1;
+        aud.rolloffMode = AudioRolloffMode.Custom;
+        aud.minDistance = 50;
+        aud.maxDistance = 200;
+    }
+#endif
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -53,6 +71,8 @@ public class PressurePlateBehaviour : MonoBehaviour
         {
             ppgc.pressurePlate.Add(gameObject.GetComponent<PressurePlateBehaviour>());
         }
+
+        aud = GetComponent<AudioSource>();
 
         startPos = transform.position;
         bc = GetComponent<BoxCollider>();
@@ -127,6 +147,7 @@ public class PressurePlateBehaviour : MonoBehaviour
             target = pushedPos;
 
             Debug.Log("Help");
+            aud.Play();
         }
 
         while (transform.position != target)
