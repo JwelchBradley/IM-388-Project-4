@@ -19,7 +19,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!224 &5610403350320873150
 RectTransform:
@@ -108,7 +108,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayText: Press F to read note
-  displayTextControllers: 010000000000000002000000
+  displayTextControllers: 0100000002000000
   noteString: "You know about apples? I love to peeling apples. Such a great tasting
     vegetable, and good for you too! Not that it really matters to me, since im currently
     decomposin\u2019 HAHAHA. "
@@ -321,6 +321,10 @@ PrefabInstance:
     - target: {fileID: 21423581952969530, guid: 7c64b0d45b78fc04886b14baf1671f38, type: 3}
       propertyPath: m_Name
       value: Paper Mesh UV
+      objectReference: {fileID: 0}
+    - target: {fileID: 21423581952969530, guid: 7c64b0d45b78fc04886b14baf1671f38, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 794828223961616768, guid: 7c64b0d45b78fc04886b14baf1671f38, type: 3}
       propertyPath: m_RootOrder

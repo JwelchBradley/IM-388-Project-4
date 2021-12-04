@@ -484,6 +484,30 @@ public class ThirdPersonMovement : MonoBehaviour
         Physics.Raycast(visuals.transform.position, -visuals.transform.up, out tempHit, climbDist, wallMask);
         if (hit.normal.y > 0.5f || hit.normal.y < -0.5f)
         {
+            if(tempHit.normal.x > 0.5f)
+            {
+                cineCam.m_XAxis.Value = -90;
+                newParentRot *= Quaternion.Euler(0, 90, 0);
+            }
+            else if(tempHit.normal.x < -0.5f){
+                cineCam.m_XAxis.Value = 90;
+                newParentRot *= Quaternion.Euler(0, -90, 0);
+            }
+            else
+            {
+                if (tempHit.normal.z > 0.8f)
+                {
+                    cineCam.m_XAxis.Value = 180;
+                    newParentRot *= Quaternion.Euler(0, 0, 0);
+                }
+                else
+                {
+                    cineCam.m_XAxis.Value = 0;
+                    newParentRot *= Quaternion.Euler(0, 180, 0);
+                }
+            }
+            #region old switch statement
+            /*
             switch (tempHit.normal.x)
             {
                 case 1:
@@ -518,7 +542,8 @@ public class ThirdPersonMovement : MonoBehaviour
                         newParentRot *= Quaternion.Euler(0, 180, 0);
                     }
                     break;
-            }
+            }*/
+            #endregion
 
             hasClimbed = false;
         }

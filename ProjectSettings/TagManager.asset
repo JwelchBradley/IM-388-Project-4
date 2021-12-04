@@ -30,7 +30,7 @@ TagManager:
   - NotClimbableWall
   - Arms
   - EyeHidden
-  - 
+  - IgnoreRayCastWall
   - 
   - 
   - 
