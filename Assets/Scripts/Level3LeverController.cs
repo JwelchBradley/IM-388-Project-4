@@ -44,10 +44,10 @@ public class Level3LeverController : MonoBehaviour
         {
             for(int i = 0; i < currentIndex; i++)
             {
-                StartCoroutine(levers[i].L3LCUnActivate());
+                StartCoroutine(levers[i].L3LCUnActivate(false));
             }
 
-            StartCoroutine(lb.L3LCUnActivate());
+            StartCoroutine(lb.L3LCUnActivate(true));
             currentIndex = 0;
         }
     }

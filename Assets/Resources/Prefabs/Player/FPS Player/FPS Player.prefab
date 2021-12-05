@@ -197,6 +197,10 @@ PrefabInstance:
       value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 1119962703066126360, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
+      propertyPath: m_StandbyUpdate
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1119962703066126360, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_Lens.FarClipPlane
       value: 1000
       objectReference: {fileID: 0}

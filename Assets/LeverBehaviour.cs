@@ -20,7 +20,16 @@ public class LeverBehaviour : Interactable
     [Tooltip("True means the lever can be actiavted")]
     bool canActivate = true;
 
-    AudioSource aud;
+    private AudioSource aud;
+
+    [SerializeField]
+    private AudioClip clickSound;
+
+    [SerializeField]
+    private AudioClip correctSound;
+
+    [SerializeField]
+    private AudioClip incorrectSound;
 
     public bool CanActivate
     {
@@ -148,7 +157,7 @@ public class LeverBehaviour : Interactable
 
                 Invoke("TurnGreen", 1.01f);
 
-                aud.Play();
+                aud.PlayOneShot(clickSound);
             }
             onLight.SetActive(activated);
 
@@ -174,12 +183,21 @@ public class LeverBehaviour : Interactable
     private void TurnGreen()
     {
         greenYellowLight.color = Color.green;
+
+        if (activated)
+        {
+            aud.PlayOneShot(correctSound);
+        }
     }
 
-    public IEnumerator L3LCUnActivate()
+    public IEnumerator L3LCUnActivate(bool current)
     {
         yield return new WaitForSeconds(1);
         StopAllCoroutines();
+
+        if(current)
+        aud.PlayOneShot(incorrectSound);
+
         activated = false;
         offLight.SetActive(true);
         onLight.SetActive(false);

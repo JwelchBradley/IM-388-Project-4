@@ -34,9 +34,17 @@ public class BoxBehaviour : Interactable
     {
         if (!isPulling)
         {
-            //ClampVelocity();
+            ClampVelocity();
         }
         canPull = Vector3.Distance(player.transform.position, transform.position) < pullDist;
+    }
+
+    private void ClampVelocity()
+    {
+        if(rb.velocity.sqrMagnitude > 64)
+        {
+            rb.velocity = Vector3.ClampMagnitude(rb.velocity, 8);
+        }
     }
 
     public override void DisplayInteractText()

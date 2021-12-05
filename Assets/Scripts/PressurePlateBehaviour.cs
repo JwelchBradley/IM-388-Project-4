@@ -146,7 +146,6 @@ public class PressurePlateBehaviour : MonoBehaviour
         {
             target = pushedPos;
 
-            Debug.Log("Help");
             aud.Play();
         }
 
