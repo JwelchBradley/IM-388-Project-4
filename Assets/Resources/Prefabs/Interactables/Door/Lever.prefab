@@ -394,6 +394,7 @@ MonoBehaviour:
   onLight: {fileID: 4659040090431915192}
   offLight: {fileID: 6834863981668329000}
   l3lc: {fileID: 0}
+  yellowCheck: 1
 --- !u!1 &4376958355738787449
 GameObject:
   m_ObjectHideFlags: 0

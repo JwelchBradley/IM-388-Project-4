@@ -10,9 +10,9 @@ using UnityEngine;
 
 public interface IInteractable
 {
-    public void DisplayInteractText();
+    /*public*/ void DisplayInteractText();
 
-    public void Interact();
+    /*public*/ void Interact();
 }
 
 public class Interactable : MonoBehaviour, IInteractable

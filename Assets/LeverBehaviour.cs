@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
+[RequireComponent(typeof(AudioSource))]
 public class LeverBehaviour : Interactable
 {
     [Header("Scene Settings")]
@@ -17,6 +19,8 @@ public class LeverBehaviour : Interactable
     [SerializeField]
     [Tooltip("True means the lever can be actiavted")]
     bool canActivate = true;
+
+    AudioSource aud;
 
     public bool CanActivate
     {
@@ -64,6 +68,20 @@ public class LeverBehaviour : Interactable
     private bool yellowCheck = true;
     #endregion
 
+#if UNITY_EDITOR
+    private void Reset()
+    {
+        AudioMixer mixer = Resources.Load("AudioMaster") as AudioMixer;
+        aud = GetComponent<AudioSource>();
+        aud.outputAudioMixerGroup = mixer.FindMatchingGroups("SFX")[0];
+        aud.playOnAwake = false;
+        aud.spatialBlend = 1;
+        aud.rolloffMode = AudioRolloffMode.Custom;
+        aud.minDistance = 50;
+        aud.maxDistance = 200;
+    }
+#endif
+
     private void Start()
     {
         startPos = lever.transform.localPosition;
@@ -76,7 +94,9 @@ public class LeverBehaviour : Interactable
 
         greenYellowLight = onLight.GetComponentInChildren<Light>();
 
-        if(startingIter == -1)
+        aud = GetComponent<AudioSource>();
+
+        if (startingIter == -1)
         {
             onLight.SetActive(true);
             offLight.SetActive(false);
@@ -105,6 +125,8 @@ public class LeverBehaviour : Interactable
     {
         bool allowInteract = true;
 
+        //aud.Play();
+
         if(activated && !canUnactivate)
         {
             allowInteract = false;
@@ -125,6 +147,8 @@ public class LeverBehaviour : Interactable
                 greenYellowLight.color = Color.yellow;
 
                 Invoke("TurnGreen", 1.01f);
+
+                aud.Play();
             }
             onLight.SetActive(activated);
 
