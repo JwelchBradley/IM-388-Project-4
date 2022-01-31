@@ -23,6 +23,8 @@ public class RadialMenuController : MonoBehaviour
     Sprite hand;
     [SerializeField]
     Sprite eye;
+    [SerializeField]
+    Sprite heart;
 
     // Start is called before the first frame update
     void Awake()
@@ -36,11 +38,15 @@ public class RadialMenuController : MonoBehaviour
     {
         float angle = FindAngle();
 
-        if(angle > 60 && angle < 180)
+        if(angle > 0 && angle < 90)
+        {
+            im.sprite = heart;
+        }
+        else if(angle >= 90 && angle < 180)
         {
             im.sprite = eye;
         }
-        else if(angle >= 180 && angle < 270)
+        else if (angle >= 180 && angle < 270)
         {
             im.sprite = hand;
         }

@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// List of controllers.
     /// </summary>
-    public enum activeController { HAND, PERSON, EYE };
+    public enum activeController { HAND, PERSON, EYE, HEART };
 
     /// <summary>
     /// The currently active controller;
@@ -79,6 +79,20 @@ public class PlayerController : MonoBehaviour
     {
         get => eCaster;
     }
+
+    /// <summary>
+    /// The current active heartcontroller.
+    /// </summary>
+    /*private HeartController hc;
+
+    public HeartController HC
+    {
+        get => hc;
+        set
+        {
+            hc = value;
+        }
+    }*/
     #endregion
     #endregion
 
@@ -153,6 +167,15 @@ public class PlayerController : MonoBehaviour
     public GameObject HandMesh
     {
         get => handMesh;
+    }
+
+    [Tooltip("The mesh of the fps player heart")]
+    [SerializeField]
+    private GameObject heartMesh;
+
+    public GameObject HeartMesh
+    {
+        get => heartMesh;
     }
 
     [Tooltip("The mesh of the players arms")]
@@ -772,7 +795,68 @@ public class PlayerController : MonoBehaviour
             ec.Look(inputVec);
         }
     }
+    #endregion
 
+    #region Heart
+    /// <summary>
+    /// Changes to and from heart
+    /// </summary>
+    private void OnHeart()
+    {
+        switch (currentActive)
+        {
+            /*// Pulls out the heart to be place or changes from the person to the heart
+            case activeController.PERSON:
+
+                if (hc == null)
+                {
+                    //NoLongerCastingEye();
+                }
+                else
+                {
+                    StartCoroutine(SetEyeImageRenderer());
+                    crosshair.SetActive(false);
+                    fpsMesh.SetActive(true);
+                    pm.MovePlayer(Vector2.zero, false);
+                    eyeCam.Priority = 100;
+                    currentActive = activeController.EYE;
+                    ec.OutlineScript.enabled = false;
+                    armMesh.SetActive(false);
+
+                    pmb.PickUpBodyPartReminder.SetActive(false);
+                }
+                break;
+
+
+            // Changes to the heart from the hand
+            case activeController.HAND:
+                if (hc != null)
+                {
+                    StartCoroutine(SetEyeImageRenderer());
+                    tpm.MovePlayer(Vector2.zero);
+                    eyeCam.Priority = 100;
+                    currentActive = activeController.EYE;
+                    tpm.SwitchCameras();
+                    armMesh.SetActive(false);
+                }
+                break;
+            // Changes from the eye to the heart
+            case activeController.EYE:
+                if (hc != null)
+                {
+                    StartCoroutine(SetEyeImageRenderer());
+                    tpm.MovePlayer(Vector2.zero);
+                    eyeCam.Priority = 100;
+                    currentActive = activeController.EYE;
+                    tpm.SwitchCameras();
+                    armMesh.SetActive(false);
+                }
+                break;*/
+        }
+    }
+    #endregion
+
+    #region Select Radial Menu Item
     /// <summary>
     /// Handles the spawning of the eye when the mouse is clicked and the playing is casting.
     /// </summary>
@@ -790,14 +874,17 @@ public class PlayerController : MonoBehaviour
         {
             switch (radialMenu.GetComponent<RadialMenuController>().Im.sprite.name)
             {
-                case "RadialMenuNewAtlas_5":
+                case "RadialMenuNewAtlas_10":
                     OnBody();
                     break;
-                case "RadialMenuNewAtlas_6":
+                case "RadialMenuNewAtlas_12":
                     OnEye();
                     break;
-                case "RadialMenuNewAtlas_7":
+                case "RadialMenuNewAtlas_8":
                     OnHand();
+                    break;
+                case "RadialMenuNewAtlas_11":
+                    OnHeart();
                     break;
             }
 
