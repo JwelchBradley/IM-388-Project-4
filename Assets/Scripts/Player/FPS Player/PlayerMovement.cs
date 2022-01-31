@@ -198,8 +198,10 @@ public class PlayerMovement : MonoBehaviour
 
         if (PlayerPrefs.GetFloat("X Sens") != 0 && PlayerPrefs.GetFloat("Y Sens") != 0)
         {
-            walkCamPOV.m_HorizontalAxis.m_MaxSpeed = PlayerPrefs.GetFloat("X Sens");
-            walkCamPOV.m_VerticalAxis.m_MaxSpeed = PlayerPrefs.GetFloat("Y Sens");
+            //walkCamPOV.m_HorizontalAxis.m_MaxSpeed = PlayerPrefs.GetFloat("X Sens");
+            //walkCamPOV.m_VerticalAxis.m_MaxSpeed = PlayerPrefs.GetFloat("Y Sens");
+            walkCamPOV.m_HorizontalAxis.m_MaxSpeed = .3f;
+            walkCamPOV.m_VerticalAxis.m_MaxSpeed = .3f;
         }
     }
     #endregion
@@ -411,7 +413,7 @@ public class PlayerMovement : MonoBehaviour
 
     private float GetAxisCustom(string axisName)
     {
-        if (mainCamBrain.IsBlending || GetComponent<PlayerController>().Current || pauseMenu.Note.activeInHierarchy)
+        if (mainCamBrain.IsBlending || GetComponent<PlayerController>().CurrentRadial || pauseMenu.Note.activeInHierarchy)
             return 0;
         return Input.GetAxis(axisName);
     }

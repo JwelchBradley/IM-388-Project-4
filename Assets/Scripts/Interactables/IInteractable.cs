@@ -10,17 +10,33 @@ using UnityEngine;
 
 public interface IInteractable
 {
-    /*public*/ void DisplayInteractText();
+    /// <summary>
+    /// Displays the text for the interaction.
+    /// </summary>
+    public void DisplayInteractText();
 
-    /*public*/ void Interact();
+    /// <summary>
+    /// Does the interaction with this object.
+    /// </summary>
+    public void Interact();
 }
 
+/*****************************************************************************
+// File Name :         Interactable.cs
+// Author :            Jacob Welch
+// Creation Date :     13 November 2021
+//
+// Brief Description : A default implementation of interactable objects.
+*****************************************************************************/
 public class Interactable : MonoBehaviour, IInteractable
 {
     [SerializeField]
     [Tooltip("The text that will be displayed when this object can be interacted with")]
     protected string displayText = "Press F to pickup Hand";
 
+    /// <summary>
+    /// The pick up text in the scene.
+    /// </summary>
     protected TextMeshProUGUI text;
 
     protected PlayerController pc;

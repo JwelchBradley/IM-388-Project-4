@@ -896,7 +896,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
     private void LimitCamera()
     {
-        if (mainCamBrain.IsBlending || GameObject.Find("Player").GetComponent<PlayerController>().Current)
+        if (mainCamBrain.IsBlending || GameObject.Find("Player").GetComponent<PlayerController>().CurrentRadial)
         {
             cineCam.m_XAxis.m_MaxSpeed = 0;
             cineCam.m_YAxis.m_MaxSpeed = 0;
