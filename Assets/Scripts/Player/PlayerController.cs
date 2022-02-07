@@ -20,6 +20,11 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private PauseMenuBehavior pmb;
 
+    public PauseMenuBehavior PMB
+    {
+        get => pmb;
+    }
+
     #region Character Controllers
     /// <summary>
     /// List of controllers.
@@ -289,6 +294,18 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = false;
 
         crosshair = GameObject.Find("Crosshair");
+
+        GameObject hand = GameObject.Find("Hand Player");
+        if (hand != null)
+        {
+            // Initializes hand if it isn't created yet
+            InitializeHand(hand);
+
+            // Sets all the values for it going to the hand
+            pm.MovePlayer(Vector2.zero, false);
+            ChangeMeshState(true, false, false);
+            ToHand();
+        }
     }
 
     /// <summary>
@@ -361,10 +378,6 @@ public class PlayerController : MonoBehaviour
     {
         switch (currentActive)
         {
-            case activeController.PERSON:
-                pm.Jump();
-                break;
-
             case activeController.HAND:
                 tpm.Jump();
                 break;
@@ -430,37 +443,8 @@ public class PlayerController : MonoBehaviour
             {
                 past = hit.transform.gameObject;
             }
-            LayerMask currentMask = pickUpSurface;
-            float currentDist = maxDist;
 
-            if(currentActive != activeController.PERSON)
-            {
-                currentMask = interactableMask;
-                currentDist = maxHandDist;
-            }
-
-            canPickUp = Physics.BoxCast(mainCam.transform.position, Vector3.one * 3, mainCam.transform.forward, out hit, mainCam.transform.rotation, currentDist, currentMask);
-
-            if (!canPickUp)
-            {
-                canPickUp = Physics.BoxCast(mainCam.transform.position, Vector3.one * 1f, mainCam.transform.forward, out hit, mainCam.transform.rotation, currentDist, currentMask);
-            }
-
-            if (!canPickUp)
-            {
-                canPickUp = Physics.BoxCast(mainCam.transform.position, Vector3.one * 0.5f, mainCam.transform.forward, out hit, mainCam.transform.rotation, currentDist, currentMask);
-            }
-
-            if (canPickUp)
-            {
-                RaycastHit hitTemp;
-                Physics.Raycast(mainCam.transform.position, hit.point - mainCam.transform.position, out hitTemp, currentDist, wallCheckMask);
-
-                if(Vector3.Distance(hitTemp.point, mainCam.transform.position) < Vector3.Distance(hit.point, mainCam.transform.position))
-                {
-                    canPickUp = false;
-                }
-            }
+            CheckForInteractable(ref hit);
 
             if (canPickUp)
             {
@@ -478,7 +462,6 @@ public class PlayerController : MonoBehaviour
 
                     interactable.DisplayInteractText();
                 }
-                //pickUpText.text = "Press F to pickup " + hit.transform.gameObject.tag;
             }
             else
             {
@@ -495,6 +478,45 @@ public class PlayerController : MonoBehaviour
             interactable = null;
             canPickUp = false;
             pmb.PickUpText.text = "";
+        }
+    }
+
+    /// <summary>
+    /// Checks if an allowed interactable is in view.
+    /// </summary>
+    /// <param name="hit"></param>
+    private void CheckForInteractable(ref RaycastHit hit)
+    {
+        LayerMask currentMask = pickUpSurface;
+        float currentDist = maxDist;
+
+        if (currentActive != activeController.PERSON)
+        {
+            currentMask = interactableMask;
+            currentDist = maxHandDist;
+        }
+
+        canPickUp = Physics.BoxCast(mainCam.transform.position, Vector3.one * 3, mainCam.transform.forward, out hit, mainCam.transform.rotation, currentDist, currentMask);
+
+        if (!canPickUp)
+        {
+            canPickUp = Physics.BoxCast(mainCam.transform.position, Vector3.one * 1f, mainCam.transform.forward, out hit, mainCam.transform.rotation, currentDist, currentMask);
+        }
+
+        if (!canPickUp)
+        {
+            canPickUp = Physics.BoxCast(mainCam.transform.position, Vector3.one * 0.5f, mainCam.transform.forward, out hit, mainCam.transform.rotation, currentDist, currentMask);
+        }
+
+        if (canPickUp)
+        {
+            RaycastHit hitTemp;
+            Physics.Raycast(mainCam.transform.position, hit.point - mainCam.transform.position, out hitTemp, currentDist, wallCheckMask);
+
+            if (Vector3.Distance(hitTemp.point, mainCam.transform.position) < Vector3.Distance(hit.point, mainCam.transform.position))
+            {
+                canPickUp = false;
+            }
         }
     }
 
@@ -604,7 +626,6 @@ public class PlayerController : MonoBehaviour
                 if (tpm != null)
                 {
                     mainCam.cullingMask = startingRendererMask;
-                    tpm.SwitchCameras();
                     ToHand();
                 }
                 break;
@@ -635,7 +656,15 @@ public class PlayerController : MonoBehaviour
     private void ToHand()
     {
         currentActive =  activeController.HAND;
+        if(tpm.OutlineScript != null)
         tpm.OutlineScript.enabled = false;
+        tpm.SwitchCameras();
+        ChangeBlendMethod(CinemachineBrain.BrainUpdateMethod.LateUpdate);
+    }
+
+    private void ChangeBlendMethod(CinemachineBrain.BrainUpdateMethod updateMethod)
+    {
+        //mainCamBrain.m_BlendUpdateMethod = updateMethod;
     }
     #endregion
 
@@ -730,6 +759,10 @@ public class PlayerController : MonoBehaviour
         if (currentActive.Equals(activeController.EYE) && !mainCamBrain.IsBlending && !pmb.RadialMenuPanel.activeInHierarchy)
         {
             ec.Look(inputVec);
+        }
+        else if (currentActive.Equals(activeController.HAND))
+        {
+            tpm.UpdateCameraCall(inputVec);
         }
     }
     #endregion

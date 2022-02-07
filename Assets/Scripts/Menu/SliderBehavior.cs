@@ -45,7 +45,11 @@ public class SliderBehavior : MonoBehaviour
     /// </summary>
     private CinemachinePOV walkCamPOV;
 
-    private CinemachineFreeLook thirdPersonCamera;
+    private CinemachinePOV thirdPersonCamera;
+
+    private GameObject thirdPersonMovement;
+
+    private ThirdPersonMovement tpm;
     #endregion
 
     #region Volume
@@ -140,50 +144,38 @@ public class SliderBehavior : MonoBehaviour
 
         SetInputField();
 
-        if(walkCamPOV != null)
+        if (walkCamPOV != null)
         {
-            switch(variableName)
+            switch (variableName)
             {
                 case "X Sens":
                     walkCamPOV.m_HorizontalAxis.m_MaxSpeed = sliderValue;
-                        break;
+                    break;
                 case "Y Sens":
                     walkCamPOV.m_VerticalAxis.m_MaxSpeed = sliderValue;
                     break;
                 case "X Sens Hand":
-                    if (thirdPersonCamera == null)
                     {
-                        GameObject thirdPerson = GameObject.Find("Third Person Camera");
+                        if (tpm == null)
+                            tpm = GameObject.Find("Hand Player").GetComponent<ThirdPersonMovement>();
 
-                        if (thirdPerson != null)
+                        if (tpm != null)
                         {
-                            thirdPersonCamera = thirdPerson.GetComponent<CinemachineFreeLook>();
-                            thirdPersonCamera.m_XAxis.m_MaxSpeed = sliderValue;
+                            tpm.XSens = sliderValue;
                         }
-                    }
-                    else
-                    {
-                        thirdPersonCamera.m_XAxis.m_MaxSpeed = sliderValue;
                     }
                     break;
                 case "Y Sens Hand":
-                    if (thirdPersonCamera == null)
                     {
-                        GameObject thirdPerson = GameObject.Find("Third Person Camera");
+                        if (tpm == null)
+                            tpm = GameObject.Find("Hand Player").GetComponent<ThirdPersonMovement>();
 
-                        if(thirdPerson != null)
+                        if (tpm != null)
                         {
-                            thirdPersonCamera = thirdPerson.GetComponent<CinemachineFreeLook>();
-                            thirdPersonCamera.m_YAxis.m_MaxSpeed = sliderValue;
+                            tpm.YSens = sliderValue;
                         }
+                        break;
                     }
-                    else
-                    {
-                        thirdPersonCamera.m_YAxis.m_MaxSpeed = sliderValue;
-                    }
-                    break;
-                default:
-                    break;
             }
         }
     }
