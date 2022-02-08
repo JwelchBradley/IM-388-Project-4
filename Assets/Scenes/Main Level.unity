@@ -52166,6 +52166,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Third Person Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5138946511043987947, guid: 4a4b2e5112016374aa596430353577dd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a4b2e5112016374aa596430353577dd, type: 3}
 --- !u!1001 &1452370915
