@@ -529,19 +529,75 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
-    #region Body
-    private void OnBody()
+    public void UpdateBodyPart(activeController newActive)
     {
-        crosshair.SetActive(true);
+        eCaster.IsCasting = false;
+
+        if (currentActive.Equals(newActive))
+        {
+            return;
+        }
 
         switch (currentActive)
         {
             case activeController.PERSON:
-                eCaster.IsCasting = false;
+                DeactivatePerson();
                 break;
             case activeController.HAND:
-                ToZombie();
-                
+                DeactivateHand();
+                break;
+            case activeController.EYE:
+                DeactivateEye();
+                break;
+            case activeController.HEART:
+                DeactivateHeart();
+                break;
+            case activeController.INTESTINES:
+                DeactivateIntestines();
+                break;
+            case activeController.MOUTH:
+                DeactivateMouth();
+                break;
+        }
+
+        switch (newActive)
+        {
+            case activeController.PERSON:
+                ActivatePerson();
+                break;
+            case activeController.HAND:
+                ActivateHand();
+                break;
+            case activeController.EYE:
+                ActivateEye();
+                break;
+            case activeController.HEART:
+                ActivateHeart();
+                break;
+            case activeController.INTESTINES:
+                ActivateIntestines();
+                break;
+            case activeController.MOUTH:
+                ActivateMouth();
+                break;
+        }
+
+        currentActive = newActive;
+    }
+
+    #region Body
+    #region Input Call
+    private void OnBody()
+    {
+        UpdateBodyPart(activeController.PERSON);
+        #region Old
+        /*
+        switch (currentActive)
+        {
+            case activeController.PERSON:
+
+                break;
+            case activeController.HAND:
                 tpm.SwitchCameras();
                 tpm.MovePlayer(Vector2.zero);
                 break;
@@ -551,11 +607,34 @@ public class PlayerController : MonoBehaviour
                 UpdateCamera(walkCam);
                 mainCam.cullingMask = startingRendererMask;
                 break;
-        }
+        }*/
+        #endregion
+    }
+    #endregion
+
+    #region Activation and Deactivation
+    private void ActivatePerson()
+    {
+        crosshair.SetActive(true);
+
+        ToZombie();
 
         StartCoroutine(EnableArms());
     }
 
+    private void DeactivatePerson()
+    {
+        armMesh.SetActive(false);
+        // Sets all the values for it going to the hand
+        pm.MovePlayer(Vector2.zero, false);
+        // If player is trying to cast eye then stop it
+        if (ec == null && eCaster.IsCasting)
+        {
+            NoLongerCastingEye();
+        }
+    }
+
+    #region Change Functions
     /// <summary>
     /// Switches the state to being the zombie.
     /// </summary>
@@ -570,6 +649,8 @@ public class PlayerController : MonoBehaviour
         {
             ec.OutlineScript.enabled = true;
         }
+
+        UpdateCamera(walkCam);
 
         currentActive = activeController.PERSON;
         fpsMesh.SetActive(false);
@@ -595,23 +676,30 @@ public class PlayerController : MonoBehaviour
         }
     }
     #endregion
+    #endregion
+    #endregion
 
     #region Hand
+    #region Input Call
     /// <summary>
     /// Handles changes to and from the hand.
     /// </summary>
     private void OnHand()
     {
+        UpdateBodyPart(activeController.HAND);
+        #region Old
+        /*
         switch (currentActive)
         {
             // To the hand from the person
             case activeController.PERSON:
+                /*
                 // If player is trying to cast eye then stop it
                 if (ec == null && eCaster.IsCasting)
                 {
                     NoLongerCastingEye();
-                }
-
+                }*/
+        /*
                 // Initializes hand if it isn't created yet
                 IsHandActiveCheck();
 
@@ -629,11 +717,30 @@ public class PlayerController : MonoBehaviour
                     ToHand();
                 }
                 break;
-        }
+        }*/
 
-        armMesh.SetActive(false);
+        //armMesh.SetActive(false);
+        #endregion
+    }
+    #endregion
+
+    #region Activation and Deactivation
+    private void ActivateHand()
+    {
+        // Initializes hand if it isn't created yet
+        IsHandActiveCheck();
+
+        ChangeMeshState(true, false, false);
+        ToHand();
     }
 
+    private void DeactivateHand()
+    {
+        tpm.SwitchCameras();
+        tpm.MovePlayer(Vector2.zero);
+    }
+
+    #region Change Functions
     /// <summary>
     /// Initializes the hand if it hasn't been created yet.
     /// </summary>
@@ -644,10 +751,6 @@ public class PlayerController : MonoBehaviour
             GameObject hand = (GameObject)Instantiate(Resources.Load("Prefabs/Player/Third Person Player/Third Person Player", typeof(GameObject)), transform.position + Camera.main.transform.forward * 2, transform.rotation);
             InitializeHand(hand);
         }
-        else
-        {
-            tpm.SwitchCameras();
-        }
     }
 
     /// <summary>
@@ -655,25 +758,32 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void ToHand()
     {
-        currentActive =  activeController.HAND;
-        if(tpm.OutlineScript != null)
-        tpm.OutlineScript.enabled = false;
+        currentActive = activeController.HAND;
+        if (tpm.OutlineScript != null)
+            tpm.OutlineScript.enabled = false;
         tpm.SwitchCameras();
-        ChangeBlendMethod(CinemachineBrain.BrainUpdateMethod.LateUpdate);
     }
-
-    private void ChangeBlendMethod(CinemachineBrain.BrainUpdateMethod updateMethod)
-    {
-        //mainCamBrain.m_BlendUpdateMethod = updateMethod;
-    }
+    #endregion
+    #endregion
     #endregion
 
     #region Eye
+    #region Input Call
     /// <summary>
     /// Changes to and from the eye.
     /// </summary>
     private void OnEye()
     {
+        if (ec != null)
+        {
+            UpdateBodyPart(activeController.EYE);
+        }
+        else
+        {
+            NoLongerCastingEye();
+        }
+        #region Old
+        /*
         switch (currentActive)
         {
             // Pulls out the eye to be place or changes from the person to the eye
@@ -701,9 +811,24 @@ public class PlayerController : MonoBehaviour
                     ChangeToEye();
                 }
                 break;
-        }
+        }*/
+        #endregion
+    }
+    #endregion
+
+    #region Activate and Deactivate
+    private void ActivateEye()
+    {
+            ChangeToEye();
     }
 
+    private void DeactivateEye()
+    {
+        mainCam.cullingMask = startingRendererMask;
+    }
+    #endregion
+
+    #region Change Functions
     /// <summary>
     /// Changes the player to be using the eye.
     /// </summary>
@@ -747,6 +872,7 @@ public class PlayerController : MonoBehaviour
         eCaster.IsCasting = !eCaster.IsCasting;
         crosshair.SetActive(!crosshair.activeInHierarchy);
     }
+    #endregion
 
     /// <summary>
     /// Handles the looking of the eye.
@@ -765,6 +891,72 @@ public class PlayerController : MonoBehaviour
             tpm.UpdateCameraCall(inputVec);
         }
     }
+    #endregion
+
+    #region Heart
+    #region Input Call
+    private void OnHeart()
+    {
+        UpdateBodyPart(activeController.HEART);
+    }
+    #endregion
+
+    #region Activation and Deactivation
+    private void ActivateHeart()
+    {
+
+    }
+
+    private void DeactivateHeart()
+    {
+
+    }
+
+    #region Change Functions
+
+    #endregion
+    #endregion
+    #endregion
+
+    #region Intestines
+    #region Input Call
+    private void OnIntestine()
+    {
+        UpdateBodyPart(activeController.INTESTINES);
+    }
+    #endregion
+
+    #region Activation and Deactivation
+    private void DeactivateIntestines()
+    {
+
+    }
+
+    private void ActivateIntestines()
+    {
+
+    }
+    #endregion
+    #endregion
+
+    #region Mouth
+    #region Input Call
+    private void OnMouth()
+    {
+        UpdateBodyPart(activeController.MOUTH);
+    }
+    #endregion
+
+    #region Activation and Deactivation
+    private void ActivateMouth()
+    {
+
+    }
+    private void DeactivateMouth()
+    {
+
+    }
+    #endregion
     #endregion
 
     #region Radial Menu

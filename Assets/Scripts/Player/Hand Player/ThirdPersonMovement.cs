@@ -422,7 +422,6 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             jumpVel += gravity * Time.fixedDeltaTime;
             controller.Move(new Vector3(0, jumpVel, 0) * Time.fixedDeltaTime);
-            Debug.Log(jumpVel);
             anim.SetBool(jumpAnimationHash, true);
         }
         else if (isClimbing)
