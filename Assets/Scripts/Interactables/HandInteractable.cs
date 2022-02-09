@@ -8,9 +8,7 @@ public class HandInteractable : Interactable
     {
         Destroy(pc.TPM.Hand.transform.parent.gameObject, 0.01f);
         pc.TPM = null;
-        pc.HandCam = null;
         pc.HandMesh.SetActive(true);
         pc.RightHandArmMesh.SetActive(true);
-        pc.RemovePickupBodyPartReminder();
     }
 }

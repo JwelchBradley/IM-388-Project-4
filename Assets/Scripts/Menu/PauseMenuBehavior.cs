@@ -11,6 +11,7 @@ using UnityEngine.SceneManagement;
 using System;
 using System.Collections;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class PauseMenuBehavior : MenuBehavior
 {
@@ -41,27 +42,48 @@ public class PauseMenuBehavior : MenuBehavior
 
     [Space]
     [SerializeField]
-    [Tooltip("The panels that can be activated in the pause menu")]
-    private List<GameObject> menuPanels = new List<GameObject>();
-
-    [Space]
-    [SerializeField]
     [Tooltip("The pause menu gameobject")]
     private GameObject pauseMenu = null;
 
-    private GameObject note;
+    [Tooltip("The radial menu")]
+    [SerializeField] private GameObject radialMenuPanel;
 
+    public GameObject RadialMenuPanel
+    {
+        get => radialMenuPanel;
+    }
+
+    [Tooltip("The radial menu controller")]
+    [SerializeField] RadialMenuController rmc;
+
+    /// <summary>
+    /// The radial menu controller.
+    /// </summary>
+    public RadialMenuController RMC
+    {
+        get => rmc;
+    }
+
+    [Tooltip("The pickup text")]
+    [SerializeField] private TextMeshProUGUI pickUpText;
+
+    /// <summary>
+    /// The pickup text.
+    /// </summary>
+    public TextMeshProUGUI PickUpText
+    {
+        get => pickUpText;
+    }
+
+    [Tooltip("The UI for notes")]
+    [SerializeField] private GameObject note;
+
+    /// <summary>
+    /// The UI for notes.
+    /// </summary>
     public GameObject Note
     {
         get => note;
-    }
-
-    [SerializeField]
-    private GameObject pickUpBodyPartReminder;
-
-    public GameObject PickUpBodyPartReminder
-    {
-        get => pickUpBodyPartReminder;
     }
     #endregion
 
@@ -71,8 +93,6 @@ public class PauseMenuBehavior : MenuBehavior
     /// </summary>
     private void Awake()
     {
-        note = GameObject.Find("Note");
-        note.SetActive(false);
         StartCoroutine(WaitFadeIn());
     }
 

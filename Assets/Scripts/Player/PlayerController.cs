@@ -20,17 +20,25 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private PauseMenuBehavior pmb;
 
+    public PauseMenuBehavior PMB
+    {
+        get => pmb;
+    }
+
     #region Character Controllers
     /// <summary>
     /// List of controllers.
     /// </summary>
-    public enum activeController { HAND, PERSON, EYE, HEART };
+    public enum activeController { HAND, PERSON, EYE, HEART, EARS, INTESTINES, MOUTH };
 
     /// <summary>
     /// The currently active controller;
     /// </summary>
     private activeController currentActive = activeController.PERSON;
 
+    /// <summary>
+    /// Gets the currently active character controller.
+    /// </summary>
     public activeController CurrentActive
     {
         get => currentActive;
@@ -47,6 +55,9 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private ThirdPersonMovement tpm;
 
+    /// <summary>
+    /// The movement script for the hand controller.
+    /// </summary>
     public ThirdPersonMovement TPM
     {
         get => tpm;
@@ -61,6 +72,9 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private EyeController ec;
 
+    /// <summary>
+    /// The current active eyecontroller.
+    /// </summary>
     public EyeController EC
     {
         get => ec;
@@ -75,24 +89,13 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private EyeCaster eCaster;
 
+    /// <summary>
+    /// The eye casing component.
+    /// </summary>
     public EyeCaster ECaster
     {
         get => eCaster;
     }
-
-    /// <summary>
-    /// The current active heartcontroller.
-    /// </summary>
-    /*private HeartController hc;
-
-    public HeartController HC
-    {
-        get => hc;
-        set
-        {
-            hc = value;
-        }
-    }*/
     #endregion
     #endregion
 
@@ -103,23 +106,13 @@ public class PlayerController : MonoBehaviour
     private CinemachineVirtualCamera walkCam;
 
     /// <summary>
-    /// The virtual camera for when the hand.
-    /// </summary>
-    private CinemachineFreeLook handCam;
-
-    public CinemachineFreeLook HandCam
-    {
-        set
-        {
-            handCam = value;
-        }
-    }
-
-    /// <summary>
     /// The virtual camera for the eye.
     /// </summary>
     private CinemachineVirtualCamera eyeCam;
 
+    /// <summary>
+    /// The camera used by the eye.
+    /// </summary>
     public CinemachineVirtualCamera EyeCam
     {
         set
@@ -138,11 +131,15 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private Camera mainCam;
 
-    [SerializeField]
-    private GameObject eyeImageRenderer;
-    [SerializeField]
-    private LayerMask eyeImageRendererMask;
+    #region Renderering Masks
+    [Tooltip("The layermask of the eye image renderer")]
+    [SerializeField] private LayerMask eyeImageRendererMask;
+
+    /// <summary>
+    /// The starting layermask renderer.
+    /// </summary>
     private LayerMask startingRendererMask;
+    #endregion
     #endregion
 
     #region FPS Visuals
@@ -155,6 +152,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject eyeMesh;
 
+    /// <summary>
+    /// The mesh of the fps player eye.
+    /// </summary>
     public GameObject EyeMesh
     {
         get => eyeMesh;
@@ -164,36 +164,35 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject handMesh;
 
+    /// <summary>
+    /// The mesh of the fps player hand.
+    /// </summary>
     public GameObject HandMesh
     {
         get => handMesh;
-    }
-
-    [Tooltip("The mesh of the fps player heart")]
-    [SerializeField]
-    private GameObject heartMesh;
-
-    public GameObject HeartMesh
-    {
-        get => heartMesh;
     }
 
     [Tooltip("The mesh of the players arms")]
     [SerializeField]
     private GameObject armMesh;
 
-    [SerializeField]
-    private GameObject rightHandArmMesh;
+    [Tooltip("The right hand of the zombies FPS view")]
+    [SerializeField] private GameObject rightHandArmMesh;
 
+    /// <summary>
+    /// The right hand of the zombies FPS view.
+    /// </summary>
     public GameObject RightHandArmMesh
     {
         get => rightHandArmMesh;
     }
 
     [Tooltip("The animator of the players arms")]
-    [SerializeField]
-    private Animator[] armAnim;
+    [SerializeField] private Animator[] armAnim;
 
+    /// <summary>
+    /// The animator of the players arms.
+    /// </summary>
     public Animator[] ArmAnim
     {
         get => armAnim;
@@ -201,13 +200,6 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Radial Menu
-    private GameObject radialMenuPanel;
-
-    private GameObject radialMenu;
-
-
-    private bool currentRadial = false;
-
     private bool canOpenRadial = true;
 
     public bool CanOpenRadial
@@ -218,7 +210,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public bool Current
+    private bool currentRadial = false;
+
+    public bool CurrentRadial
     {
         get => currentRadial;
     }
@@ -226,29 +220,53 @@ public class PlayerController : MonoBehaviour
 
     #region Pickup
     [Header("Pickup")]
-    [SerializeField]
-    private float maxDist = 10;
-    [SerializeField]
-    private float maxHandDist = 20;
-    [SerializeField]
-    private LayerMask pickUpSurface;
-    [SerializeField]
-    private LayerMask interactableMask;
-    private TextMeshProUGUI pickUpText;
+    [Tooltip("The max distance for normal interactions")]
+    [Range(0, 50)]
+    [SerializeField] private float maxDist = 10;
 
-    [SerializeField]
-    private LayerMask wallCheckMask;
+    [Range(0, 50)]
+    [Tooltip("The max distance for interactions as the hand")]
+    [SerializeField] private float maxHandDist = 20;
+
+    #region Interaction Masks
+    [Tooltip("The layermask for pick up objects")]
+    [SerializeField] private LayerMask pickUpSurface;
+
+    [Tooltip("The layermask for interactable objects")]
+    [SerializeField] private LayerMask interactableMask;
+
+    [Tooltip("The layer mask used to check if a wall is obscuring an object")]
+    [SerializeField] private LayerMask wallCheckMask;
+    #endregion
+
+    /// <summary>
+    /// Holds true if the player is able to pick something up.
+    /// </summary>
     private bool canPickUp = false;
+
+    /// <summary>
+    /// The current interactable object being looked at.
+    /// </summary>
     private IInteractable interactable;
+
+    /// <summary>
+    /// The current interactable object being looked at.
+    /// </summary>
     public IInteractable InteractableObject
     {
         get => interactable;
     }
 
+    /// <summary>
+    /// Holds reference to the last raycast data.
+    /// </summary>
     private RaycastHit hit;
     #endregion
 
     #region Crosshair
+    /// <summary>
+    /// The crosshair for the zombie.
+    /// </summary>
     private GameObject crosshair;
     #endregion
     #endregion
@@ -265,30 +283,29 @@ public class PlayerController : MonoBehaviour
         pm = GetComponent<PlayerMovement>();
         eCaster = GetComponent<EyeCaster>();
         walkCam = GameObject.Find("Walk vcam").GetComponent<CinemachineVirtualCamera>();
+
+        // Initializes the main camera
         mainCam = Camera.main;
         mainCamBrain = mainCam.GetComponent<CinemachineBrain>();
         startingRendererMask = mainCam.cullingMask;
-
-        // Gets the hand if the scenes starts with it
-        GameObject hand = GameObject.Find("Third Person Player");
-        InitializeHand(hand);
 
         // Sets the cursor state
         Invoke("InitializeCursor", 0.1f);
         Cursor.visible = false;
 
-        InitializeRadialMenu();
-
-        pickUpText = GameObject.Find("Pickup Text").GetComponent<TextMeshProUGUI>();
-
         crosshair = GameObject.Find("Crosshair");
-    }
 
-    private void InitializeRadialMenu()
-    {
-        radialMenuPanel = GameObject.Find("Radial Menu Panel");
-        radialMenu = GameObject.Find("Radial Menu");
-        radialMenuPanel.SetActive(false);
+        GameObject hand = GameObject.Find("Hand Player");
+        if (hand != null)
+        {
+            // Initializes hand if it isn't created yet
+            InitializeHand(hand);
+
+            // Sets all the values for it going to the hand
+            pm.MovePlayer(Vector2.zero, false);
+            ChangeMeshState(true, false, false);
+            ToHand();
+        }
     }
 
     /// <summary>
@@ -305,13 +322,9 @@ public class PlayerController : MonoBehaviour
     /// <param name="hand">The hand gameobject.</param>
     private void InitializeHand(GameObject hand)
     {
-        if (hand != null)
-        {
-            handMesh.SetActive(false);
-            rightHandArmMesh.SetActive(false);
-            tpm = hand.GetComponentInChildren<ThirdPersonMovement>();
-            handCam = hand.GetComponentInChildren<CinemachineFreeLook>();
-        }
+        handMesh.SetActive(false);
+        rightHandArmMesh.SetActive(false);
+        tpm = hand.GetComponentInChildren<ThirdPersonMovement>();
     }
 
     /// <summary>
@@ -320,16 +333,15 @@ public class PlayerController : MonoBehaviour
     /// <param name="eye"></param>
     private void InitializeEye(GameObject eye)
     {
-        StartCoroutine(SetEyeImageRenderer());
+        // Hides eye on player and shows zombie
         eyeMesh.SetActive(false);
-        armMesh.SetActive(false);
+        pm.MovePlayer(Vector2.zero, false);
+
+        // Gets component references
         ec = eye.GetComponentInChildren<EyeController>();
         eyeCam = eye.GetComponentInChildren<CinemachineVirtualCamera>();
-        fpsMesh.SetActive(true);
-        pm.MovePlayer(Vector2.zero, false);
-        eyeCam.Priority = 100;
-        currentActive = activeController.EYE;
-        pmb.PickUpBodyPartReminder.SetActive(false);
+
+        ChangeToEye();
     }
     #endregion
 
@@ -356,12 +368,6 @@ public class PlayerController : MonoBehaviour
             case activeController.PERSON:
                 pm.Crouch();
                 break;
-
-            case activeController.HAND:
-                break;
-
-            case activeController.EYE:
-                break;
         }
     }
 
@@ -372,15 +378,8 @@ public class PlayerController : MonoBehaviour
     {
         switch (currentActive)
         {
-            case activeController.PERSON:
-                pm.Jump();
-                break;
-
             case activeController.HAND:
                 tpm.Jump();
-                break;
-
-            case activeController.EYE:
                 break;
         }
     }
@@ -402,9 +401,6 @@ public class PlayerController : MonoBehaviour
             case activeController.HAND:
                 tpm.MovePlayer(inputVec);
                 break;
-
-            case activeController.EYE:
-                break;
         }
     }
     #endregion
@@ -415,8 +411,8 @@ public class PlayerController : MonoBehaviour
     {
         if (canOpenRadial && Time.timeScale != 0 && !pmb.Note.activeInHierarchy)
         {
-            currentRadial = !radialMenuPanel.activeInHierarchy;
-            radialMenuPanel.SetActive(currentRadial);
+            currentRadial = !pmb.RadialMenuPanel.activeInHierarchy;
+            pmb.RadialMenuPanel.SetActive(currentRadial);
             Cursor.visible = currentRadial;
 
             if (currentRadial)
@@ -447,37 +443,8 @@ public class PlayerController : MonoBehaviour
             {
                 past = hit.transform.gameObject;
             }
-            LayerMask currentMask = pickUpSurface;
-            float currentDist = maxDist;
 
-            if(currentActive != activeController.PERSON)
-            {
-                currentMask = interactableMask;
-                currentDist = maxHandDist;
-            }
-
-            canPickUp = Physics.BoxCast(mainCam.transform.position, Vector3.one * 3, mainCam.transform.forward, out hit, mainCam.transform.rotation, currentDist, currentMask);
-
-            if (!canPickUp)
-            {
-                canPickUp = Physics.BoxCast(mainCam.transform.position, Vector3.one * 1f, mainCam.transform.forward, out hit, mainCam.transform.rotation, currentDist, currentMask);
-            }
-
-            if (!canPickUp)
-            {
-                canPickUp = Physics.BoxCast(mainCam.transform.position, Vector3.one * 0.5f, mainCam.transform.forward, out hit, mainCam.transform.rotation, currentDist, currentMask);
-            }
-
-            if (canPickUp)
-            {
-                RaycastHit hitTemp;
-                Physics.Raycast(mainCam.transform.position, hit.point - mainCam.transform.position, out hitTemp, currentDist, wallCheckMask);
-
-                if(Vector3.Distance(hitTemp.point, mainCam.transform.position) < Vector3.Distance(hit.point, mainCam.transform.position))
-                {
-                    canPickUp = false;
-                }
-            }
+            CheckForInteractable(ref hit);
 
             if (canPickUp)
             {
@@ -495,50 +462,70 @@ public class PlayerController : MonoBehaviour
 
                     interactable.DisplayInteractText();
                 }
-                //pickUpText.text = "Press F to pickup " + hit.transform.gameObject.tag;
             }
             else
             {
                 interactable = null;
-                pickUpText.text = "";
+                pmb.PickUpText.text = "";
             }
         }
         else if (eCaster.IsCasting)
         {
-            pickUpText.text = "Left click to cast eye";
+            pmb.PickUpText.text = "Left click to cast eye";
         }
         else
         {
             interactable = null;
             canPickUp = false;
-            pickUpText.text = "";
+            pmb.PickUpText.text = "";
+        }
+    }
+
+    /// <summary>
+    /// Checks if an allowed interactable is in view.
+    /// </summary>
+    /// <param name="hit"></param>
+    private void CheckForInteractable(ref RaycastHit hit)
+    {
+        LayerMask currentMask = pickUpSurface;
+        float currentDist = maxDist;
+
+        if (currentActive != activeController.PERSON)
+        {
+            currentMask = interactableMask;
+            currentDist = maxHandDist;
+        }
+
+        canPickUp = Physics.BoxCast(mainCam.transform.position, Vector3.one * 3, mainCam.transform.forward, out hit, mainCam.transform.rotation, currentDist, currentMask);
+
+        if (!canPickUp)
+        {
+            canPickUp = Physics.BoxCast(mainCam.transform.position, Vector3.one * 1f, mainCam.transform.forward, out hit, mainCam.transform.rotation, currentDist, currentMask);
+        }
+
+        if (!canPickUp)
+        {
+            canPickUp = Physics.BoxCast(mainCam.transform.position, Vector3.one * 0.5f, mainCam.transform.forward, out hit, mainCam.transform.rotation, currentDist, currentMask);
+        }
+
+        if (canPickUp)
+        {
+            RaycastHit hitTemp;
+            Physics.Raycast(mainCam.transform.position, hit.point - mainCam.transform.position, out hitTemp, currentDist, wallCheckMask);
+
+            if (Vector3.Distance(hitTemp.point, mainCam.transform.position) < Vector3.Distance(hit.point, mainCam.transform.position))
+            {
+                canPickUp = false;
+            }
         }
     }
 
     public void OnResetEye()
     {
-        if(interactable != null && !radialMenu.activeInHierarchy)
+        if(interactable != null && !pmb.RadialMenuPanel.activeInHierarchy)
         {
             interactable.Interact();
         }
-        /*
-        if (canPickUp && ec != null)
-        {
-            Destroy(ec.Eye);
-            ec = null;
-            eyeCam = null;
-        }*/
-    }
-
-    public void OnResetHand()
-    {
-        /*
-        if(canPickUp && tpm != null)
-        {
-            Destroy(tpm.Hand);
-            tpm = null;
-            handCam = null;
-        }*/
     }
     #endregion
 
@@ -547,65 +534,53 @@ public class PlayerController : MonoBehaviour
     {
         crosshair.SetActive(true);
 
-        if(tpm != null)
-        {
-            tpm.OutlineScript.enabled = true;
-        }
-
-        if(ec != null)
-        {
-            ec.OutlineScript.enabled = true;
-        }
-
         switch (currentActive)
         {
             case activeController.PERSON:
                 eCaster.IsCasting = false;
                 break;
             case activeController.HAND:
-                UpdateHandCam(-5, CinemachineBrain.UpdateMethod.LateUpdate, CinemachineBrain.BrainUpdateMethod.FixedUpdate, activeController.PERSON);
-                fpsMesh.SetActive(false);
-                tpm.MovePlayer(Vector2.zero);
+                ToZombie();
+                
                 tpm.SwitchCameras();
-
-                pmb.PickUpBodyPartReminder.SetActive(true);
+                tpm.MovePlayer(Vector2.zero);
                 break;
             case activeController.EYE:
-                //eyeImageRenderer.SetActive(false);
-                mainCam.cullingMask = startingRendererMask;
-                eyeCam.Priority = -1;
-                currentActive = activeController.PERSON;
-                mainCamBrain.m_UpdateMethod = CinemachineBrain.UpdateMethod.LateUpdate;
-                mainCamBrain.m_BlendUpdateMethod = CinemachineBrain.BrainUpdateMethod.FixedUpdate;
-                fpsMesh.SetActive(false);
+                ToZombie();
 
-                pmb.PickUpBodyPartReminder.SetActive(true);
+                UpdateCamera(walkCam);
+                mainCam.cullingMask = startingRendererMask;
                 break;
         }
 
         StartCoroutine(EnableArms());
     }
 
-    public void RemovePickupBodyPartReminder()
+    /// <summary>
+    /// Switches the state to being the zombie.
+    /// </summary>
+    private void ToZombie()
     {
-        if(ec == null && tpm == null)
-        pmb.PickUpBodyPartReminder.SetActive(false);
-    }
-
-    private IEnumerator EnableArms()
-    {
-        if (currentActive.Equals(activeController.PERSON))
+        if (tpm != null)
         {
-            if (walkCam.Priority == 50)
-            {
-                walkCam.Priority = 51;
-            }
-            else
-            {
-                walkCam.Priority = 50;
-            }
+            tpm.OutlineScript.enabled = true;
         }
 
+        if (ec != null)
+        {
+            ec.OutlineScript.enabled = true;
+        }
+
+        currentActive = activeController.PERSON;
+        fpsMesh.SetActive(false);
+    }
+
+    /// <summary>
+    /// Enables the arms.
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator EnableArms()
+    {
         yield return new WaitForFixedUpdate();
         yield return new WaitForFixedUpdate();
 
@@ -631,31 +606,27 @@ public class PlayerController : MonoBehaviour
         {
             // To the hand from the person
             case activeController.PERSON:
-                ToHandFromPerson();
+                // If player is trying to cast eye then stop it
+                if (ec == null && eCaster.IsCasting)
+                {
+                    NoLongerCastingEye();
+                }
 
-                pmb.PickUpBodyPartReminder.SetActive(false);
+                // Initializes hand if it isn't created yet
+                IsHandActiveCheck();
+
+                // Sets all the values for it going to the hand
+                pm.MovePlayer(Vector2.zero, false);
+                ChangeMeshState(true, false, false);
+                ToHand();
                 break;
 
-                /*
-            // To the person from the hand
-            case activeController.HAND:
-                UpdateHandCam(0, CinemachineBrain.UpdateMethod.LateUpdate, CinemachineBrain.BrainUpdateMethod.FixedUpdate, activeController.PERSON);
-                fpsMesh.SetActive(false);
-                tpm.MovePlayer(Vector2.zero);
-                break;
-                */
             // To the hand from the eye
             case activeController.EYE:
                 if (tpm != null)
                 {
-                    //eyeImageRenderer.SetActive(false);
                     mainCam.cullingMask = startingRendererMask;
-                    tpm.SwitchCameras();
-                    UpdateHandCam(100, CinemachineBrain.UpdateMethod.FixedUpdate, CinemachineBrain.BrainUpdateMethod.FixedUpdate, activeController.HAND);
-                    //UpdateHandCam(100, CinemachineBrain.UpdateMethod.FixedUpdate, CinemachineBrain.BrainUpdateMethod.FixedUpdate, activeController.HAND);
-                    eyeCam.Priority = -1;
-                    pm.MovePlayer(Vector2.zero, false);
-                    tpm.OutlineScript.enabled = false;
+                    ToHand();
                 }
                 break;
         }
@@ -664,9 +635,9 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// Handles the event of changing to the hand from the person.
+    /// Initializes the hand if it hasn't been created yet.
     /// </summary>
-    private void ToHandFromPerson()
+    private void IsHandActiveCheck()
     {
         if (tpm == null)
         {
@@ -677,28 +648,23 @@ public class PlayerController : MonoBehaviour
         {
             tpm.SwitchCameras();
         }
-
-        if (ec == null && eCaster.IsCasting)
-        {
-            NoLongerCastingEye();
-        }
-
-        fpsMesh.SetActive(true);
-
-        crosshair.SetActive(false);
-
-        UpdateHandCam(100, CinemachineBrain.UpdateMethod.FixedUpdate, CinemachineBrain.BrainUpdateMethod.FixedUpdate, activeController.HAND);
-        //UpdateHandCam(100, CinemachineBrain.UpdateMethod.FixedUpdate, CinemachineBrain.BrainUpdateMethod.FixedUpdate, activeController.HAND);
-        pm.MovePlayer(Vector2.zero, false);
-        tpm.OutlineScript.enabled = false;
     }
 
-    private void UpdateHandCam(int priority, CinemachineBrain.UpdateMethod camUpdateMethod, CinemachineBrain.BrainUpdateMethod camBlendUpdate, activeController newActive)
+    /// <summary>
+    /// Handles the event of changing to the hand from the person.
+    /// </summary>
+    private void ToHand()
     {
-        //handCam.Priority = priority;
-        mainCamBrain.m_UpdateMethod = camUpdateMethod;
-        mainCamBrain.m_BlendUpdateMethod = camBlendUpdate;
-        currentActive = newActive;
+        currentActive =  activeController.HAND;
+        if(tpm.OutlineScript != null)
+        tpm.OutlineScript.enabled = false;
+        tpm.SwitchCameras();
+        ChangeBlendMethod(CinemachineBrain.BrainUpdateMethod.LateUpdate);
+    }
+
+    private void ChangeBlendMethod(CinemachineBrain.BrainUpdateMethod updateMethod)
+    {
+        //mainCamBrain.m_BlendUpdateMethod = updateMethod;
     }
     #endregion
 
@@ -719,16 +685,8 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
-                    StartCoroutine(SetEyeImageRenderer());
-                    crosshair.SetActive(false);
-                    fpsMesh.SetActive(true);
                     pm.MovePlayer(Vector2.zero, false);
-                    eyeCam.Priority = 100;
-                    currentActive = activeController.EYE;
-                    ec.OutlineScript.enabled = false;
-                    armMesh.SetActive(false);
-
-                    pmb.PickUpBodyPartReminder.SetActive(false);
+                    ChangeToEye();
                 }
                 break;
 
@@ -737,30 +695,39 @@ public class PlayerController : MonoBehaviour
             case activeController.HAND:
                 if(ec != null)
                 {
-                    StartCoroutine(SetEyeImageRenderer());
-                    tpm.MovePlayer(Vector2.zero);
-                    eyeCam.Priority = 100;
-                    currentActive = activeController.EYE;
                     tpm.SwitchCameras();
-                    armMesh.SetActive(false);
+                    tpm.MovePlayer(Vector2.zero);
+
+                    ChangeToEye();
                 }
                 break;
-                /*
-            // Changes from the eye to the player
-            case activeController.EYE:
-                eyeCam.Priority = 0;
-                currentActive = activeController.PERSON;
-                mainCamBrain.m_UpdateMethod = CinemachineBrain.UpdateMethod.LateUpdate;
-                mainCamBrain.m_BlendUpdateMethod = CinemachineBrain.BrainUpdateMethod.FixedUpdate;
-                fpsMesh.SetActive(false);
-                break;*/
         }
     }
 
+    /// <summary>
+    /// Changes the player to be using the eye.
+    /// </summary>
+    private void ChangeToEye()
+    {
+        // Sets the player state
+        currentActive = activeController.EYE;
+        ec.OutlineScript.enabled = false;
+
+        ChangeMeshState(true, false, false);
+        UpdateCamera(eyeCam);
+        StartCoroutine(SetEyeImageRenderer());
+    }
+
+    /// <summary>
+    /// Sets the image renderer for the eye to see hidden images.
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator SetEyeImageRenderer()
     {
+        // Garuntees a wait for the camera to blend
         yield return new WaitForFixedUpdate();
         yield return new WaitForFixedUpdate();
+
         while (mainCamBrain.IsBlending)
         {
             yield return new WaitForFixedUpdate();
@@ -769,7 +736,6 @@ public class PlayerController : MonoBehaviour
         if (currentActive.Equals(activeController.EYE))
         {
             mainCam.cullingMask = eyeImageRendererMask;
-            //eyeImageRenderer.SetActive(true);
         }
     }
 
@@ -785,114 +751,78 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// Handles the looking of the eye.
     /// </summary>
-    /// <param name="input"></param>
+    /// <param name="input">The input mouse delta.</param>
     public void OnMouseLook(InputValue input)
     {
         Vector2 inputVec = input.Get<Vector2>();
 
-        if (currentActive.Equals(activeController.EYE) && !mainCamBrain.IsBlending && !radialMenu.activeInHierarchy)
+        if (currentActive.Equals(activeController.EYE) && !mainCamBrain.IsBlending && !pmb.RadialMenuPanel.activeInHierarchy)
         {
             ec.Look(inputVec);
         }
-    }
-    #endregion
-
-    #region Heart
-    /// <summary>
-    /// Changes to and from heart
-    /// </summary>
-    private void OnHeart()
-    {
-        switch (currentActive)
+        else if (currentActive.Equals(activeController.HAND))
         {
-            /*// Pulls out the heart to be place or changes from the person to the heart
-            case activeController.PERSON:
-
-                if (hc == null)
-                {
-                    //NoLongerCastingEye();
-                }
-                else
-                {
-                    StartCoroutine(SetEyeImageRenderer());
-                    crosshair.SetActive(false);
-                    fpsMesh.SetActive(true);
-                    pm.MovePlayer(Vector2.zero, false);
-                    eyeCam.Priority = 100;
-                    currentActive = activeController.EYE;
-                    ec.OutlineScript.enabled = false;
-                    armMesh.SetActive(false);
-
-                    pmb.PickUpBodyPartReminder.SetActive(false);
-                }
-                break;
-
-
-            // Changes to the heart from the hand
-            case activeController.HAND:
-                if (hc != null)
-                {
-                    StartCoroutine(SetEyeImageRenderer());
-                    tpm.MovePlayer(Vector2.zero);
-                    eyeCam.Priority = 100;
-                    currentActive = activeController.EYE;
-                    tpm.SwitchCameras();
-                    armMesh.SetActive(false);
-                }
-                break;
-            // Changes from the eye to the heart
-            case activeController.EYE:
-                if (hc != null)
-                {
-                    StartCoroutine(SetEyeImageRenderer());
-                    tpm.MovePlayer(Vector2.zero);
-                    eyeCam.Priority = 100;
-                    currentActive = activeController.EYE;
-                    tpm.SwitchCameras();
-                    armMesh.SetActive(false);
-                }
-                break;*/
+            tpm.UpdateCameraCall(inputVec);
         }
     }
     #endregion
 
-    #region Select Radial Menu Item
+    #region Radial Menu
     /// <summary>
     /// Handles the spawning of the eye when the mouse is clicked and the playing is casting.
     /// </summary>
     public void OnClick()
     {
-        if (eCaster.IsCasting && eCaster.CanCast && Time.timeScale != 0 && !radialMenuPanel.activeInHierarchy)
+        if (eCaster.IsCasting && eCaster.CanCast && Time.timeScale != 0 && !pmb.RadialMenuPanel.activeInHierarchy)
         {
             eCaster.IsCasting = false;
             GameObject eye = eCaster.SpawnEye();
-            crosshair.SetActive(false);
             InitializeEye(eye);
-            ec.OutlineScript.enabled = false;
         }
-        else if (radialMenuPanel.activeInHierarchy && Time.timeScale != 0)
+        else if (pmb.RadialMenuPanel.activeInHierarchy && Time.timeScale != 0)
         {
-            switch (radialMenu.GetComponent<RadialMenuController>().Im.sprite.name)
+            switch (pmb.RMC.Im.sprite.name)
             {
-                case "RadialMenuNewAtlas_10":
+                case "RadialMenuNewAtlas_5":
                     OnBody();
                     break;
-                case "RadialMenuNewAtlas_12":
+                case "RadialMenuNewAtlas_6":
                     OnEye();
                     break;
-                case "RadialMenuNewAtlas_8":
+                case "RadialMenuNewAtlas_7":
                     OnHand();
-                    break;
-                case "RadialMenuNewAtlas_11":
-                    OnHeart();
                     break;
             }
 
             Invoke("OnOpenMenu", 0.05f);
-            //OnOpenMenu();
         }
     }
     #endregion
     #endregion
+    #endregion
+
+    #region Change States
+    /// <summary>
+    /// Sets the camera to be the new camera.
+    /// </summary>
+    /// <param name="newCam">The camera to be set to.</param>
+    private void UpdateCamera(CinemachineVirtualCamera newCam)
+    {
+        mainCamBrain.ActiveVirtualCamera.Priority = 0;
+        newCam.Priority = 1;
+    }
+
+    /// <summary>
+    /// Changes between different mesh states.
+    /// </summary>
+    /// <param name="shouldShowZombie">Holds true if the zombie should be shown.</param>
+    /// <param name="shouldShowArms">Holds true if the arms should be shown.</param>
+    /// <param name="shouldShowCrosshair">Holds true if the crosshair should be shown.</param>
+    private void ChangeMeshState(bool shouldShowZombie, bool shouldShowArms, bool shouldShowCrosshair)
+    {
+        fpsMesh.SetActive(shouldShowZombie);
+        armMesh.SetActive(shouldShowArms);
+        crosshair.SetActive(shouldShowCrosshair);
+    }
     #endregion
 }

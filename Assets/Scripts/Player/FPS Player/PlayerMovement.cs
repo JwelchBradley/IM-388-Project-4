@@ -183,7 +183,6 @@ public class PlayerMovement : MonoBehaviour
         mainCamBrain = Camera.main.GetComponent<CinemachineBrain>();
         walkCam = GameObject.Find("Walk vcam").GetComponent<CinemachineVirtualCamera>();
         walkCamPOV = walkCam.GetCinemachineComponent<CinemachinePOV>();
-        CinemachineCore.GetInputAxis = GetAxisCustom;
 
         SetCameraSens();
     }
@@ -192,8 +191,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!PlayerPrefs.HasKey("X Sens"))
         {
-            PlayerPrefs.SetFloat("X Sens", 400);
-            PlayerPrefs.SetFloat("Y Sens", 400);
+            PlayerPrefs.SetFloat("X Sens", .3f);
+            PlayerPrefs.SetFloat("Y Sens", .3f);
         }
 
         if (PlayerPrefs.GetFloat("X Sens") != 0 && PlayerPrefs.GetFloat("Y Sens") != 0)
@@ -213,18 +212,6 @@ public class PlayerMovement : MonoBehaviour
     {
         this.active = active;
         this.move = new Vector3(move.x, 0, move.y);
-    }
-
-    /// <summary>
-    /// The player jumps if they are on the ground.
-    /// </summary>
-    public void Jump()
-    {
-        /*
-        if (isGrounded)
-        {
-            velocity.y = Mathf.Sqrt(currentJumpHeight * -2f * gravity);
-        }*/
     }
 
     /// <summary>
@@ -295,6 +282,8 @@ public class PlayerMovement : MonoBehaviour
         {
             RotateMesh();
         }
+
+        ChangeCinemachineInputProvider(Time.deltaTime != 0 && !mainCamBrain.IsBlending && !pc.PMB.RadialMenuPanel.activeInHierarchy && !pc.PMB.Note.activeInHierarchy);
     }
 
     /// <summary>
@@ -408,12 +397,18 @@ public class PlayerMovement : MonoBehaviour
     #endregion
 
     #region Camera Limitation
-
-    private float GetAxisCustom(string axisName)
+    private void ChangeCinemachineInputProvider(bool newState)
     {
-        if (mainCamBrain.IsBlending || GetComponent<PlayerController>().Current || pauseMenu.Note.activeInHierarchy)
-            return 0;
-        return Input.GetAxis(axisName);
+        if (newState)
+        {
+            walkCamPOV.m_HorizontalAxis.m_MaxSpeed = PlayerPrefs.GetFloat("X Sens");
+            walkCamPOV.m_VerticalAxis.m_MaxSpeed = PlayerPrefs.GetFloat("Y Sens"); ;
+        }
+        else
+        {
+            walkCamPOV.m_HorizontalAxis.m_MaxSpeed = 0;
+            walkCamPOV.m_VerticalAxis.m_MaxSpeed = 0;
+        }
     }
     #endregion
     #endregion
