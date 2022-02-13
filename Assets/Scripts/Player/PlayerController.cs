@@ -96,6 +96,19 @@ public class PlayerController : MonoBehaviour
     {
         get => eCaster;
     }
+
+    /// <summary>
+    /// The eye casting component.
+    /// </summary>
+    private HeartController hc;
+
+    /// <summary>
+    /// The eye casing component.
+    /// </summary>
+    public HeartController HC
+    {
+        get => hc;
+    }
     #endregion
     #endregion
 
@@ -185,6 +198,18 @@ public class PlayerController : MonoBehaviour
     public GameObject RightHandArmMesh
     {
         get => rightHandArmMesh;
+    }
+
+    [Tooltip("The mesh of the fps player heart")]
+    [SerializeField]
+    private GameObject heartMesh;
+
+    /// <summary>
+    /// The mesh of the fps player heart.
+    /// </summary>
+    public GameObject HeartMesh
+    {
+        get => heartMesh;
     }
 
     [Tooltip("The animator of the players arms")]
@@ -306,6 +331,8 @@ public class PlayerController : MonoBehaviour
             ChangeMeshState(true, false, false);
             ToHand();
         }
+
+        InitializeHeart();
     }
 
     /// <summary>
@@ -343,6 +370,14 @@ public class PlayerController : MonoBehaviour
 
         ChangeToEye();
     }
+
+    private void InitializeHeart()
+    {
+        heartMesh.SetActive(false);
+
+        hc = heartMesh.gameObject.GetComponent<HeartController>();
+        hc.enabled = false;
+    }
     #endregion
 
     #region Input Calls
@@ -366,6 +401,9 @@ public class PlayerController : MonoBehaviour
         switch (currentActive)
         {
             case activeController.PERSON:
+                pm.Crouch();
+                break;
+            case activeController.HEART:
                 pm.Crouch();
                 break;
         }
@@ -395,6 +433,10 @@ public class PlayerController : MonoBehaviour
         switch (currentActive)
         {
             case activeController.PERSON:
+                pm.MovePlayer(inputVec, true);
+                break;
+
+            case activeController.HEART:
                 pm.MovePlayer(inputVec, true);
                 break;
 
@@ -551,6 +593,12 @@ public class PlayerController : MonoBehaviour
                 UpdateCamera(walkCam);
                 mainCam.cullingMask = startingRendererMask;
                 break;
+            case activeController.HEART:
+                if(!hc.enabled)
+                {
+                    heartMesh.SetActive(false);
+                }
+                break;
         }
 
         StartCoroutine(EnableArms());
@@ -629,6 +677,22 @@ public class PlayerController : MonoBehaviour
                     ToHand();
                 }
                 break;
+
+            // To the hand from the heart
+            case activeController.HEART:
+                if(!hc.enabled)
+                {
+                    heartMesh.SetActive(false);
+                }
+                // Initializes hand if it isn't created yet
+                IsHandActiveCheck();
+
+                // Sets all the values for it going to the hand
+                pm.MovePlayer(Vector2.zero, false);
+                ChangeMeshState(true, false, false);
+                ToHand();
+                break;
+
         }
 
         armMesh.SetActive(false);
@@ -701,6 +765,18 @@ public class PlayerController : MonoBehaviour
                     ChangeToEye();
                 }
                 break;
+            case activeController.HEART:
+                if (ec != null)
+                {
+                    if (!hc.enabled)
+                    {
+                        heartMesh.SetActive(false);
+                    }
+
+                    ChangeToEye();
+                }
+                
+                break;
         }
     }
 
@@ -767,6 +843,47 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
+    #region Heart
+    /// <summary>
+    /// Changes to and from the heart.
+    /// </summary>
+    private void OnHeart()
+    {
+        crosshair.SetActive(true);
+
+        switch (currentActive)
+        {
+            case activeController.PERSON:
+                eCaster.IsCasting = false;
+                break;
+            case activeController.HAND:
+                ToZombie();
+
+                tpm.SwitchCameras();
+                tpm.MovePlayer(Vector2.zero);
+                break;
+            case activeController.EYE:
+                ToZombie();
+
+                UpdateCamera(walkCam);
+                mainCam.cullingMask = startingRendererMask;
+                break;
+        }
+
+        heartMesh.SetActive(true);
+        currentActive = activeController.HEART;
+        StartCoroutine(EnableArms());
+    }
+
+    /// <summary>
+    /// Activates heart state when picking up the heart
+    /// </summary>
+    public void ActivateHeartStateFromBody()
+    {
+        OnHeart();
+    }
+    #endregion
+
     #region Radial Menu
     /// <summary>
     /// Handles the spawning of the eye when the mouse is clicked and the playing is casting.
@@ -783,14 +900,17 @@ public class PlayerController : MonoBehaviour
         {
             switch (pmb.RMC.Im.sprite.name)
             {
-                case "RadialMenuNewAtlas_5":
+                case "RadialMenuNewAtlas_10":
                     OnBody();
                     break;
-                case "RadialMenuNewAtlas_6":
+                case "RadialMenuNewAtlas_12":
                     OnEye();
                     break;
-                case "RadialMenuNewAtlas_7":
+                case "RadialMenuNewAtlas_8":
                     OnHand();
+                    break;
+                case "RadialMenuNewAtlas_11":
+                    OnHeart();
                     break;
             }
 
