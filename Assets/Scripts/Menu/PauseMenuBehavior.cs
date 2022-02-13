@@ -78,6 +78,14 @@ public class PauseMenuBehavior : MenuBehavior
     [Tooltip("The UI for notes")]
     [SerializeField] private GameObject note;
 
+    [SerializeField]
+    private GameObject keyPad;
+
+    public GameObject KeyPad
+    {
+        get => keyPad;
+    }
+
     /// <summary>
     /// The UI for notes.
     /// </summary>
@@ -110,7 +118,7 @@ public class PauseMenuBehavior : MenuBehavior
     public void PauseGame()
     {
         // Opens pause menu and pauses the game
-        if (canPause && canClosePauseMenu && !note.activeInHierarchy)
+        if (canPause && canClosePauseMenu && !note.activeInHierarchy && !keyPad.activeInHierarchy)
         {
             if (isPaused)
             {

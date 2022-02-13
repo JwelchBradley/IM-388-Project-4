@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DoorBehaviour : MonoBehaviour
+public class DoorBehaviour : MonoBehaviour, Activatable
 {
     BoxCollider bc;
 
@@ -61,5 +61,11 @@ public class DoorBehaviour : MonoBehaviour
 
             yield return new WaitForEndOfFrame();
         }
+    }
+
+    public void ChangeObjectState()
+    {
+        currentObjectTally = objectivesNeeded;
+        ChangeState(0);
     }
 }
