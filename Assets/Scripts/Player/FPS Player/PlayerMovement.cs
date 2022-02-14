@@ -267,7 +267,7 @@ public class PlayerMovement : MonoBehaviour
     #region Calculations
     private void FixedUpdate()
     {
-        if (!mainCamBrain.IsBlending && !pauseMenu.Note.activeInHierarchy)
+        if (!mainCamBrain.IsBlending && !pauseMenu.Note.activeInHierarchy && !pc.PMB.KeyPad.activeInHierarchy)
             MoveCalculation();
         else
         {
@@ -283,7 +283,7 @@ public class PlayerMovement : MonoBehaviour
             RotateMesh();
         }
 
-        ChangeCinemachineInputProvider(Time.deltaTime != 0 && !mainCamBrain.IsBlending && !pc.PMB.RadialMenuPanel.activeInHierarchy && !pc.PMB.Note.activeInHierarchy);
+        ChangeCinemachineInputProvider(Time.deltaTime != 0 && !mainCamBrain.IsBlending && !pc.PMB.RadialMenuPanel.activeInHierarchy && !pc.PMB.Note.activeInHierarchy && !pc.PMB.KeyPad.activeInHierarchy);
     }
 
     /// <summary>
