@@ -96,6 +96,17 @@ public class PlayerController : MonoBehaviour
     {
         get => eCaster;
     }
+
+    [SerializeField]
+    private HeartController hc;
+
+    public HeartController HC
+    {
+        get => hc;
+    }
+
+    [SerializeField]
+    private GameObject heartMesh;
     #endregion
     #endregion
 
@@ -342,6 +353,11 @@ public class PlayerController : MonoBehaviour
         eyeCam = eye.GetComponentInChildren<CinemachineVirtualCamera>();
 
         ChangeToEye();
+    }
+
+    private void InitializeHeart()
+    {
+        heartMesh.SetActive(true);
     }
     #endregion
 
@@ -869,8 +885,11 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void NoLongerCastingEye()
     {
-        eCaster.IsCasting = !eCaster.IsCasting;
-        crosshair.SetActive(!crosshair.activeInHierarchy);
+        if (currentActive.Equals(activeController.PERSON))
+        {
+            eCaster.IsCasting = !eCaster.IsCasting;
+            crosshair.SetActive(!crosshair.activeInHierarchy);
+        }
     }
     #endregion
 
@@ -904,12 +923,12 @@ public class PlayerController : MonoBehaviour
     #region Activation and Deactivation
     private void ActivateHeart()
     {
-
+        heartMesh.SetActive(true);
     }
 
     private void DeactivateHeart()
     {
-
+        heartMesh.SetActive(false);
     }
 
     #region Change Functions
@@ -973,6 +992,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (pmb.RadialMenuPanel.activeInHierarchy && Time.timeScale != 0)
         {
+            /*
             switch (pmb.RMC.Im.sprite.name)
             {
                 case "RadialMenuNewAtlas_5":
@@ -984,6 +1004,14 @@ public class PlayerController : MonoBehaviour
                 case "RadialMenuNewAtlas_7":
                     OnHand();
                     break;
+            }*/
+            if (pmb.RMC.currentHovered.Equals(activeController.EYE))
+            {
+                OnEye();
+            }
+            else
+            {
+                UpdateBodyPart(pmb.RMC.currentHovered);
             }
 
             Invoke("OnOpenMenu", 0.05f);

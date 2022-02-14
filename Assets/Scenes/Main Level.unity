@@ -36747,6 +36747,7 @@ MonoBehaviour:
   activatableObjects:
   - {fileID: 1487320646}
   interactMessage: Enter Keycode
+  numText: {fileID: 0}
 --- !u!65 &1045045942
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -42260,6 +42261,26 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6456734158009728259, guid: 1889d9abceb8bb34daca70bc9753f5c9, type: 3}
+      propertyPath: eye
+      value: 
+      objectReference: {fileID: -5548439786515485363, guid: 7d659fd6b71053940ab94fa632753e34, type: 3}
+    - target: {fileID: 6456734158009728259, guid: 1889d9abceb8bb34daca70bc9753f5c9, type: 3}
+      propertyPath: hand
+      value: 
+      objectReference: {fileID: -779838273926758070, guid: 7d659fd6b71053940ab94fa632753e34, type: 3}
+    - target: {fileID: 6456734158009728259, guid: 1889d9abceb8bb34daca70bc9753f5c9, type: 3}
+      propertyPath: mouth
+      value: 
+      objectReference: {fileID: 8318689191121538999, guid: 7d659fd6b71053940ab94fa632753e34, type: 3}
+    - target: {fileID: 6456734158009728259, guid: 1889d9abceb8bb34daca70bc9753f5c9, type: 3}
+      propertyPath: normal
+      value: 
+      objectReference: {fileID: 807825223269228001, guid: 7d659fd6b71053940ab94fa632753e34, type: 3}
+    - target: {fileID: 6456734158009728259, guid: 1889d9abceb8bb34daca70bc9753f5c9, type: 3}
+      propertyPath: person
+      value: 
+      objectReference: {fileID: 1205213927858932168, guid: 7d659fd6b71053940ab94fa632753e34, type: 3}
     - target: {fileID: 6543749493377050752, guid: 1889d9abceb8bb34daca70bc9753f5c9, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

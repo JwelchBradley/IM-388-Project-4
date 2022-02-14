@@ -23,6 +23,17 @@ public class RadialMenuController : MonoBehaviour
     Sprite hand;
     [SerializeField]
     Sprite eye;
+    [SerializeField]
+    Sprite heart;
+    [SerializeField]
+    Sprite intestines;
+    [SerializeField]
+    Sprite mouth;
+    [SerializeField]
+    Sprite ear;
+
+    [HideInInspector]
+    public PlayerController.activeController currentHovered;
 
     // Start is called before the first frame update
     void Awake()
@@ -36,17 +47,25 @@ public class RadialMenuController : MonoBehaviour
     {
         float angle = FindAngle();
 
-        if(angle > 60 && angle < 180)
+        if (angle > 90 && angle < 180)
         {
+            currentHovered = PlayerController.activeController.EYE;
             im.sprite = eye;
         }
-        else if(angle >= 180 && angle < 270)
+        else if (angle >= 180 && angle < 270)
         {
+            currentHovered = PlayerController.activeController.HAND;
             im.sprite = hand;
+        }
+        else if (angle >= 270 && angle < 360)
+        {
+            currentHovered = PlayerController.activeController.PERSON;
+            im.sprite = person;
         }
         else
         {
-            im.sprite = person;
+            currentHovered = PlayerController.activeController.HEART;
+            im.sprite = mouth;
         }
     }
 
