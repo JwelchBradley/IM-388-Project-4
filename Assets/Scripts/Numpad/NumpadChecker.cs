@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class NumpadChecker : MonoBehaviour, IInteractable
+public class NumpadChecker : Interactable
 {
     [SerializeField] private int[] code;
 
@@ -42,7 +42,7 @@ public class NumpadChecker : MonoBehaviour, IInteractable
 
     private bool Solved = false;
 
-    private void Awake()
+    private void Start()
     {
         pmb = GameObject.Find("Pause Menu Templates Canvas").GetComponent<PauseMenuBehavior>();
         nc = pmb.KeyPad.GetComponent<NumpadChecker>();
@@ -53,10 +53,11 @@ public class NumpadChecker : MonoBehaviour, IInteractable
         }
     }
 
-    public void DisplayInteractText()
+    /*
+    public override void DisplayInteractText()
     {
         pmb.PickUpText.text = interactMessage;
-    }
+    }*/
 
     public void EnterNumber(int num)
     {
@@ -98,8 +99,21 @@ public class NumpadChecker : MonoBehaviour, IInteractable
         currentIndex = 0;
     }
 
-    public void Interact()
+    public override void Interact()
     {
+        bool canInteract = false;
+
+        foreach (PlayerController.activeController ac in displayTextControllers)
+        {
+            if (ac.Equals(pc.CurrentActive))
+            {
+                canInteract = true;
+                break;
+            }
+        }
+        if (!canInteract)
+            return;
+
         nc.Code = code;
         nc.Activatables = activatables;
 

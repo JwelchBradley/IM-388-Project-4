@@ -487,7 +487,7 @@ public class ThirdPersonMovement : MonoBehaviour
         newRotation = new Vector3(Mathf.Round(newRotation.x), Mathf.Round(newRotation.y), Mathf.Round(newRotation.z));
         // Finds rotation values
         Quaternion oldRotation = visuals.transform.localRotation;
-        Quaternion targetRotation = Quaternion.LookRotation(-hit.normal) * Quaternion.Euler(new Vector3(-90, 0, 0));
+        Quaternion targetRotation = Quaternion.LookRotation(-newRotation) * Quaternion.Euler(new Vector3(-90, 0, 0));
         PlayerMoveAnimation(Vector3.one);
 
         if (isClimbing)

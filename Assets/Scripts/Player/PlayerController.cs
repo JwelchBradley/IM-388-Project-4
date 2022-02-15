@@ -8,6 +8,7 @@
 *****************************************************************************/
 using Cinemachine;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -42,6 +43,13 @@ public class PlayerController : MonoBehaviour
     public activeController CurrentActive
     {
         get => currentActive;
+    }
+
+    private List<GameObject> keys = new List<GameObject>();
+
+    public List<GameObject> Keys
+    {
+        get => keys;
     }
 
     #region Controllers
@@ -476,6 +484,7 @@ public class PlayerController : MonoBehaviour
                 {
                     interactable = hit.transform.gameObject.GetComponent<IInteractable>();
 
+                    if(interactable != null)
                     interactable.DisplayInteractText();
                 }
             }
@@ -992,19 +1001,6 @@ public class PlayerController : MonoBehaviour
         }
         else if (pmb.RadialMenuPanel.activeInHierarchy && Time.timeScale != 0)
         {
-            /*
-            switch (pmb.RMC.Im.sprite.name)
-            {
-                case "RadialMenuNewAtlas_5":
-                    OnBody();
-                    break;
-                case "RadialMenuNewAtlas_6":
-                    OnEye();
-                    break;
-                case "RadialMenuNewAtlas_7":
-                    OnHand();
-                    break;
-            }*/
             if (pmb.RMC.currentHovered.Equals(activeController.EYE))
             {
                 OnEye();
