@@ -8,6 +8,7 @@
 *****************************************************************************/
 using Cinemachine;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -29,7 +30,7 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// List of controllers.
     /// </summary>
-    public enum activeController { HAND, PERSON, EYE, HEART, EARS, INTESTINES, MOUTH };
+    public enum activeController { HAND, PERSON, EYE, EARS, INTESTINES, MOUTH };
 
     /// <summary>
     /// The currently active controller;
@@ -42,6 +43,13 @@ public class PlayerController : MonoBehaviour
     public activeController CurrentActive
     {
         get => currentActive;
+    }
+
+    private List<GameObject> keys = new List<GameObject>();
+
+    public List<GameObject> Keys
+    {
+        get => keys;
     }
 
     #region Controllers
@@ -107,6 +115,11 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private GameObject heartMesh;
+
+    public GameObject HeartMesh
+    {
+        get => heartMesh;
+    }
     #endregion
     #endregion
 
@@ -476,6 +489,7 @@ public class PlayerController : MonoBehaviour
                 {
                     interactable = hit.transform.gameObject.GetComponent<IInteractable>();
 
+                    if(interactable != null)
                     interactable.DisplayInteractText();
                 }
             }
@@ -565,9 +579,10 @@ public class PlayerController : MonoBehaviour
             case activeController.EYE:
                 DeactivateEye();
                 break;
+                /*
             case activeController.HEART:
                 DeactivateHeart();
-                break;
+                break;*/
             case activeController.INTESTINES:
                 DeactivateIntestines();
                 break;
@@ -587,9 +602,10 @@ public class PlayerController : MonoBehaviour
             case activeController.EYE:
                 ActivateEye();
                 break;
+                /*
             case activeController.HEART:
                 ActivateHeart();
-                break;
+                break;*/
             case activeController.INTESTINES:
                 ActivateIntestines();
                 break;
@@ -900,14 +916,16 @@ public class PlayerController : MonoBehaviour
     public void OnMouseLook(InputValue input)
     {
         Vector2 inputVec = input.Get<Vector2>();
-
-        if (currentActive.Equals(activeController.EYE) && !mainCamBrain.IsBlending && !pmb.RadialMenuPanel.activeInHierarchy)
+        if(!mainCamBrain.IsBlending && !pmb.RadialMenuPanel.activeInHierarchy && Time.timeScale != 0)
         {
-            ec.Look(inputVec);
-        }
-        else if (currentActive.Equals(activeController.HAND))
-        {
-            tpm.UpdateCameraCall(inputVec);
+            if (currentActive.Equals(activeController.EYE))
+            {
+                ec.Look(inputVec);
+            }
+            else if (currentActive.Equals(activeController.HAND))
+            {
+                tpm.UpdateCameraCall(inputVec);
+            }
         }
     }
     #endregion
@@ -916,7 +934,7 @@ public class PlayerController : MonoBehaviour
     #region Input Call
     private void OnHeart()
     {
-        UpdateBodyPart(activeController.HEART);
+        //UpdateBodyPart(activeController.HEART);
     }
     #endregion
 
@@ -992,19 +1010,6 @@ public class PlayerController : MonoBehaviour
         }
         else if (pmb.RadialMenuPanel.activeInHierarchy && Time.timeScale != 0)
         {
-            /*
-            switch (pmb.RMC.Im.sprite.name)
-            {
-                case "RadialMenuNewAtlas_5":
-                    OnBody();
-                    break;
-                case "RadialMenuNewAtlas_6":
-                    OnEye();
-                    break;
-                case "RadialMenuNewAtlas_7":
-                    OnHand();
-                    break;
-            }*/
             if (pmb.RMC.currentHovered.Equals(activeController.EYE))
             {
                 OnEye();

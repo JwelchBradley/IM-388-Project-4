@@ -46,7 +46,24 @@ public class RadialMenuController : MonoBehaviour
     void FixedUpdate()
     {
         float angle = FindAngle();
+        Debug.Log(angle);
+        if (angle >= 45 && angle < 180)
+        {
+            currentHovered = PlayerController.activeController.EYE;
+            im.sprite = eye;
+        }
+        else if (angle < 270 && angle > 180)
+        {
+            currentHovered = PlayerController.activeController.HAND;
+            im.sprite = hand;
+        }
+        else
+        {
+            currentHovered = PlayerController.activeController.PERSON;
+            im.sprite = person;
+        }
 
+        /*
         if (angle > 90 && angle < 180)
         {
             currentHovered = PlayerController.activeController.EYE;
@@ -64,9 +81,9 @@ public class RadialMenuController : MonoBehaviour
         }
         else
         {
-            currentHovered = PlayerController.activeController.HEART;
+            currentHovered = PlayerController.activeController.MOUTH;
             im.sprite = mouth;
-        }
+        }*/
     }
 
     /// <summary>
