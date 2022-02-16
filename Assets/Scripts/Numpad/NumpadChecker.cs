@@ -35,17 +35,24 @@ public class NumpadChecker : Interactable
     [SerializeField]
     private string interactMessage = "Enter Keycode";
 
-    NumpadChecker nc;
-
     [SerializeField]
-    private TextMeshProUGUI numText;
+    private string solvedInteractMessage = "This has already been solved";
 
     private bool Solved = false;
+
+    private string currentEntered = "";
+
+    public string CurrentEntered
+    {
+        get => currentEntered;
+    }
+
+    private NumpadController nc;
 
     private void Start()
     {
         pmb = GameObject.Find("Pause Menu Templates Canvas").GetComponent<PauseMenuBehavior>();
-        nc = pmb.KeyPad.GetComponent<NumpadChecker>();
+        nc = pmb.KeyPad.GetComponent<NumpadController>();
 
         foreach(GameObject gm in activatableObjects)
         {
@@ -53,26 +60,33 @@ public class NumpadChecker : Interactable
         }
     }
 
-    /*
     public override void DisplayInteractText()
     {
-        pmb.PickUpText.text = interactMessage;
-    }*/
+        base.DisplayInteractText();
 
-    public void EnterNumber(int num)
+        if (Solved)
+        {
+            text.text = solvedInteractMessage;
+        }
+    }
+
+    public string EnterNumber(int num)
     {
         if (Solved)
         {
-            return;
+            return "Correct";
         }
 
-        numText.text += num;
+        //numText.text += num;
+        currentEntered += num;
         currentIndex++;
 
         if (currentIndex == code.Length)
         {
             Entered();
         }
+
+        return currentEntered;
     }
 
     private void Entered()
@@ -83,7 +97,7 @@ public class NumpadChecker : Interactable
             entered += num.ToString();
         }
 
-        if(entered == numText.text)
+        if(entered == currentEntered)
         {
             ActivateObjects();
         }
@@ -95,12 +109,17 @@ public class NumpadChecker : Interactable
 
     private void Reset()
     {
-        numText.text = "";
+        currentEntered = "";
         currentIndex = 0;
     }
 
     public override void Interact()
     {
+        if (Solved)
+        {
+            return;
+        }
+
         bool canInteract = false;
 
         foreach (PlayerController.activeController ac in displayTextControllers)
@@ -111,14 +130,12 @@ public class NumpadChecker : Interactable
                 break;
             }
         }
-        if (!canInteract)
+        if (!canInteract || Time.timeScale == 0)
             return;
-
-        nc.Code = code;
-        nc.Activatables = activatables;
 
         if (!pmb.KeyPad.activeInHierarchy || !Input.GetKeyDown(KeyCode.Mouse0))
         {
+            nc.CurrentNumpad = GetComponent<NumpadChecker>();
             pmb.KeyPad.SetActive(!pmb.KeyPad.activeInHierarchy);
             Cursor.visible = !Cursor.visible;
             Cursor.lockState = CursorLockMode.Confined;
@@ -127,19 +144,20 @@ public class NumpadChecker : Interactable
 
     private void ActivateObjects()
     {
-        numText.text = "Correct";
+        currentEntered = "Correct";
+        Solved = true;
 
         foreach(Activatable activatable in activatables)
         {
             activatable.ChangeObjectState();
         }
 
-        Invoke("Close", 1f);
+        Invoke("Close", 0.5f);
     }
 
     private void Close()
     {
-        pmb.KeyPad.SetActive(false) ;
+        pmb.KeyPad.SetActive(false);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }

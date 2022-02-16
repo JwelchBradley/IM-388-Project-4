@@ -2,15 +2,53 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HeartPlaceLocation : MonoBehaviour
+public class HeartPlaceLocation : Interactable
 {
-    IHeartActivatable[] heartActivatables = new IHeartActivatable[0];
+    [SerializeField]
+    private GameObject[] activatableObjects;
 
-    public void UpdateHeartInteractables()
+    private List<Activatable> activatables = new List<Activatable>();
+
+    [SerializeField]
+    private Transform heartPlaceLocation;
+
+    private HeartController hc;
+
+    [SerializeField]
+    private string heartPlacedHereMessage = "Press F to pick up the heart";
+
+    private void Start()
     {
-        foreach(IHeartActivatable heartActivatable in heartActivatables)
+        foreach(GameObject activatable in activatableObjects)
         {
-            heartActivatable.ChangeObjectState();
+            activatables.Add(activatable.GetComponent<Activatable>());
+        }
+    }
+
+    public override void DisplayInteractText()
+    {
+        base.DisplayInteractText();
+
+        if(hc != null)
+        {
+            text.text = heartPlacedHereMessage;
+        }
+    }
+
+    public override void Interact()
+    {
+        if (!pc.HeartMesh.activeInHierarchy)
+        {
+            pc.HeartMesh.transform.position = heartPlaceLocation.position;
+            pc.HeartMesh.SetActive(true);
+            hc = pc.HeartMesh.GetComponent<HeartController>();
+            hc.heartActivatables = activatables;
+            hc.StartCoroutine(hc.Switch());
+        }
+        else
+        {
+            hc = null;
+            pc.HeartMesh.SetActive(false);
         }
     }
 }

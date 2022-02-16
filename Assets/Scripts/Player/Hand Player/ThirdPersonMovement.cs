@@ -33,7 +33,7 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         set
         {
-            xSens = value/10;
+            xSens = value;
         }
     }
 
@@ -49,7 +49,7 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         set
         {
-            ySens = value/10;
+            ySens = value;
         }
     }
     #endregion

@@ -9,19 +9,31 @@ public class HeartController : MonoBehaviour
     [Tooltip("Time it takes for the heart to beat.")]
     public float heartbeatTime = 1f;
 
+    [HideInInspector]
+    public List<Activatable> heartActivatables = new List<Activatable>();
+
 
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine("Switch");
+        
     }
 
-    IEnumerator Switch()
+    public IEnumerator Switch()
     {
         while (true)
         {
-            heartbeatSwitch = !heartbeatSwitch;
             yield return new WaitForSeconds(heartbeatTime);
+            UpdateHeartInteractables();
+            //heartbeatSwitch = !heartbeatSwitch;
+        }
+    }
+
+    public void UpdateHeartInteractables()
+    {
+        foreach (Activatable heartActivatable in heartActivatables)
+        {
+            heartActivatable.ChangeObjectState();
         }
     }
 }

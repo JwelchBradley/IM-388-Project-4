@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// List of controllers.
     /// </summary>
-    public enum activeController { HAND, PERSON, EYE, HEART, EARS, INTESTINES, MOUTH };
+    public enum activeController { HAND, PERSON, EYE, EARS, INTESTINES, MOUTH };
 
     /// <summary>
     /// The currently active controller;
@@ -115,6 +115,11 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private GameObject heartMesh;
+
+    public GameObject HeartMesh
+    {
+        get => heartMesh;
+    }
     #endregion
     #endregion
 
@@ -574,9 +579,10 @@ public class PlayerController : MonoBehaviour
             case activeController.EYE:
                 DeactivateEye();
                 break;
+                /*
             case activeController.HEART:
                 DeactivateHeart();
-                break;
+                break;*/
             case activeController.INTESTINES:
                 DeactivateIntestines();
                 break;
@@ -596,9 +602,10 @@ public class PlayerController : MonoBehaviour
             case activeController.EYE:
                 ActivateEye();
                 break;
+                /*
             case activeController.HEART:
                 ActivateHeart();
-                break;
+                break;*/
             case activeController.INTESTINES:
                 ActivateIntestines();
                 break;
@@ -909,14 +916,16 @@ public class PlayerController : MonoBehaviour
     public void OnMouseLook(InputValue input)
     {
         Vector2 inputVec = input.Get<Vector2>();
-
-        if (currentActive.Equals(activeController.EYE) && !mainCamBrain.IsBlending && !pmb.RadialMenuPanel.activeInHierarchy)
+        if(!mainCamBrain.IsBlending && !pmb.RadialMenuPanel.activeInHierarchy && Time.timeScale != 0)
         {
-            ec.Look(inputVec);
-        }
-        else if (currentActive.Equals(activeController.HAND))
-        {
-            tpm.UpdateCameraCall(inputVec);
+            if (currentActive.Equals(activeController.EYE))
+            {
+                ec.Look(inputVec);
+            }
+            else if (currentActive.Equals(activeController.HAND))
+            {
+                tpm.UpdateCameraCall(inputVec);
+            }
         }
     }
     #endregion
@@ -925,7 +934,7 @@ public class PlayerController : MonoBehaviour
     #region Input Call
     private void OnHeart()
     {
-        UpdateBodyPart(activeController.HEART);
+        //UpdateBodyPart(activeController.HEART);
     }
     #endregion
 
