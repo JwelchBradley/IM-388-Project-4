@@ -45,10 +45,6 @@ public class SliderBehavior : MonoBehaviour
     /// </summary>
     private CinemachinePOV walkCamPOV;
 
-    private CinemachinePOV thirdPersonCamera;
-
-    private GameObject thirdPersonMovement;
-
     private ThirdPersonMovement tpm;
     #endregion
 
@@ -105,16 +101,16 @@ public class SliderBehavior : MonoBehaviour
                 switch (variableName)
                 {
                     case "X Sens":
-                            PlayerPrefs.SetFloat(variableName, 400);
+                            PlayerPrefs.SetFloat(variableName, 1);
                             break;
                     case "Y Sens":
-                            PlayerPrefs.SetFloat(variableName, 400);
+                            PlayerPrefs.SetFloat(variableName, 1);
                             break;
                     case "X Sens Hand":
-                        PlayerPrefs.SetFloat(variableName, 200);
+                        PlayerPrefs.SetFloat(variableName, 1);
                         break;
                     case "Y Sens Hand":
-                        PlayerPrefs.SetFloat(variableName, 2);
+                        PlayerPrefs.SetFloat(variableName, 1);
                         break;
                     default:
                             break;
@@ -149,15 +145,24 @@ public class SliderBehavior : MonoBehaviour
             switch (variableName)
             {
                 case "X Sens":
-                    walkCamPOV.m_HorizontalAxis.m_MaxSpeed = sliderValue;
+                    walkCamPOV.m_HorizontalAxis.m_MaxSpeed = sliderValue/3;
+                    Debug.Log(walkCamPOV.m_HorizontalAxis.m_MaxSpeed);
                     break;
                 case "Y Sens":
-                    walkCamPOV.m_VerticalAxis.m_MaxSpeed = sliderValue;
+                    walkCamPOV.m_VerticalAxis.m_MaxSpeed = sliderValue/3;
+                    Debug.Log(walkCamPOV.m_HorizontalAxis.m_MaxSpeed);
                     break;
                 case "X Sens Hand":
                     {
                         if (tpm == null)
-                            tpm = GameObject.Find("Hand Player").GetComponent<ThirdPersonMovement>();
+                        {
+                            GameObject handPlayer = GameObject.Find("Hand Player");
+
+                            if(handPlayer != null)
+                            {
+                                tpm = handPlayer.GetComponent<ThirdPersonMovement>();
+                            }
+                        }
 
                         if (tpm != null)
                         {
@@ -213,7 +218,6 @@ public class SliderBehavior : MonoBehaviour
             value /= 100;
 
             inputField.text = value.ToString();
-            //Debug.Log(variableName);
         }
     }
 }

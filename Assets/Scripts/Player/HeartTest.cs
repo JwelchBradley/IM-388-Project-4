@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HeartTest : MonoBehaviour
+public class HeartTest : MonoBehaviour,Activatable
 {
     [Tooltip("The heart controller")]
     public HeartController hc;
@@ -17,6 +17,12 @@ public class HeartTest : MonoBehaviour
     /// </summary>
     private bool previousState = false;
 
+    public void ChangeObjectState()
+    {
+        gameObject.SetActive(!gameObject.activeInHierarchy);
+        //mesh.enabled = !mesh.enabled;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,9 +32,10 @@ public class HeartTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(hc.enabled)
+        /*
+        if (hc.enabled)
         {
-            if(previousState != hc.heartbeatSwitch)
+            if (previousState != hc.heartbeatSwitch)
             {
                 mesh.enabled = !mesh.enabled;
                 previousState = hc.heartbeatSwitch;
@@ -37,6 +44,6 @@ public class HeartTest : MonoBehaviour
         else
         {
             mesh.enabled = true;
-        }
+        }*/
     }
 }

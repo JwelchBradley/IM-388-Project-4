@@ -179,6 +179,7 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private void GetCameras()
     {
+        PlayerPrefs.DeleteAll();
         cameraTransform = Camera.main.transform;
         mainCamBrain = Camera.main.GetComponent<CinemachineBrain>();
         walkCam = GameObject.Find("Walk vcam").GetComponent<CinemachineVirtualCamera>();
@@ -191,14 +192,14 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!PlayerPrefs.HasKey("X Sens"))
         {
-            PlayerPrefs.SetFloat("X Sens", .3f);
-            PlayerPrefs.SetFloat("Y Sens", .3f);
+            PlayerPrefs.SetFloat("X Sens", 1);
+            PlayerPrefs.SetFloat("Y Sens", 1);
         }
 
         if (PlayerPrefs.GetFloat("X Sens") != 0 && PlayerPrefs.GetFloat("Y Sens") != 0)
         {
-            walkCamPOV.m_HorizontalAxis.m_MaxSpeed = PlayerPrefs.GetFloat("X Sens");
-            walkCamPOV.m_VerticalAxis.m_MaxSpeed = PlayerPrefs.GetFloat("Y Sens");
+            walkCamPOV.m_HorizontalAxis.m_MaxSpeed = PlayerPrefs.GetFloat("X Sens")/3;
+            walkCamPOV.m_VerticalAxis.m_MaxSpeed = PlayerPrefs.GetFloat("Y Sens")/3;
         }
     }
     #endregion
@@ -267,7 +268,7 @@ public class PlayerMovement : MonoBehaviour
     #region Calculations
     private void FixedUpdate()
     {
-        if (!mainCamBrain.IsBlending && !pauseMenu.Note.activeInHierarchy)
+        if (!mainCamBrain.IsBlending && !pauseMenu.Note.activeInHierarchy && !pc.PMB.KeyPad.activeInHierarchy)
             MoveCalculation();
         else
         {
@@ -283,7 +284,7 @@ public class PlayerMovement : MonoBehaviour
             RotateMesh();
         }
 
-        ChangeCinemachineInputProvider(Time.deltaTime != 0 && !mainCamBrain.IsBlending && !pc.PMB.RadialMenuPanel.activeInHierarchy && !pc.PMB.Note.activeInHierarchy);
+        ChangeCinemachineInputProvider(Time.deltaTime != 0 && !mainCamBrain.IsBlending && !pc.PMB.RadialMenuPanel.activeInHierarchy && !pc.PMB.Note.activeInHierarchy && !pc.PMB.KeyPad.activeInHierarchy);
     }
 
     /// <summary>
@@ -401,8 +402,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (newState)
         {
-            walkCamPOV.m_HorizontalAxis.m_MaxSpeed = PlayerPrefs.GetFloat("X Sens");
-            walkCamPOV.m_VerticalAxis.m_MaxSpeed = PlayerPrefs.GetFloat("Y Sens"); ;
+            walkCamPOV.m_HorizontalAxis.m_MaxSpeed = PlayerPrefs.GetFloat("X Sens")/3;
+            walkCamPOV.m_VerticalAxis.m_MaxSpeed = PlayerPrefs.GetFloat("Y Sens")/3;
         }
         else
         {
