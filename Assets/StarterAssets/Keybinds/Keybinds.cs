@@ -57,6 +57,38 @@ public class @Keybinds : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Body"",
+                    ""type"": ""Button"",
+                    ""id"": ""dc2f651e-5f06-4c07-a345-e0df66e4288c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Eye"",
+                    ""type"": ""Button"",
+                    ""id"": ""ee4ae34f-c4bf-48dd-818c-d6e80d14446b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Ear"",
+                    ""type"": ""Button"",
+                    ""id"": ""30fd23aa-3a75-48c0-8d96-0d4fddda3ff1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Hand"",
+                    ""type"": ""Button"",
+                    ""id"": ""fb19e3ce-19a6-4d39-97b8-7ef5fd536dc7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -246,6 +278,50 @@ public class @Keybinds : IInputActionCollection, IDisposable
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""00195c07-cde5-4ae3-b409-72df73a19631"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Body"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""935e8ecf-6a84-421e-96cc-e3a69e80938c"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Eye"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""00c1f2c9-0530-4cda-b100-db5e7c0908f9"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Ear"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8a3e0178-a4b2-4d96-b895-c3fefa20744f"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Hand"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -307,6 +383,10 @@ public class @Keybinds : IInputActionCollection, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
+        m_Player_Body = m_Player.FindAction("Body", throwIfNotFound: true);
+        m_Player_Eye = m_Player.FindAction("Eye", throwIfNotFound: true);
+        m_Player_Ear = m_Player.FindAction("Ear", throwIfNotFound: true);
+        m_Player_Hand = m_Player.FindAction("Hand", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -361,6 +441,10 @@ public class @Keybinds : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_Pause;
+    private readonly InputAction m_Player_Body;
+    private readonly InputAction m_Player_Eye;
+    private readonly InputAction m_Player_Ear;
+    private readonly InputAction m_Player_Hand;
     public struct PlayerActions
     {
         private @Keybinds m_Wrapper;
@@ -370,6 +454,10 @@ public class @Keybinds : IInputActionCollection, IDisposable
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
+        public InputAction @Body => m_Wrapper.m_Player_Body;
+        public InputAction @Eye => m_Wrapper.m_Player_Eye;
+        public InputAction @Ear => m_Wrapper.m_Player_Ear;
+        public InputAction @Hand => m_Wrapper.m_Player_Hand;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -394,6 +482,18 @@ public class @Keybinds : IInputActionCollection, IDisposable
                 @Pause.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                @Body.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBody;
+                @Body.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBody;
+                @Body.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBody;
+                @Eye.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEye;
+                @Eye.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEye;
+                @Eye.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEye;
+                @Ear.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEar;
+                @Ear.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEar;
+                @Ear.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEar;
+                @Hand.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHand;
+                @Hand.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHand;
+                @Hand.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHand;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -413,6 +513,18 @@ public class @Keybinds : IInputActionCollection, IDisposable
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
+                @Body.started += instance.OnBody;
+                @Body.performed += instance.OnBody;
+                @Body.canceled += instance.OnBody;
+                @Eye.started += instance.OnEye;
+                @Eye.performed += instance.OnEye;
+                @Eye.canceled += instance.OnEye;
+                @Ear.started += instance.OnEar;
+                @Ear.performed += instance.OnEar;
+                @Ear.canceled += instance.OnEar;
+                @Hand.started += instance.OnHand;
+                @Hand.performed += instance.OnHand;
+                @Hand.canceled += instance.OnHand;
             }
         }
     }
@@ -460,5 +572,9 @@ public class @Keybinds : IInputActionCollection, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnBody(InputAction.CallbackContext context);
+        void OnEye(InputAction.CallbackContext context);
+        void OnEar(InputAction.CallbackContext context);
+        void OnHand(InputAction.CallbackContext context);
     }
 }
