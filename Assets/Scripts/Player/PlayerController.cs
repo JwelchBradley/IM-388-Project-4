@@ -16,6 +16,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     #region Variables
+    #region Pause Menu
     /// <summary>
     /// The pause menu script.
     /// </summary>
@@ -25,12 +26,13 @@ public class PlayerController : MonoBehaviour
     {
         get => pmb;
     }
+    #endregion
 
     #region Character Controllers
     /// <summary>
     /// List of controllers.
     /// </summary>
-    public enum activeController { HAND, PERSON, EYE, EARS, INTESTINES, MOUTH };
+    public enum activeController { HAND, PERSON, EYE, INTESTINES, MOUTH };
 
     /// <summary>
     /// The currently active controller;
@@ -92,6 +94,17 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private EarController earCon;
+
+    public EarController EarCon
+    {
+        get => earCon;
+        set
+        {
+            earCon = value;
+        }
+    }
+
     /// <summary>
     /// The eye casting component.
     /// </summary>
@@ -104,6 +117,14 @@ public class PlayerController : MonoBehaviour
     {
         get => eCaster;
     }
+
+    [SerializeField]
+    private GameObject castableEye;
+
+    [SerializeField]
+    private GameObject castableEar;
+
+    private GameObject currentCastableObject;
 
     [SerializeField]
     private HeartController hc;
@@ -339,39 +360,6 @@ public class PlayerController : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
     }
-
-    /// <summary>
-    /// Gets everything necessary for the hand to function.
-    /// </summary>
-    /// <param name="hand">The hand gameobject.</param>
-    private void InitializeHand(GameObject hand)
-    {
-        handMesh.SetActive(false);
-        rightHandArmMesh.SetActive(false);
-        tpm = hand.GetComponentInChildren<ThirdPersonMovement>();
-    }
-
-    /// <summary>
-    /// Initializes the eye when it is first placed.
-    /// </summary>
-    /// <param name="eye"></param>
-    private void InitializeEye(GameObject eye)
-    {
-        // Hides eye on player and shows zombie
-        eyeMesh.SetActive(false);
-        pm.MovePlayer(Vector2.zero, false);
-
-        // Gets component references
-        ec = eye.GetComponentInChildren<EyeController>();
-        eyeCam = eye.GetComponentInChildren<CinemachineVirtualCamera>();
-
-        ChangeToEye();
-    }
-
-    private void InitializeHeart()
-    {
-        heartMesh.SetActive(true);
-    }
     #endregion
 
     #region Input Calls
@@ -579,10 +567,6 @@ public class PlayerController : MonoBehaviour
             case activeController.EYE:
                 DeactivateEye();
                 break;
-                /*
-            case activeController.HEART:
-                DeactivateHeart();
-                break;*/
             case activeController.INTESTINES:
                 DeactivateIntestines();
                 break;
@@ -602,10 +586,6 @@ public class PlayerController : MonoBehaviour
             case activeController.EYE:
                 ActivateEye();
                 break;
-                /*
-            case activeController.HEART:
-                ActivateHeart();
-                break;*/
             case activeController.INTESTINES:
                 ActivateIntestines();
                 break;
@@ -621,26 +601,8 @@ public class PlayerController : MonoBehaviour
     #region Input Call
     private void OnBody()
     {
+        if(!currentActive.Equals(activeController.PERSON))
         UpdateBodyPart(activeController.PERSON);
-        #region Old
-        /*
-        switch (currentActive)
-        {
-            case activeController.PERSON:
-
-                break;
-            case activeController.HAND:
-                tpm.SwitchCameras();
-                tpm.MovePlayer(Vector2.zero);
-                break;
-            case activeController.EYE:
-                ToZombie();
-
-                UpdateCamera(walkCam);
-                mainCam.cullingMask = startingRendererMask;
-                break;
-        }*/
-        #endregion
     }
     #endregion
 
@@ -662,7 +624,7 @@ public class PlayerController : MonoBehaviour
         // If player is trying to cast eye then stop it
         if (ec == null && eCaster.IsCasting)
         {
-            NoLongerCastingEye();
+            CastingStateChange(null);
         }
     }
 
@@ -712,47 +674,25 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Hand
+    /// <summary>
+    /// Gets everything necessary for the hand to function.
+    /// </summary>
+    /// <param name="hand">The hand gameobject.</param>
+    private void InitializeHand(GameObject hand)
+    {
+        handMesh.SetActive(false);
+        rightHandArmMesh.SetActive(false);
+        tpm = hand.GetComponentInChildren<ThirdPersonMovement>();
+    }
+
     #region Input Call
     /// <summary>
     /// Handles changes to and from the hand.
     /// </summary>
-    private void OnHand()
+    public void OnHand()
     {
+        if(!currentActive.Equals(activeController.HAND))
         UpdateBodyPart(activeController.HAND);
-        #region Old
-        /*
-        switch (currentActive)
-        {
-            // To the hand from the person
-            case activeController.PERSON:
-                /*
-                // If player is trying to cast eye then stop it
-                if (ec == null && eCaster.IsCasting)
-                {
-                    NoLongerCastingEye();
-                }*/
-        /*
-                // Initializes hand if it isn't created yet
-                IsHandActiveCheck();
-
-                // Sets all the values for it going to the hand
-                pm.MovePlayer(Vector2.zero, false);
-                ChangeMeshState(true, false, false);
-                ToHand();
-                break;
-
-            // To the hand from the eye
-            case activeController.EYE:
-                if (tpm != null)
-                {
-                    mainCam.cullingMask = startingRendererMask;
-                    ToHand();
-                }
-                break;
-        }*/
-
-        //armMesh.SetActive(false);
-        #endregion
     }
     #endregion
 
@@ -800,6 +740,23 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Eye
+    /// <summary>
+    /// Initializes the eye when it is first placed.
+    /// </summary>
+    /// <param name="eye"></param>
+    private void InitializeEye(GameObject eye)
+    {
+        // Hides eye on player and shows zombie
+        eyeMesh.SetActive(false);
+        pm.MovePlayer(Vector2.zero, false);
+
+        // Gets component references
+        ec = eye.GetComponentInChildren<EyeController>();
+        eyeCam = eye.GetComponentInChildren<CinemachineVirtualCamera>();
+
+        ChangeToEye();
+    }
+
     #region Input Call
     /// <summary>
     /// Changes to and from the eye.
@@ -812,7 +769,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            NoLongerCastingEye();
+            CastingStateChange(castableEye);
         }
         #region Old
         /*
@@ -899,8 +856,10 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// Stops the casting funciton for the eye.
     /// </summary>
-    private void NoLongerCastingEye()
+    private void CastingStateChange(GameObject newObj)
     {
+        currentCastableObject = newObj;
+
         if (currentActive.Equals(activeController.PERSON))
         {
             eCaster.IsCasting = !eCaster.IsCasting;
@@ -996,6 +955,21 @@ public class PlayerController : MonoBehaviour
     #endregion
     #endregion
 
+    #region Ear
+    private void InitializeEar(GameObject obj)
+    {
+        earCon = obj.GetComponent<EarController>();
+        crosshair.SetActive(true);
+
+    }
+
+    private void OnEar()
+    {
+        if(earCon == null)
+        CastingStateChange(castableEar);
+    }
+    #endregion
+
     #region Radial Menu
     /// <summary>
     /// Handles the spawning of the eye when the mouse is clicked and the playing is casting.
@@ -1005,8 +979,16 @@ public class PlayerController : MonoBehaviour
         if (eCaster.IsCasting && eCaster.CanCast && Time.timeScale != 0 && !pmb.RadialMenuPanel.activeInHierarchy)
         {
             eCaster.IsCasting = false;
-            GameObject eye = eCaster.SpawnEye();
-            InitializeEye(eye);
+            GameObject obj = eCaster.SpawnObject(currentCastableObject);
+
+            if (currentCastableObject.Equals(castableEye))
+            {
+                InitializeEye(obj);
+            }
+            else if (currentCastableObject.Equals(castableEar))
+            {
+                InitializeEar(obj);
+            }
         }
         else if (pmb.RadialMenuPanel.activeInHierarchy && Time.timeScale != 0)
         {

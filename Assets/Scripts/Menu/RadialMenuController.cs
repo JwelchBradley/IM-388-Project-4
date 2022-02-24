@@ -46,7 +46,6 @@ public class RadialMenuController : MonoBehaviour
     void FixedUpdate()
     {
         float angle = FindAngle();
-        Debug.Log(angle);
         if (angle >= 45 && angle < 180)
         {
             currentHovered = PlayerController.activeController.EYE;

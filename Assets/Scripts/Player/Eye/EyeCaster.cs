@@ -101,6 +101,15 @@ public class EyeCaster : MonoBehaviour
 
     private void MoveIndicatorTowardsLocation() { }
 
+    public GameObject SpawnObject(GameObject obj)
+    {
+        //GameObject eye = (GameObject)Instantiate(Resources.Load("Prefabs/Player/Eye/Eye", typeof(GameObject)), hit.point, SpawnRotation());
+        GameObject newObject = Instantiate(obj, hit.point, SpawnRotation());
+        newObject.transform.position = SpawnSpot(newObject);
+        mr.enabled = false;
+        return newObject;
+    }
+
     public GameObject SpawnEye()
     {
         GameObject eye = (GameObject)Instantiate(Resources.Load("Prefabs/Player/Eye/Eye", typeof(GameObject)), hit.point, SpawnRotation());
