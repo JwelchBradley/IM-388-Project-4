@@ -314,6 +314,11 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private GameObject crosshair;
     #endregion
+
+    #region Checkpoints
+    [Tooltip("The current checkpoint. Set this variable to create a default checkpoint.")]
+    public GameObject checkpoint;
+    #endregion
     #endregion
 
     #region Funcitons
@@ -1005,6 +1010,22 @@ public class PlayerController : MonoBehaviour
         }
     }
     #endregion
+    #endregion
+
+    #region Checkpoints
+    public void KillPlayer()
+    {
+        transform.position = checkpoint.transform.position;
+        transform.rotation = checkpoint.transform.rotation;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Checkpoint")
+        {
+            checkpoint = other.gameObject;
+        }
+    }
     #endregion
     #endregion
 
