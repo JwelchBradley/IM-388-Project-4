@@ -72,4 +72,12 @@ public class HeartSpikes : MonoBehaviour, Activatable
             transform.position = targetLocation;
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Player")
+        {
+            other.GetComponent<PlayerController>().KillPlayer();
+        }
+    }
 }

@@ -10,6 +10,7 @@ TagManager:
   - Pressure B
   - Pressure C
   - Pressure D
+  - Checkpoint
   layers:
   - Default
   - TransparentFX
