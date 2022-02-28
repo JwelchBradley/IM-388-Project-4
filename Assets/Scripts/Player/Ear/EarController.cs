@@ -4,15 +4,33 @@ using UnityEngine;
 
 public class EarController : MonoBehaviour
 {
+    [Tooltip("The audio that plays for the ear")]
+    public AudioSource earAudio;
+    [Tooltip("The object with the audio listener")]
+    public Transform listeningObject;
+
+    /// <summary>
+    /// Thev initial parent of the listeningObject
+    /// </summary>
+    private Transform listeningObjectParent;
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        GameObject ear = GameObject.FindGameObjectWithTag("Ear");
+        earAudio = ear.GetComponent<AudioSource>();
+        listeningObject = ear.GetComponent<Transform>();
+
+        earAudio.enabled = true;
+        listeningObjectParent = listeningObject.parent;
+        listeningObject.SetParent(transform);
+        listeningObject.localPosition = Vector3.zero;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDestroy()
     {
-        
+        earAudio.enabled = false;
+        listeningObject.SetParent(listeningObjectParent);
+        listeningObject.localPosition = Vector3.zero;
     }
 }
