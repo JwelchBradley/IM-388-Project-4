@@ -11,6 +11,7 @@ TagManager:
   - Pressure C
   - Pressure D
   - Checkpoint
+  - Ear
   layers:
   - Default
   - TransparentFX
