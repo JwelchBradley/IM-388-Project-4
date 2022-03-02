@@ -427,7 +427,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1119962703066126361, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.0419188
+      value: 2.0419135
       objectReference: {fileID: 0}
     - target: {fileID: 1119962703066126361, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_LocalPosition.y
@@ -459,11 +459,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704054421393, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_VerticalAxis.m_AccelTime
-      value: 0.1
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704054421393, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_VerticalAxis.m_DecelTime
-      value: 0.1
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704054421393, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_VerticalAxis.m_SpeedMode
@@ -471,11 +471,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704054421393, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_HorizontalAxis.m_AccelTime
-      value: 0.1
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704054421393, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_HorizontalAxis.m_DecelTime
-      value: 0.1
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704054421393, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_HorizontalAxis.m_SpeedMode
@@ -506,12 +506,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704133113642, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
+      propertyPath: m_BlendUpdateMethod
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1119962704133113642, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_DefaultBlend.m_Time
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704133113646, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.0419188
+      value: 2.0419135
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704133113646, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_LocalPosition.y
@@ -567,7 +571,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704133113647, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_CullingMask.m_Bits
-      value: 911359
+      value: 1959935
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704201748204, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_Name
@@ -958,6 +962,10 @@ PrefabInstance:
       propertyPath: castableEye
       value: 
       objectReference: {fileID: 5808411181917555995, guid: 04f64e641e49b5245ac6a25a0caba4ef, type: 3}
+    - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
+      propertyPath: hookMask.m_Bits
+      value: 1048576
+      objectReference: {fileID: 0}
     - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
       propertyPath: eyeImageRenderer
       value: 
