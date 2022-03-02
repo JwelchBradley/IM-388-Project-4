@@ -1075,8 +1075,11 @@ public class PlayerController : MonoBehaviour
     #region Checkpoints
     public void KillPlayer()
     {
+        CharacterController cc = GetComponent<CharacterController>();
+        cc.enabled = false;
         transform.position = checkpoint.transform.position;
         transform.rotation = checkpoint.transform.rotation;
+        cc.enabled = true;
     }
 
     private void OnTriggerEnter(Collider other)
