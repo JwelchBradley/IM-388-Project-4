@@ -308,6 +308,21 @@ public class PlayerController : MonoBehaviour
     private RaycastHit hit;
     #endregion
 
+    #region Grapple
+    [SerializeField]
+    private LayerMask hookMask;
+
+    [SerializeField]
+    private float hookMaxDistCheck = 40;
+
+    private bool canHook = false;
+
+    #region Components
+    CharacterController cc;
+    Rigidbody rb;
+    #endregion
+    #endregion
+
     #region Crosshair
     /// <summary>
     /// The crosshair for the zombie.
@@ -452,7 +467,35 @@ public class PlayerController : MonoBehaviour
     #region Pickup
     private void FixedUpdate()
     {
+        if(!CheckForHook())
         DisplayPickupText();
+    }
+
+    private bool CheckForHook()
+    {
+        if(!mainCamBrain.IsBlending && currentActive.Equals(activeController.PERSON))
+        {
+            if(Physics.BoxCast(mainCam.transform.position, Vector3.one * 3, mainCam.transform.forward, out hit, mainCam.transform.rotation, hookMaxDistCheck, hookMask) ||
+                Physics.BoxCast(mainCam.transform.position, Vector3.one * 0.5f, mainCam.transform.forward, out hit, mainCam.transform.rotation, hookMaxDistCheck, hookMask))
+            {
+                RaycastHit hitTemp;
+                Physics.Raycast(mainCam.transform.position, hit.point - mainCam.transform.position, out hitTemp, hookMaxDistCheck, wallCheckMask);
+
+                if (Vector3.Distance(hitTemp.point, mainCam.transform.position) < Vector3.Distance(hit.point, mainCam.transform.position))
+                {
+                    pmb.PickUpText.text = "";
+                    canHook = false;
+                }
+                else
+                {
+                    pmb.PickUpText.text = "Left click to throw intestines";
+                    canHook = true;
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     private void DisplayPickupText()
@@ -1008,8 +1051,25 @@ public class PlayerController : MonoBehaviour
 
             Invoke("OnOpenMenu", 0.05f);
         }
+        else if (canHook)
+        {
+            CastHook();
+        }
     }
     #endregion
+    #endregion
+
+    #region Hook
+    private void CastHook()
+    {
+        if(cc == null)
+        {
+            cc = GetComponent<CharacterController>();
+            rb = gameObject.AddComponent<Rigidbody>();
+        }
+        cc.enabled = false;
+        rb.useGravity = true;
+    }
     #endregion
 
     #region Checkpoints

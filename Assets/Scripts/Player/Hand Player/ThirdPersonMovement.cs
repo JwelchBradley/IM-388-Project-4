@@ -238,7 +238,7 @@ public class ThirdPersonMovement : MonoBehaviour
         }
         else
         {
-            cineCam.m_Priority = 0;
+            cineCam.m_Priority = -1;
 
             if(curClimb > 0)
             {
