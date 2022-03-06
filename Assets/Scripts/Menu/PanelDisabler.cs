@@ -30,7 +30,7 @@ public class PanelDisabler : MonoBehaviour
                 pauseMenu.CanClosePauseMenu(true);
             }
 
-            if (pauseMenu.KeyPad.activeInHierarchy)
+            if (pauseMenu != null && pauseMenu.KeyPad.activeInHierarchy)
             {
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;

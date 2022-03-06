@@ -120,6 +120,15 @@ public class PlayerMovement : MonoBehaviour
 
     [HideInInspector]
     public float pullMod = 1;
+
+    #region Grapple Variables
+    [Header("Grapple")]
+    [SerializeField]
+    private float grappleAccelerationSpeed = 8500;
+
+    [SerializeField]
+    private float extraGravity = 4000;
+    #endregion
     #endregion
 
     #region Cameras
@@ -179,7 +188,6 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private void GetCameras()
     {
-        PlayerPrefs.DeleteAll();
         cameraTransform = Camera.main.transform;
         mainCamBrain = Camera.main.GetComponent<CinemachineBrain>();
         walkCam = GameObject.Find("Walk vcam").GetComponent<CinemachineVirtualCamera>();
@@ -269,7 +277,18 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         if (!mainCamBrain.IsBlending && !pauseMenu.Note.activeInHierarchy && !pc.PMB.KeyPad.activeInHierarchy)
-            MoveCalculation();
+        {
+            if (controller.enabled)
+            {
+                MoveCalculation();
+
+            }
+                else
+                    {
+                HookMove();
+                    }
+        }
+
         else
         {
             aud.Stop();
@@ -296,6 +315,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (isGrounded)
         {
+            velocity.y = 0;
             controller.stepOffset = 1;
         }
         else
@@ -336,7 +356,30 @@ public class PlayerMovement : MonoBehaviour
         controller.Move(currentMove * currentSpeed * pullMod * Time.fixedDeltaTime);
     }
 
-    
+    private Rigidbody rb;
+    private void HookMove()
+    {
+        if (rb == null)
+        {
+            rb = GetComponent<Rigidbody>();
+        }
+        else
+        {
+            velocity.y = rb.velocity.y;
+
+            if (!isGrounded)
+            rb.AddForce(Vector3.down * extraGravity * Time.fixedDeltaTime);
+
+            if (move != Vector3.zero)
+            {
+                Vector3 currentMove = cameraTransform.right * move.x + cameraTransform.forward * move.z;
+                currentMove.y = 0f;
+                currentMove.Normalize();
+                rb.AddForce(currentMove * grappleAccelerationSpeed * Time.fixedDeltaTime);
+            }
+        }
+    }
+
     private void RotateMesh()
     {
         Quaternion camRot = cameraTransform.rotation;

@@ -87,6 +87,7 @@ public class SliderBehavior : MonoBehaviour
     {
         if (PlayerPrefs.HasKey(variableName))
         {
+            Debug.Log(variableName);
             slider.value = PlayerPrefs.GetFloat(variableName);
             SetInputField();
         }
@@ -112,6 +113,16 @@ public class SliderBehavior : MonoBehaviour
                     case "Y Sens Hand":
                         PlayerPrefs.SetFloat(variableName, 1);
                         break;
+                    case "X Sens Eye":
+                        {
+                            PlayerPrefs.SetFloat(variableName, 1);
+                            break;
+                        }
+                    case "Y Sens Eye":
+                        {
+                            PlayerPrefs.SetFloat(variableName, 1);
+                            break;
+                        }
                     default:
                             break;
                 }
@@ -179,6 +190,16 @@ public class SliderBehavior : MonoBehaviour
                         {
                             tpm.YSens = sliderValue;
                         }
+                        break;
+                    }
+                case "X Sens Eye":
+                    {
+                        EyeController.XSens = sliderValue;
+                        break;
+                    }
+                case "Y Sens Eye":
+                    {
+                        EyeController.YSens = sliderValue;
                         break;
                     }
             }

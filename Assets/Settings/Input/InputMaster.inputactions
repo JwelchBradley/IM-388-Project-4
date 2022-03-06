@@ -278,17 +278,6 @@
                 },
                 {
                     "name": "",
-                    "id": "a50257eb-744e-4ba2-96f0-7858ca3b9db1",
-                    "path": "<Keyboard>/q",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "OpenMenu",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "4225d3b8-917c-467a-b771-0a2ac48a4ef5",
                     "path": "<Keyboard>/f",
                     "interactions": "",

@@ -9,14 +9,14 @@ public class HeartController : MonoBehaviour
     [Tooltip("Time it takes for the heart to beat.")]
     public float heartbeatTime = 1f;
 
-    [HideInInspector]
-    public List<Activatable> heartActivatables = new List<Activatable>();
+    private HeartPlaceLocation hpc;
 
-
-    // Start is called before the first frame update
-    void Start()
+    public HeartPlaceLocation HPC
     {
-        
+        set
+        {
+            hpc = value;
+        }
     }
 
     public IEnumerator Switch()
@@ -31,9 +31,11 @@ public class HeartController : MonoBehaviour
 
     public void UpdateHeartInteractables()
     {
+        hpc.Activate();
+        /*
         foreach (Activatable heartActivatable in heartActivatables)
         {
             heartActivatable.ChangeObjectState();
-        }
+        }*/
     }
 }

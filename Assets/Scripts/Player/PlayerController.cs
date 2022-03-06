@@ -315,11 +315,40 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float hookMaxDistCheck = 40;
 
+    [SerializeField]
+    private GameObject grappleLocationMarker;
+
     private bool canHook = false;
+
+    private SpringJoint joint;
+
+
+    #region Grapple Values
+    [Header("Grapple values")]
+    [Tooltip("Max length - use decimal #.")]
+    public float maxJointDist;
+
+    [Tooltip("Min length - use decimal #.")]
+    public float minJointDist;
+
+    [Tooltip("Spring value of spring joint.")]
+    public float springJoint;
+
+    [Tooltip("Damper scale for spring joint.")]
+    public float damperJoint;
+
+    [Tooltip("Mass scale for spring joint.")]
+    public float massScaleJoint;
+
+    public float toleranceJoint;
+    #endregion
+
 
     #region Components
     CharacterController cc;
     Rigidbody rb;
+    CapsuleCollider ccol;
+    LineRenderer intestinesRenderer;
     #endregion
     #endregion
 
@@ -471,33 +500,6 @@ public class PlayerController : MonoBehaviour
         DisplayPickupText();
     }
 
-    private bool CheckForHook()
-    {
-        if(!mainCamBrain.IsBlending && currentActive.Equals(activeController.PERSON))
-        {
-            if(Physics.BoxCast(mainCam.transform.position, Vector3.one * 3, mainCam.transform.forward, out hit, mainCam.transform.rotation, hookMaxDistCheck, hookMask) ||
-                Physics.BoxCast(mainCam.transform.position, Vector3.one * 0.5f, mainCam.transform.forward, out hit, mainCam.transform.rotation, hookMaxDistCheck, hookMask))
-            {
-                RaycastHit hitTemp;
-                Physics.Raycast(mainCam.transform.position, hit.point - mainCam.transform.position, out hitTemp, hookMaxDistCheck, wallCheckMask);
-
-                if (Vector3.Distance(hitTemp.point, mainCam.transform.position) < Vector3.Distance(hit.point, mainCam.transform.position))
-                {
-                    pmb.PickUpText.text = "";
-                    canHook = false;
-                }
-                else
-                {
-                    pmb.PickUpText.text = "Left click to throw intestines";
-                    canHook = true;
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
     private void DisplayPickupText()
     {
         if (!mainCamBrain.IsBlending && !eCaster.IsCasting)
@@ -595,8 +597,11 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
+    #region Body Parts
     public void UpdateBodyPart(activeController newActive)
     {
+        if (Time.timeScale == 0) return;
+
         eCaster.IsCasting = false;
 
         if (currentActive.Equals(newActive))
@@ -1017,6 +1022,7 @@ public class PlayerController : MonoBehaviour
         CastingStateChange(castableEar);
     }
     #endregion
+    #endregion
 
     #region Radial Menu
     /// <summary>
@@ -1060,25 +1066,167 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Hook
+    private Vector3 hookPos;
+    private bool CheckForHook()
+    {
+        if (!mainCamBrain.IsBlending && currentActive.Equals(activeController.PERSON))
+        {
+            if (Physics.BoxCast(mainCam.transform.position, Vector3.one * 3, mainCam.transform.forward, out hit, mainCam.transform.rotation, hookMaxDistCheck, hookMask) ||
+                Physics.BoxCast(mainCam.transform.position, Vector3.one * 0.5f, mainCam.transform.forward, out hit, mainCam.transform.rotation, hookMaxDistCheck, hookMask))
+            {
+                grappleLocationMarker.SetActive(true);
+                grappleLocationMarker.transform.position = hit.transform.position;
+
+                RaycastHit hitTemp;
+                Physics.Raycast(mainCam.transform.position, hit.point - mainCam.transform.position, out hitTemp, hookMaxDistCheck, wallCheckMask);
+
+                if (Vector3.Distance(hitTemp.point, mainCam.transform.position) < Vector3.Distance(hit.point, mainCam.transform.position))
+                {
+                    pmb.PickUpText.text = "";
+                    canHook = false;
+                }
+                else
+                {
+                    pmb.PickUpText.text = "Left click to throw intestines";
+                    canHook = true;
+                    return true;
+                }
+            }
+            else
+            {
+                canHook = false;
+                grappleLocationMarker.SetActive(false);
+            }
+        }
+        else
+        {
+            canHook = false;
+            grappleLocationMarker.SetActive(false);
+        }
+
+        return false;
+    }
+
     private void CastHook()
     {
         if(cc == null)
         {
-            cc = GetComponent<CharacterController>();
-            rb = gameObject.AddComponent<Rigidbody>();
+            cc = GetComponent<CharacterController>();            
         }
+
+        if(rb == null)
+        {
+            rb = gameObject.AddComponent<Rigidbody>();
+            rb.mass = 20;
+            rb.constraints = RigidbodyConstraints.FreezeRotation;
+            ccol = gameObject.AddComponent<CapsuleCollider>();
+            ccol.height = cc.height;
+        }
+        else
+        {
+            ccol.enabled = true;
+        }
+
         cc.enabled = false;
         rb.useGravity = true;
+
+        StartGrapple();
+    }
+
+    #region Hooking
+    /// <summary>
+    /// Creates a line and spring joint
+    /// </summary>
+    void StartGrapple()
+    {
+        if (Time.timeScale != 0)
+        {
+            hookPos = hit.point;
+
+                // Create positions for joint
+                joint = gameObject.AddComponent<SpringJoint>();
+            intestinesRenderer = gameObject.AddComponent<LineRenderer>();
+
+            joint.autoConfigureConnectedAnchor = false;
+                joint.connectedAnchor = hookPos;
+
+                float distFromPoint = Vector3.Distance(transform.position, hookPos);
+
+
+                // Joint settings
+                joint.maxDistance = maxJointDist;
+                joint.minDistance = minJointDist;
+
+                joint.spring = springJoint;
+                joint.damper = damperJoint;
+                joint.massScale = massScaleJoint;
+                joint.tolerance = toleranceJoint;
+        }
+    }
+
+    
+    /// <summary>
+    /// Creates the rope with 2 points
+    /// Delete rope if no joint found
+    /// </summary>
+    void DrawRope()
+    {
+        //if (!joint) return;
+        if (joint == null) return;
+
+        intestinesRenderer.positionCount = 2;
+        intestinesRenderer.SetPosition(0, transform.position);
+        intestinesRenderer.SetPosition(1, hookPos);
+
+    }
+
+    private void LateUpdate()
+    {
+        DrawRope();
+
+        if (Input.GetKeyUp(KeyCode.Mouse0) && ccol != null && ccol.enabled)
+        {
+            ExitHook();
+        }
+    }
+
+    
+    /// <summary>
+    /// Remove Grapple
+    /// </summary>
+    void StopGrapple()
+    {
+        rb.velocity = Vector3.zero;
+        Destroy(intestinesRenderer);
+        Destroy(joint);
+    }
+    #endregion
+
+    private void ExitHook()
+    {
+        rb.useGravity = false;
+        ccol.enabled = false;
+        cc.enabled = true;
+
+        Debug.Log("stop");
+
+        StopGrapple();
     }
     #endregion
 
     #region Checkpoints
     public void KillPlayer()
     {
-        CharacterController cc = GetComponent<CharacterController>();
+        if(cc == null) cc = GetComponent<CharacterController>();
         cc.enabled = false;
         transform.position = checkpoint.transform.position;
         transform.rotation = checkpoint.transform.rotation;
+        StartCoroutine(AllowMovement());
+    }
+
+    private IEnumerator AllowMovement()
+    {
+        yield return new WaitForSeconds(0.01f);
         cc.enabled = true;
     }
 

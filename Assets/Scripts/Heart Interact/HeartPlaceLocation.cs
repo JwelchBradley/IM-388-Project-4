@@ -1,13 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class HeartPlaceLocation : Interactable
 {
+    /*
     [SerializeField]
     private GameObject[] activatableObjects;
+    */
+    public UnityEvent activation;
 
-    private List<Activatable> activatables = new List<Activatable>();
+    //private List<Activatable> activatables = new List<Activatable>();
 
     [SerializeField]
     private Transform heartPlaceLocation;
@@ -19,10 +23,13 @@ public class HeartPlaceLocation : Interactable
 
     private void Start()
     {
+
+
+        /*
         foreach(GameObject activatable in activatableObjects)
         {
             activatables.Add(activatable.GetComponent<Activatable>());
-        }
+        }*/
     }
 
     public override void DisplayInteractText()
@@ -42,7 +49,7 @@ public class HeartPlaceLocation : Interactable
             pc.HeartMesh.transform.position = heartPlaceLocation.position;
             pc.HeartMesh.SetActive(true);
             hc = pc.HeartMesh.GetComponent<HeartController>();
-            hc.heartActivatables = activatables;
+            hc.HPC = this;
             hc.StartCoroutine(hc.Switch());
         }
         else
@@ -50,5 +57,10 @@ public class HeartPlaceLocation : Interactable
             hc = null;
             pc.HeartMesh.SetActive(false);
         }
+    }
+
+    public void Activate()
+    {
+        activation.Invoke();
     }
 }

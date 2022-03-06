@@ -4,16 +4,27 @@ using UnityEngine;
 
 public class HeartSpikes : MonoBehaviour, Activatable
 {
+    [Header("Speed")]
     [Tooltip("The time it takes for the spikes to move into a new position")]
     public float spikeMoveTime;
     [Tooltip("The delay before the spikes come up")]
     public float delayedMoveTime;
+
+    [Header("Object References")]
     [Tooltip("The location where spikes are shown to the player")]
     public GameObject upperLocation;
     [Tooltip("The location where the spikes are hidden")]
     public GameObject lowerLocation;
+    [SerializeField]
+    [Tooltip("The spike object to move")]
+    private Transform spike;
+
+    [Header("Scene Settings")]
     [Tooltip("Whether the spikes start in their upper location")]
     public bool startUp;
+
+    [SerializeField]
+    private GameObject heartLocation;
 
     /// <summary>
     /// The current location target
@@ -27,15 +38,17 @@ public class HeartSpikes : MonoBehaviour, Activatable
 
     private void Start()
     {
+        heartLocation.GetComponent<HeartPlaceLocation>().activation.AddListener(ChangeObjectState);
+
         if(startUp)
         {
             targetLocation = upperLocation.transform.position;
-            transform.position = targetLocation;
+            spike.position = targetLocation;
         }
         else
         {
             targetLocation = lowerLocation.transform.position;
-            transform.position = targetLocation;
+            spike.position = targetLocation;
         }
     }
 
@@ -59,17 +72,17 @@ public class HeartSpikes : MonoBehaviour, Activatable
         {
             if(targetLocation == upperLocation.transform.position)
             {
-                transform.position = Vector3.Lerp(lowerLocation.transform.position, targetLocation, (Time.unscaledTime - changeTime) / (spikeMoveTime + delayedMoveTime));
+                spike.position = Vector3.Lerp(lowerLocation.transform.position, targetLocation, (Time.unscaledTime - changeTime) / (spikeMoveTime + delayedMoveTime));
             }
             else
             {
-                transform.position = Vector3.Lerp(upperLocation.transform.position, targetLocation, (Time.unscaledTime - changeTime) / spikeMoveTime);
+                spike.position = Vector3.Lerp(upperLocation.transform.position, targetLocation, (Time.unscaledTime - changeTime) / spikeMoveTime);
             }
             
         }
         else
         {
-            transform.position = targetLocation;
+            spike.position = targetLocation;
         }
     }
 

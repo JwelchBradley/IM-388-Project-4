@@ -14,6 +14,13 @@ public class EyeController : MonoBehaviour
     private float startingYRotation = 0;
 
     private float mouseSensitivity = 2.5f;
+    public static float xSens = 2.5f;
+    public static float XSens { set { xSens = value * 2.5f; } }
+
+    public static float ySens = 2.5f;
+    public static float YSens { set { ySens = value * 2.5f; } }
+
+
     float xRotation = 0f;
     float yRotation = 0f;
 
@@ -38,6 +45,16 @@ public class EyeController : MonoBehaviour
     {
         outline = GetComponentInChildren<Outline>();
         InitializeAngle();
+        InitializeSens();
+    }
+
+    private void InitializeSens()
+    {
+        if(PlayerPrefs.HasKey("X Sens Eye"))
+        {
+            XSens = PlayerPrefs.GetFloat("X Sens Eye");
+            YSens = PlayerPrefs.GetFloat("Y Sens Eye");
+        }
     }
 
     public void InitializeAngle()
@@ -86,16 +103,16 @@ public class EyeController : MonoBehaviour
                 //transform.RotateAround(eye.transform.position, Vector3.down, -1);
             }
 
-            transform.RotateAround(eye.transform.position, Vector3.down, -input.x*mouseSensitivity*Time.deltaTime);
+            transform.RotateAround(eye.transform.position, Vector3.down, -input.x* xSens * Time.deltaTime);
             //xRotation += input.x * mouseSensitivity * Time.deltaTime * mod;
-            yRotation -= input.y * mouseSensitivity * Time.deltaTime;
+            yRotation -= input.y * ySens * Time.deltaTime;
 
             yRotation = Mathf.Clamp(yRotation, -90, 0);
         }
         else
         {
-            xRotation += input.x * mouseSensitivity * Time.deltaTime;
-            yRotation -= input.y * mouseSensitivity * Time.deltaTime;
+            xRotation += input.x * xSens * Time.deltaTime;
+            yRotation -= input.y * ySens * Time.deltaTime;
         }
 
         xRotation = Mathf.Clamp(xRotation, -xDegreesOfFreedom+startingYRotation, xDegreesOfFreedom+startingYRotation);
