@@ -515,31 +515,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704133113646, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 147.46887
+      value: -379.74506
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704133113646, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.89576083
+      value: -0.8957617
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704133113646, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 38.658817
+      value: 24.643074
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704133113646, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.86242664
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704133113646, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0.14121999
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704133113646, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: -0.47969514
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704133113646, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0.07854876
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704133113646, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -964,27 +964,27 @@ PrefabInstance:
       objectReference: {fileID: 5808411181917555995, guid: 04f64e641e49b5245ac6a25a0caba4ef, type: 3}
     - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
       propertyPath: damperJoint
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
       propertyPath: springJoint
-      value: 1
+      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
       propertyPath: maxJointDist
-      value: 0.001
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
       propertyPath: minJointDist
-      value: 0.001
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
       propertyPath: massScaleJoint
-      value: 1
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
       propertyPath: toleranceJoint
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
       propertyPath: hookMask.m_Bits
