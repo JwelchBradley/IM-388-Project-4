@@ -21,17 +21,6 @@ public class HeartPlaceLocation : Interactable
     [SerializeField]
     private string heartPlacedHereMessage = "Press F to pick up the heart";
 
-    private void Start()
-    {
-
-
-        /*
-        foreach(GameObject activatable in activatableObjects)
-        {
-            activatables.Add(activatable.GetComponent<Activatable>());
-        }*/
-    }
-
     public override void DisplayInteractText()
     {
         base.DisplayInteractText();
