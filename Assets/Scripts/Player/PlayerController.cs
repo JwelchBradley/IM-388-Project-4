@@ -363,6 +363,23 @@ public class PlayerController : MonoBehaviour
     [Tooltip("The current checkpoint. Set this variable to create a default checkpoint.")]
     public GameObject checkpoint;
     #endregion
+
+    #region Upgrade
+    [Tooltip("The type of ear upgrade used. 0 is none")]
+    public int earType = 0;
+
+    [Tooltip("The type of eye upgrade used. 0 is none")]
+    public int eyeType = 0;
+
+    [Tooltip("The type of hand upgrade used. 0 is none")]
+    public int handType = 0;
+
+    [Tooltip("The type of heart upgrade used. 0 is none")]
+    public int heartType = 0;
+
+    [Tooltip("The type of intestines upgrade used. 0 is none")]
+    public int intestinesType = 0;
+    #endregion
     #endregion
 
     #region Funcitons
