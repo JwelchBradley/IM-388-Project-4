@@ -58,7 +58,6 @@ public class DoorBehaviour : MonoBehaviour, Activatable
         while(transform.position != target)
         {
             transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
-
             yield return new WaitForEndOfFrame();
         }
     }
