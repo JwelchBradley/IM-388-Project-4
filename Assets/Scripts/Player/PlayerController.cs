@@ -125,6 +125,9 @@ public class PlayerController : MonoBehaviour
     private GameObject castableEar;
 
     [SerializeField]
+    private GameObject upgradedEar;
+
+    [SerializeField]
     private GameObject normalHand;
 
     [SerializeField]
@@ -1050,7 +1053,16 @@ public class PlayerController : MonoBehaviour
     private void OnEar()
     {
         if(earCon == null)
-        CastingStateChange(castableEar);
+        {
+            if(earType == 0)
+            {
+                CastingStateChange(castableEar);
+            }
+            else
+            {
+                CastingStateChange(upgradedEar);
+            }
+        }
     }
     #endregion
     #endregion
