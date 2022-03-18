@@ -931,6 +931,10 @@ PrefabInstance:
       value: -0.3
       objectReference: {fileID: 0}
     - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
+      propertyPath: hc
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
       propertyPath: armAnim
       value: 
       objectReference: {fileID: 2631204326957140770}
@@ -955,6 +959,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5722244511634728044}
     - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
+      propertyPath: heartMesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
       propertyPath: castableEar
       value: 
       objectReference: {fileID: 7032459133983628089, guid: 614760e1054bb6040ad4b7a212ac2ee0, type: 3}
@@ -962,30 +970,6 @@ PrefabInstance:
       propertyPath: castableEye
       value: 
       objectReference: {fileID: 5808411181917555995, guid: 04f64e641e49b5245ac6a25a0caba4ef, type: 3}
-    - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
-      propertyPath: damperJoint
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
-      propertyPath: springJoint
-      value: 1.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
-      propertyPath: maxJointDist
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
-      propertyPath: minJointDist
-      value: 3.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
-      propertyPath: massScaleJoint
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
-      propertyPath: toleranceJoint
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
       propertyPath: hookMask.m_Bits
       value: 1048576
@@ -1082,10 +1066,6 @@ PrefabInstance:
       propertyPath: mesh
       value: 
       objectReference: {fileID: 919132147685171550}
-    - target: {fileID: 8837074069219185252, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
-      propertyPath: gravity
-      value: -100
-      objectReference: {fileID: 0}
     - target: {fileID: 8837074069219185252, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
       propertyPath: pullPos
       value: 

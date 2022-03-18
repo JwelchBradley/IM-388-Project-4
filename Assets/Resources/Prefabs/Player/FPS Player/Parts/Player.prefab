@@ -163,6 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a7e988bb129ff14cbb58961e11e78f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pullPos: {fileID: 0}
   walkSpeed: 10
   crouchWalkSpeed: 6
   jumpHeight: 3
@@ -177,6 +178,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   pullMod: 1
+  grappleAccelerationSpeed: 8500
+  extraGravity: 4000
   mesh: {fileID: 2854205682003935556}
   pushPower: 5
   pushableMask:
@@ -263,10 +266,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6deb0c53605785d4d99a87aa40e70c35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  castableEye: {fileID: 0}
+  castableEar: {fileID: 0}
+  hc: {fileID: 0}
+  heartMesh: {fileID: 0}
+  eyeImageRendererMask:
+    serializedVersion: 2
+    m_Bits: 0
   fpsMesh: {fileID: 2854205682003935556}
   eyeMesh: {fileID: 0}
   handMesh: {fileID: 0}
+  armMesh: {fileID: 0}
+  rightHandArmMesh: {fileID: 0}
+  armAnim: []
   maxDist: 10
+  maxHandDist: 20
   pickUpSurface:
     serializedVersion: 2
     m_Bits: 0
@@ -276,6 +290,23 @@ MonoBehaviour:
   wallCheckMask:
     serializedVersion: 2
     m_Bits: 0
+  hookMask:
+    serializedVersion: 2
+    m_Bits: 0
+  hookMaxDistCheck: 40
+  grappleLocationMarker: {fileID: 0}
+  maxJointDist: 6
+  minJointDist: 3.5
+  springJoint: 1.25
+  damperJoint: 4
+  massScaleJoint: 20
+  toleranceJoint: 0
+  checkpoint: {fileID: 0}
+  earType: 0
+  eyeType: 0
+  handType: 0
+  heartType: 0
+  intestinesType: 0
 --- !u!1 &8837074069345544470
 GameObject:
   m_ObjectHideFlags: 0

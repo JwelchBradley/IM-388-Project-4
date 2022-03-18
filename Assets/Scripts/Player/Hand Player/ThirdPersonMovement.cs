@@ -485,6 +485,7 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         Vector3 newRotation = hit.normal;
         newRotation = new Vector3(Mathf.Round(newRotation.x), Mathf.Round(newRotation.y), Mathf.Round(newRotation.z));
+
         // Finds rotation values
         Quaternion oldRotation = visuals.transform.localRotation;
         Quaternion targetRotation = Quaternion.LookRotation(-newRotation) * Quaternion.Euler(new Vector3(-90, 0, 0));
@@ -574,6 +575,8 @@ public class ThirdPersonMovement : MonoBehaviour
 
         isClimbTransitioning = true;
         SetClimbValues();
+
+        targetRotation = Quaternion.Euler(new Vector3(Mathf.Round((targetRotation.eulerAngles.x/90))*90, Mathf.Round((targetRotation.eulerAngles.y / 90)) * 90, Mathf.Round(targetRotation.eulerAngles.z / 90) * 90));
 
         float t = 0;
         while (visuals.transform.localRotation != targetRotation)

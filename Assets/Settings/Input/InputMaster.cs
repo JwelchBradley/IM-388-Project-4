@@ -121,6 +121,14 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Recall"",
+                    ""type"": ""Button"",
+                    ""id"": ""4a576531-c24f-4355-accd-e9406a1c8eed"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -325,7 +333,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""456a41c5-fcd7-4025-9383-47b9ae691c67"",
-                    ""path"": ""<Keyboard>/1"",
+                    ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -336,7 +344,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""0b68af3d-d5cb-42b9-8f02-aa71bf48490d"",
-                    ""path"": ""<Keyboard>/2"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -347,7 +355,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""955540de-ab00-4637-adf6-e28639204a06"",
-                    ""path"": ""<Keyboard>/3"",
+                    ""path"": ""<Keyboard>/c"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -358,11 +366,22 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""4962e3d3-7ea9-4c97-83f1-f2aba9409b42"",
-                    ""path"": ""<Keyboard>/4"",
+                    ""path"": ""<Keyboard>/x"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard and Mouse"",
                     ""action"": ""Ear"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2ce85f62-bad2-47ea-b4a4-5019cead3d3a"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Recall"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -441,6 +460,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
         m_Player_Hand = m_Player.FindAction("Hand", throwIfNotFound: true);
         m_Player_Eye = m_Player.FindAction("Eye", throwIfNotFound: true);
         m_Player_Ear = m_Player.FindAction("Ear", throwIfNotFound: true);
+        m_Player_Recall = m_Player.FindAction("Recall", throwIfNotFound: true);
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_Newaction = m_Menu.FindAction("New action", throwIfNotFound: true);
@@ -506,6 +526,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Hand;
     private readonly InputAction m_Player_Eye;
     private readonly InputAction m_Player_Ear;
+    private readonly InputAction m_Player_Recall;
     public struct PlayerActions
     {
         private @InputMaster m_Wrapper;
@@ -523,6 +544,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
         public InputAction @Hand => m_Wrapper.m_Player_Hand;
         public InputAction @Eye => m_Wrapper.m_Player_Eye;
         public InputAction @Ear => m_Wrapper.m_Player_Ear;
+        public InputAction @Recall => m_Wrapper.m_Player_Recall;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -571,6 +593,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @Ear.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEar;
                 @Ear.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEar;
                 @Ear.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEar;
+                @Recall.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRecall;
+                @Recall.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRecall;
+                @Recall.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRecall;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -614,6 +639,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @Ear.started += instance.OnEar;
                 @Ear.performed += instance.OnEar;
                 @Ear.canceled += instance.OnEar;
+                @Recall.started += instance.OnRecall;
+                @Recall.performed += instance.OnRecall;
+                @Recall.canceled += instance.OnRecall;
             }
         }
     }
@@ -684,6 +712,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
         void OnHand(InputAction.CallbackContext context);
         void OnEye(InputAction.CallbackContext context);
         void OnEar(InputAction.CallbackContext context);
+        void OnRecall(InputAction.CallbackContext context);
     }
     public interface IMenuActions
     {
