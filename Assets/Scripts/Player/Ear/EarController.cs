@@ -9,7 +9,7 @@ public class EarController : MonoBehaviour
     [Tooltip("The object with the audio listener")]
     public Transform listeningObject;
     [Tooltip("The upgrade type so that trigger areas can change the clip depending on the upgrade")]
-    public Transform type = 0;
+    public int type = 0;
 
     /// <summary>
     /// Thev initial parent of the listeningObject
