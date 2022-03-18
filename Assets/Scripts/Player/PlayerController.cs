@@ -124,6 +124,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject castableEar;
 
+    [SerializeField]
+    private GameObject upgradedEar;
+
+    [SerializeField]
+    private GameObject normalHand;
+
+    [SerializeField]
+    private GameObject fastHand;
+
     private GameObject currentCastableObject;
 
     [SerializeField]
@@ -790,7 +799,15 @@ public class PlayerController : MonoBehaviour
     {
         if (tpm == null)
         {
-            GameObject hand = (GameObject)Instantiate(Resources.Load("Prefabs/Player/Third Person Player/Third Person Player", typeof(GameObject)), transform.position + Camera.main.transform.forward * 2, transform.rotation);
+            GameObject hand;
+            if(handType == 0)
+            {
+                hand = Instantiate(normalHand, transform.position + Camera.main.transform.forward * 2, transform.rotation);
+            }
+            else
+            {
+                hand = Instantiate(fastHand, transform.position + Camera.main.transform.forward * 2, transform.rotation);
+            }
             InitializeHand(hand);
         }
     }
@@ -1036,7 +1053,16 @@ public class PlayerController : MonoBehaviour
     private void OnEar()
     {
         if(earCon == null)
-        CastingStateChange(castableEar);
+        {
+            if(earType == 0)
+            {
+                CastingStateChange(castableEar);
+            }
+            else
+            {
+                CastingStateChange(upgradedEar);
+            }
+        }
     }
     #endregion
     #endregion

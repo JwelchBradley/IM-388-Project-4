@@ -5,6 +5,15 @@ using UnityEngine;
 public class ThirdPersonMovement : MonoBehaviour
 {
     #region Variables
+    [SerializeField]
+    [Tooltip("The upgrade type for this object")]
+    private int type = 0;
+
+    public int Type
+    {
+        get => type;
+    }
+
     #region Camera
     #region Normal Camera
     /// <summary>
