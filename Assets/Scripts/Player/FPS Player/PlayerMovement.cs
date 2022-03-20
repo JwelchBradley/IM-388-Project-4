@@ -92,7 +92,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField]
     [Tooltip("The rate at which gravity scales")]
-    [Range(-100, 0)]
+    [Range(-500, 0)]
     private float gravity = -9.8f;
 
     [Space]
@@ -316,7 +316,7 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded)
         {
             velocity.y = 0;
-            controller.stepOffset = 1;
+            controller.stepOffset = 3;
         }
         else
         {

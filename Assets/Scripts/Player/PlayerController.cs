@@ -314,7 +314,8 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// Holds reference to the last raycast data.
     /// </summary>
-    private RaycastHit hit;
+    [HideInInspector]
+    public RaycastHit hit;
     #endregion
 
     #region Grapple
@@ -328,9 +329,15 @@ public class PlayerController : MonoBehaviour
     private GameObject grappleLocationMarker;
 
     private bool canHook = false;
+    private bool canHookGrab = false;
 
     private SpringJoint joint;
 
+    [SerializeField]
+    private Material intestinesMaterial;
+
+    [SerializeField]
+    private float intestinesWidth = 0.5f;
 
     #region Grapple Values
     [Header("Grapple values")]
@@ -676,6 +683,23 @@ public class PlayerController : MonoBehaviour
         currentActive = newActive;
     }
 
+    public void OnRecall()
+    {
+        if (!currentActive.Equals(activeController.PERSON)) return;
+
+        if(EC != null && EC.Eye != null)
+        ResetEye();
+
+        if(earCon != null)
+        ResetEar();
+
+        if(tpm != null && tpm.Hand != null)
+        ResetHand();
+
+        if(heartMesh.activeInHierarchy)
+        ResetHeart();
+    }
+
     #region Body
     #region Input Call
     private void OnBody()
@@ -762,6 +786,14 @@ public class PlayerController : MonoBehaviour
         handMesh.SetActive(false);
         rightHandArmMesh.SetActive(false);
         tpm = hand.GetComponentInChildren<ThirdPersonMovement>();
+    }
+
+    public void ResetHand()
+    {
+        Destroy(TPM.Hand.transform.parent.gameObject, 0.01f);
+        TPM = null;
+        HandMesh.SetActive(true);
+        RightHandArmMesh.SetActive(true);
     }
 
     #region Input Call
@@ -955,6 +987,14 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
+    public void ResetEye()
+    {
+        Destroy(EC.Eye, 0.01f);
+        EC = null;
+        EyeCam = null;
+        EyeMesh.SetActive(true);
+    }
+
     /// <summary>
     /// Handles the looking of the eye.
     /// </summary>
@@ -977,28 +1017,10 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Heart
-    #region Input Call
-    private void OnHeart()
-    {
-        //UpdateBodyPart(activeController.HEART);
-    }
-    #endregion
-
-    #region Activation and Deactivation
-    private void ActivateHeart()
-    {
-        heartMesh.SetActive(true);
-    }
-
-    private void DeactivateHeart()
+    private void ResetHeart()
     {
         heartMesh.SetActive(false);
     }
-
-    #region Change Functions
-
-    #endregion
-    #endregion
     #endregion
 
     #region Intestines
@@ -1064,6 +1086,12 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
+    public void ResetEar()
+    {
+        EarCon = null;
+        Destroy(gameObject, 0.01f);
+    }
     #endregion
     #endregion
 
@@ -1104,6 +1132,10 @@ public class PlayerController : MonoBehaviour
         {
             CastHook();
         }
+        else if (canHookGrab)
+        {
+            HookGrab();
+        }
     }
     #endregion
     #endregion
@@ -1112,13 +1144,11 @@ public class PlayerController : MonoBehaviour
     private Vector3 hookPos;
     private bool CheckForHook()
     {
-        if (!mainCamBrain.IsBlending && currentActive.Equals(activeController.PERSON))
+        if (!mainCamBrain.IsBlending && currentActive.Equals(activeController.PERSON) && intestinesRenderer == null)
         {
             if (Physics.BoxCast(mainCam.transform.position, Vector3.one * 3, mainCam.transform.forward, out hit, mainCam.transform.rotation, hookMaxDistCheck, hookMask) ||
                 Physics.BoxCast(mainCam.transform.position, Vector3.one * 0.5f, mainCam.transform.forward, out hit, mainCam.transform.rotation, hookMaxDistCheck, hookMask))
             {
-                grappleLocationMarker.SetActive(true);
-                grappleLocationMarker.transform.position = hit.transform.position;
 
                 RaycastHit hitTemp;
                 Physics.Raycast(mainCam.transform.position, hit.point - mainCam.transform.position, out hitTemp, hookMaxDistCheck, wallCheckMask);
@@ -1127,23 +1157,40 @@ public class PlayerController : MonoBehaviour
                 {
                     pmb.PickUpText.text = "";
                     canHook = false;
+                    canHookGrab = false;
                 }
                 else
                 {
-                    pmb.PickUpText.text = "Left click to throw intestines";
-                    canHook = true;
-                    return true;
+                    grappleLocationMarker.SetActive(true);
+                    grappleLocationMarker.transform.position = hit.transform.position;
+
+                    if (hit.transform.gameObject.CompareTag("HookGrabbable"))
+                    {
+                        pmb.PickUpText.text = "Left click to pick up with intestines";
+                        canHook = false;
+                        canHookGrab = true;
+                        return true;
+                    }
+                    else
+                    {
+                        pmb.PickUpText.text = "Left click to throw intestines";
+                        canHook = true;
+                        canHookGrab = false;
+                        return true;
+                    }
                 }
             }
             else
             {
                 canHook = false;
+                canHookGrab = false;
                 grappleLocationMarker.SetActive(false);
             }
         }
         else
         {
             canHook = false;
+            canHookGrab = false;
             grappleLocationMarker.SetActive(false);
         }
 
@@ -1176,6 +1223,12 @@ public class PlayerController : MonoBehaviour
         StartGrapple();
     }
 
+    private void HookGrab()
+    {
+        Keys.Add(hit.transform.gameObject);
+        hit.transform.gameObject.SetActive(false);
+    }
+
     #region Hooking
     /// <summary>
     /// Creates a line and spring joint
@@ -1189,6 +1242,9 @@ public class PlayerController : MonoBehaviour
                 // Create positions for joint
                 joint = gameObject.AddComponent<SpringJoint>();
             intestinesRenderer = gameObject.AddComponent<LineRenderer>();
+            intestinesRenderer.material = intestinesMaterial;
+            intestinesRenderer.startWidth = intestinesWidth;
+            intestinesRenderer.endWidth = intestinesWidth * 2;
 
             joint.autoConfigureConnectedAnchor = false;
                 joint.connectedAnchor = hookPos;

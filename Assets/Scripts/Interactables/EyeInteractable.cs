@@ -15,10 +15,7 @@ public class EyeInteractable : Interactable
     {
         if(pc.CurrentActive.Equals(PlayerController.activeController.PERSON))
         {
-            Destroy(pc.EC.Eye, 0.01f);
-            pc.EC = null;
-            pc.EyeCam = null;
-            pc.EyeMesh.SetActive(true);
+            pc.ResetEye();
         }
     }
 }

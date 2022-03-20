@@ -92,5 +92,9 @@ public class HeartSpikes : MonoBehaviour, Activatable
         {
             other.GetComponent<PlayerController>().KillPlayer();
         }
+        else if(other.tag == "Hand") 
+        {
+            other.GetComponent<ThirdPersonMovement>().KillPlayer();
+        }
     }
 }

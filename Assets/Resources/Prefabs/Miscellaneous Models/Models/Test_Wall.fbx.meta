@@ -3,7 +3,22 @@ guid: 17e2bdaab90b9544ca79da89ac1a5c7e
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: New_Wall_initialShadingGroup1
+    second: {fileID: -840037777384891287, guid: 43152bc5738e6c94e8ab3c42fb5d8297, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: New_Wall_pasted__texturedFacets25
+    second: {fileID: -4565884009001823619, guid: 43152bc5738e6c94e8ab3c42fb5d8297, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: New_Wall_pasted__texturedFacets27
+    second: {fileID: -4565884009001823619, guid: 43152bc5738e6c94e8ab3c42fb5d8297, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

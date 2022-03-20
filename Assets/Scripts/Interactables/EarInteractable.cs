@@ -11,8 +11,7 @@ public class EarInteractable : Interactable
     {
         if (pc.CurrentActive.Equals(PlayerController.activeController.PERSON))
         {
-            pc.EarCon = null;
-            Destroy(gameObject, 0.01f);
+            pc.ResetEar();
         }
     }
 }

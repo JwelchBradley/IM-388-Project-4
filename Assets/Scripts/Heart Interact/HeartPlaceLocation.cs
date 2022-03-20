@@ -40,11 +40,13 @@ public class HeartPlaceLocation : Interactable
             hc = pc.HeartMesh.GetComponent<HeartController>();
             hc.HPC = this;
             hc.StartCoroutine(hc.Switch());
+            DisplayInteractText();
         }
         else
         {
             hc = null;
             pc.HeartMesh.SetActive(false);
+            DisplayInteractText();
         }
     }
 

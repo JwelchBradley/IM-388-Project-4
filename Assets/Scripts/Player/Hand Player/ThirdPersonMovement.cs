@@ -814,4 +814,11 @@ public class ThirdPersonMovement : MonoBehaviour
     }
     #endregion
     #endregion
+
+    public void KillPlayer()
+    {
+        PlayerController pc = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<PlayerController>();
+        pc.UpdateBodyPart(PlayerController.activeController.PERSON);
+        pc.ResetHand();
+    }
 }

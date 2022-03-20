@@ -7,6 +7,7 @@ public class BoxBehaviour : Interactable
     Rigidbody rb;
     GameObject player;
     private PlayerMovement pm;
+    private PlayerController pc;
     private Vector3 offset;
     [SerializeField]
     private float pullDist = 1;
@@ -27,6 +28,7 @@ public class BoxBehaviour : Interactable
         rb = GetComponent<Rigidbody>();
         player = GameObject.Find("Player");
         pm = player.GetComponent<PlayerMovement>();
+        pc = player.GetComponent<PlayerController>();
         interactable = GetComponent<Interactable>();
     }
 
@@ -47,8 +49,12 @@ public class BoxBehaviour : Interactable
         }
     }
 
+    Coroutine holdLookRef = null;
     public override void DisplayInteractText()
     {
+        if(holdLookRef == null)
+            holdLookRef = StartCoroutine(HoldLookRef());
+
         //base.DisplayInteractText();
         //StartCoroutine(DisplayInteractTextHelper());
         if (canPull)
@@ -59,6 +65,18 @@ public class BoxBehaviour : Interactable
         {
             text.text = "";
         }
+    }
+
+    private IEnumerator HoldLookRef()
+    {
+        while(pc.hit.transform != null && pc.hit.transform.gameObject.Equals(gameObject))
+        {
+            yield return new WaitForFixedUpdate();
+
+            DisplayInteractText();
+        }
+
+        holdLookRef = null;
     }
 
     public override void Interact()
@@ -91,6 +109,8 @@ public class BoxBehaviour : Interactable
         rb.velocity = Vector3.zero;
         isPulling = false;
         pm.pullMod = 1;
+
+        base.DisplayInteractText();
         //MoveBoxForward();
     }
 }

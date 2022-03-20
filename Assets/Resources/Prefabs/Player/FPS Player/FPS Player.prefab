@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1944982645}
   m_LocalRotation: {x: -0, y: 0.0013463795, z: -0, w: -0.99999917}
-  m_LocalPosition: {x: -8.799015, y: 4.593055, z: -0.33412474}
+  m_LocalPosition: {x: -9.8, y: 7.49, z: -0.34}
   m_LocalScale: {x: 9.819967, y: 9.819967, z: 9.819967}
   m_Children: []
   m_Father: {fileID: 543450651957066724}
@@ -427,7 +427,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1119962703066126361, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.0419044
+      value: 2.0419135
       objectReference: {fileID: 0}
     - target: {fileID: 1119962703066126361, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_LocalPosition.y
@@ -515,15 +515,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704133113646, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.0419044
+      value: -379.74506
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704133113646, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.748969
+      value: -0.89576083
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704133113646, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 21.918106
+      value: 24.643076
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704133113646, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_LocalRotation.w
@@ -972,27 +972,27 @@ PrefabInstance:
       objectReference: {fileID: 5808411181917555995, guid: 04f64e641e49b5245ac6a25a0caba4ef, type: 3}
     - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
       propertyPath: damperJoint
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
       propertyPath: springJoint
-      value: 1
+      value: 2.25
       objectReference: {fileID: 0}
     - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
       propertyPath: maxJointDist
-      value: 0.001
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
       propertyPath: minJointDist
-      value: 0.001
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
       propertyPath: massScaleJoint
-      value: 1
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
       propertyPath: toleranceJoint
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
       propertyPath: hookMask.m_Bits
@@ -1010,6 +1010,10 @@ PrefabInstance:
       propertyPath: armAnim.Array.size
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
+      propertyPath: intestinesMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 5a53d6a2e219b644c903b895e3d58aad, type: 2}
     - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
       propertyPath: pickUpSurface.m_Bits
       value: 776
@@ -1039,8 +1043,12 @@ PrefabInstance:
       value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 8837074069219185250, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
+      propertyPath: m_Height
+      value: 3.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8837074069219185250, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
       propertyPath: m_StepOffset
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8837074069219185251, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
       propertyPath: m_RootOrder
@@ -1092,7 +1100,7 @@ PrefabInstance:
       objectReference: {fileID: 919132147685171550}
     - target: {fileID: 8837074069219185252, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
       propertyPath: gravity
-      value: -100
+      value: -75
       objectReference: {fileID: 0}
     - target: {fileID: 8837074069219185252, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
       propertyPath: pullPos
@@ -1109,6 +1117,10 @@ PrefabInstance:
     - target: {fileID: 8837074069219185252, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
       propertyPath: jumpHeight
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8837074069219185252, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
+      propertyPath: extraGravity
+      value: 30000
       objectReference: {fileID: 0}
     - target: {fileID: 8837074069219185252, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
       propertyPath: crouchWalkSpeed

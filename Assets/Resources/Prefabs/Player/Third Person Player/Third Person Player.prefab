@@ -209,6 +209,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dca96abce4610940aaf09d59f705952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   cinemachineCameraTarget: {fileID: 6383923825273417835}
   bottomClamp: -12
   topClamp: 70
@@ -1551,7 +1552,7 @@ MonoBehaviour:
   ShoulderOffset: {x: 0.5, y: 0.68, z: 0}
   VerticalArmLength: 0.4
   CameraSide: 1
-  CameraDistance: 2
+  CameraDistance: 3
   CameraCollisionFilter:
     serializedVersion: 2
     m_Bits: 0
