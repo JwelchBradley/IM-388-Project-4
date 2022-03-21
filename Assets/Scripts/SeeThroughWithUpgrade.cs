@@ -1,0 +1,29 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class SeeThroughWithUpgrade : MonoBehaviour
+{
+    private MeshRenderer render;
+    private PlayerController player;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        render = GetComponent<MeshRenderer>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<PlayerController>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if(player.eyeType == 1 && player.CurrentActive == PlayerController.activeController.EYE)
+        {
+            render.enabled = false;
+        }
+        else
+        {
+            render.enabled = true;
+        }
+    }
+}
