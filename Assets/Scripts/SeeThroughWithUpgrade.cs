@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class SeeThroughWithUpgrade : MonoBehaviour
 {
-    private MeshRenderer render;
+    private Renderer render;
     private PlayerController player;
 
     // Start is called before the first frame update
     void Start()
     {
-        render = GetComponent<MeshRenderer>();
+        render = GetComponent<Renderer>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<PlayerController>();
     }
 

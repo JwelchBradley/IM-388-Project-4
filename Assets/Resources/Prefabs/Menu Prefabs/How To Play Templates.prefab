@@ -364,12 +364,16 @@ MonoBehaviour:
     <b>Interact:</b>
     F
 
-    <b>Change State:</b> Q
+    <b>Change to Zombie:</b> Q
 
-    <b>Aim:</b> Mouse
+    <b>Change to Hand:</b> E
 
-    <b>Open Pause:</b>
-    - Esc
+    <b>Change
+    to Eye:</b> C
+
+    <b>Recall all Parts</b> R
+
+    <b>Open Pause:</b> - Esc
 
 '
   m_isRightToLeft: 0

@@ -1074,6 +1074,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnEar()
     {
+        return;
         if(earCon == null)
         {
             if(earType == 0)

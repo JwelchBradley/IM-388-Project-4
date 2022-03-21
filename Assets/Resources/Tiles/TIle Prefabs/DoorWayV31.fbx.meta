@@ -3,7 +3,42 @@ guid: 7b95d20a4edd27940ae5646ac6e68597
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert1
+    second: {fileID: 2100000, guid: 11e47be8f16d74044bd84967b40bae75, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pasted__lambert6
+    second: {fileID: 2100000, guid: 11e47be8f16d74044bd84967b40bae75, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pasted__pasted__lambert5
+    second: {fileID: 2100000, guid: 11e47be8f16d74044bd84967b40bae75, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pasted__pasted__lambert7
+    second: {fileID: 2100000, guid: 11e47be8f16d74044bd84967b40bae75, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pasted__pasted__pasted__defaultPolygonShader17
+    second: {fileID: 2100000, guid: 11e47be8f16d74044bd84967b40bae75, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pasted__pasted__pasted__lambert6
+    second: {fileID: 2100000, guid: 11e47be8f16d74044bd84967b40bae75, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pasted__pasted__pasted__pasted__defaultPolygonShader16
+    second: {fileID: 2100000, guid: 11e47be8f16d74044bd84967b40bae75, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
