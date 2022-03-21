@@ -687,7 +687,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704133113647, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: far clip plane
-      value: 500
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704133113647, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: near clip plane
@@ -1115,7 +1115,7 @@ PrefabInstance:
     - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
       propertyPath: castableEar
       value: 
-      objectReference: {fileID: 6054774316084382634}
+      objectReference: {fileID: 7032459133983628089, guid: 614760e1054bb6040ad4b7a212ac2ee0, type: 3}
     - target: {fileID: 6399384503034149750, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
       propertyPath: castableEye
       value: 

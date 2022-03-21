@@ -572,7 +572,10 @@ public class PlayerController : MonoBehaviour
         }
         else if (eCaster.IsCasting)
         {
-            pmb.PickUpText.text = "Left click to cast eye";
+            if (currentCastableObject.Equals(castableEye))
+                pmb.PickUpText.text = "Left click to cast eye";
+            else
+                pmb.PickUpText.text = "Left click to cast ear";
         }
         else
         {
@@ -1074,7 +1077,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnEar()
     {
-        return;
         if(earCon == null)
         {
             if(earType == 0)
@@ -1090,8 +1092,8 @@ public class PlayerController : MonoBehaviour
 
     public void ResetEar()
     {
+        Destroy(EarCon.gameObject, 0.01f);
         EarCon = null;
-        Destroy(gameObject, 0.01f);
     }
     #endregion
     #endregion

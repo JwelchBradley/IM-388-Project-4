@@ -2721,24 +2721,26 @@ PrefabInstance:
 
         Jacob Welch
 
+        Broc Edson
+
 
         <u>Artists</u>
 
-        Austin
-        Dahmm
+        Kevin
+        Saucedo
 
-        Connor Dunn
-
-
-        <u>Sound Designer</u>
-
-        Jake
-        Weber
+        Ty
 
 
         <u>Game Designer</u>
 
-        Zal Daboo'
+        Jacob Welch
+
+
+        <u>Level
+        Designer</u>
+
+        Alex Fox'
       objectReference: {fileID: 0}
     - target: {fileID: 1785420434429610891, guid: 67e20e42230fb12469be0bc7900aacd9, type: 3}
       propertyPath: m_fontAsset
