@@ -8,17 +8,17 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: New_Wall_initialShadingGroup1
-    second: {fileID: -840037777384891287, guid: 43152bc5738e6c94e8ab3c42fb5d8297, type: 3}
+    second: {fileID: 2100000, guid: 85d0ef5c9f3d1c54e8699b49c51dc335, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: New_Wall_pasted__texturedFacets25
-    second: {fileID: -4565884009001823619, guid: 43152bc5738e6c94e8ab3c42fb5d8297, type: 3}
+    second: {fileID: 932851071429951443, guid: 1f7fe7ef210dca247b17f79db6d06f3b, type: 3}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: New_Wall_pasted__texturedFacets27
-    second: {fileID: -4565884009001823619, guid: 43152bc5738e6c94e8ab3c42fb5d8297, type: 3}
+    second: {fileID: 2100000, guid: 85d0ef5c9f3d1c54e8699b49c51dc335, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
