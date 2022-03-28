@@ -7700,7 +7700,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6216472653992271187, guid: 4446e0d79ed4ba847acf512e26f4f4bd, type: 3}
       propertyPath: m_RootOrder
-      value: 14
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 6216472653992271187, guid: 4446e0d79ed4ba847acf512e26f4f4bd, type: 3}
       propertyPath: m_LocalScale.x
