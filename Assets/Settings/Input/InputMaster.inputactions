@@ -102,14 +102,6 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Ear",
-                    "type": "Button",
-                    "id": "aa072658-9063-4c34-be2a-de6868061413",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
                     "name": "Recall",
                     "type": "Button",
                     "id": "4a576531-c24f-4355-accd-e9406a1c8eed",
@@ -347,17 +339,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Eye",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "4962e3d3-7ea9-4c97-83f1-f2aba9409b42",
-                    "path": "<Keyboard>/x",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard and Mouse",
-                    "action": "Ear",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

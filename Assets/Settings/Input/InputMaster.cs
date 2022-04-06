@@ -115,14 +115,6 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Ear"",
-                    ""type"": ""Button"",
-                    ""id"": ""aa072658-9063-4c34-be2a-de6868061413"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
                     ""name"": ""Recall"",
                     ""type"": ""Button"",
                     ""id"": ""4a576531-c24f-4355-accd-e9406a1c8eed"",
@@ -365,17 +357,6 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""4962e3d3-7ea9-4c97-83f1-f2aba9409b42"",
-                    ""path"": ""<Keyboard>/x"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard and Mouse"",
-                    ""action"": ""Ear"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""2ce85f62-bad2-47ea-b4a4-5019cead3d3a"",
                     ""path"": ""<Keyboard>/r"",
                     ""interactions"": """",
@@ -459,7 +440,6 @@ public class @InputMaster : IInputActionCollection, IDisposable
         m_Player_Body = m_Player.FindAction("Body", throwIfNotFound: true);
         m_Player_Hand = m_Player.FindAction("Hand", throwIfNotFound: true);
         m_Player_Eye = m_Player.FindAction("Eye", throwIfNotFound: true);
-        m_Player_Ear = m_Player.FindAction("Ear", throwIfNotFound: true);
         m_Player_Recall = m_Player.FindAction("Recall", throwIfNotFound: true);
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
@@ -525,7 +505,6 @@ public class @InputMaster : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Body;
     private readonly InputAction m_Player_Hand;
     private readonly InputAction m_Player_Eye;
-    private readonly InputAction m_Player_Ear;
     private readonly InputAction m_Player_Recall;
     public struct PlayerActions
     {
@@ -543,7 +522,6 @@ public class @InputMaster : IInputActionCollection, IDisposable
         public InputAction @Body => m_Wrapper.m_Player_Body;
         public InputAction @Hand => m_Wrapper.m_Player_Hand;
         public InputAction @Eye => m_Wrapper.m_Player_Eye;
-        public InputAction @Ear => m_Wrapper.m_Player_Ear;
         public InputAction @Recall => m_Wrapper.m_Player_Recall;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
@@ -590,9 +568,6 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @Eye.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEye;
                 @Eye.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEye;
                 @Eye.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEye;
-                @Ear.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEar;
-                @Ear.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEar;
-                @Ear.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEar;
                 @Recall.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRecall;
                 @Recall.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRecall;
                 @Recall.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRecall;
@@ -636,9 +611,6 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @Eye.started += instance.OnEye;
                 @Eye.performed += instance.OnEye;
                 @Eye.canceled += instance.OnEye;
-                @Ear.started += instance.OnEar;
-                @Ear.performed += instance.OnEar;
-                @Ear.canceled += instance.OnEar;
                 @Recall.started += instance.OnRecall;
                 @Recall.performed += instance.OnRecall;
                 @Recall.canceled += instance.OnRecall;
@@ -711,7 +683,6 @@ public class @InputMaster : IInputActionCollection, IDisposable
         void OnBody(InputAction.CallbackContext context);
         void OnHand(InputAction.CallbackContext context);
         void OnEye(InputAction.CallbackContext context);
-        void OnEar(InputAction.CallbackContext context);
         void OnRecall(InputAction.CallbackContext context);
     }
     public interface IMenuActions
