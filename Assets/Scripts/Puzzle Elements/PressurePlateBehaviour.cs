@@ -50,6 +50,8 @@ public class PressurePlateBehaviour : MonoBehaviour
     private GameObject[] Wire;
     List<Material> OriginalColor = new List<Material>();
 
+    bool isChanging = false;
+
 #if UNITY_EDITOR
     private void Reset()
     {
@@ -137,10 +139,15 @@ public class PressurePlateBehaviour : MonoBehaviour
             //
             SetEmission(Color.black);
         }
+        else if(!heldDown && transform.position != pushedPos && !isChanging)
+        {
+            StartCoroutine(ChangeState(false));
+        }
     }
 
     private IEnumerator ChangeState(bool shouldChange)
     {
+        isChanging = true;
         Vector3 target = startPos;
         if (shouldChange)
         {
@@ -155,6 +162,7 @@ public class PressurePlateBehaviour : MonoBehaviour
 
             yield return new WaitForEndOfFrame();
         }
+        isChanging = false;
     }
     //
     void SetEmission(Color hue)

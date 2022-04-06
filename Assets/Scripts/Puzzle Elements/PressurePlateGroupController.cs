@@ -18,6 +18,9 @@ public class PressurePlateGroupController : MonoBehaviour
     {
         numActivated += mod;
 
+        print(pressurePlate.Count);
+        print("numActived: " + numActivated);
+
         if(numActivated == pressurePlate.Count)
         {
             AllowLever(true);
