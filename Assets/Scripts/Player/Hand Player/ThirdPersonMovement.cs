@@ -325,15 +325,19 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         if (!mainCamBrain.IsBlending)
         {
-            if (isClimbing)
+            if (!isClimbTransitioning)
             {
-                CameraRotation(ref cinemachineTargetXRotWall, ref cinemachineTargetYRotWall, cinemachineCameraWallTarget, bottomClamp, topClamp, true);
-                print(cinemachineTargetXRotWall);
+                if (isClimbing)
+                {
+                    CameraRotation(ref cinemachineTargetXRotWall, ref cinemachineTargetYRotWall, cinemachineCameraWallTarget, bottomClamp, topClamp, true);
+                    print(cinemachineTargetXRotWall);
+                }
+                else
+                {
+                    CameraRotation(ref cinemachineTargetXRot, ref cinemachineTargetYRot, cinemachineCameraTarget.transform, bottomClamp, topClamp, false);
+                }
             }
-            else
-            {
-                CameraRotation(ref cinemachineTargetXRot, ref cinemachineTargetYRot, cinemachineCameraTarget.transform, bottomClamp, topClamp, false);
-            }
+
 
             PlayerMoveAnimation(moveVec);
 
@@ -501,12 +505,16 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         if (hit.normal.y >= 0.5f || hit.normal.y <= -0.5f)
         {
+            cinemachineTargetXRot = cinemachineTargetXRotWall;
+            cinemachineTargetYRot = 0;
+
             controller.stepOffset = startingStepOffset;
             isClimbing = false;
             climbCineCam.Priority = 0;
             newClimbCineCam.Priority = 0;
             curClimb = 0;
             xRotChange = 0;
+            controller.radius = 0.4f;
         }
         else
         {
@@ -514,6 +522,8 @@ public class ThirdPersonMovement : MonoBehaviour
             curClimb = 150;
             climbCineCam.Priority = 150;
             newClimbCineCam.Priority = 150;
+
+            controller.radius = 0.2f;
         }
     }
 
@@ -625,6 +635,9 @@ public class ThirdPersonMovement : MonoBehaviour
 
             if (hit.normal.y >= -0.5f && hit.normal.y <= 0.5f)
             {
+                cinemachineTargetXRotWall = Mathf.Lerp(oldCamValue, newCamValue, t);
+                // Updates cinemachine follow target rotation (essentially rotates the camera)
+                cinemachineCameraWallTarget.rotation = Quaternion.Euler(cinemachineTargetYRotWall, cinemachineTargetXRotWall, 0.0f);
                 climbCineCam.m_XAxis.Value = Mathf.Lerp(oldCamValue, newCamValue, t);
             }
 
@@ -671,18 +684,26 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         if (currentNormal.x < -0.8f)
         {
+            cinemachineWallLeftClamp = 0;
+            cinemachineWallRightClamp = 180;
             return 90;
         }
         else if (currentNormal.x > 0.8f)
         {
+            cinemachineWallLeftClamp = 180;
+            cinemachineWallRightClamp = 359;
             return 270;
         }
         else if (currentNormal.z > 0.8f)
         {
+            cinemachineWallLeftClamp = 90;
+            cinemachineWallRightClamp = 270;
             return 180;
         }
         else
         {
+            cinemachineWallLeftClamp = -90;
+            cinemachineWallRightClamp = 90;
             return 0;
         }
     }
@@ -815,11 +836,6 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             xTargetRot += input.x * Time.fixedDeltaTime * xSens;
             yTargetRot += -input.y * Time.fixedDeltaTime * ySens;
-
-            if (isClimbing)
-            {
-                Debug.Log(true);
-            }
         }
 
         if (shouldSideClamp)
@@ -850,9 +866,10 @@ public class ThirdPersonMovement : MonoBehaviour
     /// <returns></returns>
     private float ClampAngle(float targetAngle, float angleMin, float angleMax)
     {
-        if (targetAngle < -360f) targetAngle += 360f;
-        if (targetAngle > 360f) targetAngle -= 360f;
-        return Mathf.Clamp(targetAngle, angleMin, angleMax);
+        float newAngle = Mathf.Clamp(targetAngle, angleMin, angleMax);
+        if (newAngle < -360f) newAngle += 360f;
+        if (newAngle > 360f) newAngle -= 360f;
+        return newAngle;
     }
     #endregion
     #endregion
