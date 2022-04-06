@@ -85,6 +85,16 @@ public class ThirdPersonMovement : MonoBehaviour
     [SerializeField] private float topClamp = 90;
     #endregion
     #endregion
+
+    #region wall
+    [Tooltip("The target that the camera looks at when the hand is on a wall")]
+    [SerializeField] private Transform cinemachineCameraWallTarget;
+
+    private float cinemachineTargetXRotWall = 0;
+    private float cinemachineTargetYRotWall = 0;
+    private float cinemachineWallRightClamp = 90;
+    private float cinemachineWallLeftClamp = -90;
+    #endregion
     #endregion
 
     #region Movement
@@ -171,6 +181,9 @@ public class ThirdPersonMovement : MonoBehaviour
     [SerializeField]
     private CinemachineFreeLook climbCineCam;
 
+    [SerializeField]
+    private CinemachineVirtualCamera newClimbCineCam;
+
     public GameObject Hand
     {
         get => gameObject;
@@ -243,7 +256,8 @@ public class ThirdPersonMovement : MonoBehaviour
         if(curNorm != cineCam.m_Priority)
         {
             cineCam.m_Priority = curNorm;
-            climbCineCam.m_Priority = curClimb;
+            //climbCineCam.m_Priority = curClimb;
+            newClimbCineCam.Priority = curClimb;
         }
         else
         {
@@ -251,11 +265,15 @@ public class ThirdPersonMovement : MonoBehaviour
 
             if(curClimb > 0)
             {
-                climbCineCam.m_Priority = 1;
+                newClimbCineCam.Priority = 1;
+
+                //climbCineCam.m_Priority = 1;
             }
             else
             {
-                climbCineCam.m_Priority = -2;
+                newClimbCineCam.Priority = -2;
+
+                //climbCineCam.m_Priority = -2;
             }
         }
     }
@@ -307,7 +325,15 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         if (!mainCamBrain.IsBlending)
         {
-            CameraRotation();
+            if (isClimbing)
+            {
+                CameraRotation(ref cinemachineTargetXRotWall, ref cinemachineTargetYRotWall, cinemachineCameraWallTarget, bottomClamp, topClamp, true);
+                print(cinemachineTargetXRotWall);
+            }
+            else
+            {
+                CameraRotation(ref cinemachineTargetXRot, ref cinemachineTargetYRot, cinemachineCameraTarget.transform, bottomClamp, topClamp, false);
+            }
 
             PlayerMoveAnimation(moveVec);
 
@@ -478,6 +504,7 @@ public class ThirdPersonMovement : MonoBehaviour
             controller.stepOffset = startingStepOffset;
             isClimbing = false;
             climbCineCam.Priority = 0;
+            newClimbCineCam.Priority = 0;
             curClimb = 0;
             xRotChange = 0;
         }
@@ -486,6 +513,7 @@ public class ThirdPersonMovement : MonoBehaviour
             isClimbing = true;
             curClimb = 150;
             climbCineCam.Priority = 150;
+            newClimbCineCam.Priority = 150;
         }
     }
 
@@ -780,22 +808,36 @@ public class ThirdPersonMovement : MonoBehaviour
     /// <summary>
     /// Rotates the objects that the cinemachine camera is following.
     /// </summary>
-    public void CameraRotation()
+    public void CameraRotation(ref float xTargetRot, ref float yTargetRot, Transform target, float bottomClamp, float topClamp, bool shouldSideClamp)
     {
         // Updates the target look values
         if (input.sqrMagnitude >= 0.01f)
         {
-            cinemachineTargetXRot += input.x * Time.fixedDeltaTime * xSens;
-            cinemachineTargetYRot += -input.y * Time.fixedDeltaTime * ySens;
+            xTargetRot += input.x * Time.fixedDeltaTime * xSens;
+            yTargetRot += -input.y * Time.fixedDeltaTime * ySens;
+
+            if (isClimbing)
+            {
+                Debug.Log(true);
+            }
         }
 
-        // clamp our rotations so our values are limited 360 degrees
-        cinemachineTargetXRot = ClampAngle(cinemachineTargetXRot, float.MinValue, float.MaxValue);
-        cinemachineTargetYRot = ClampAngle(cinemachineTargetYRot, bottomClamp, topClamp);
+        if (shouldSideClamp)
+        {
+            xTargetRot = ClampAngle(xTargetRot, cinemachineWallLeftClamp, cinemachineWallRightClamp);
+        }
+        else
+        {
+            // clamp our rotations so our values are limited 360 degrees
+            xTargetRot = ClampAngle(xTargetRot, float.MinValue, float.MaxValue);
+        }
+
+        yTargetRot = ClampAngle(yTargetRot, bottomClamp, topClamp);
 
         // Updates cinemachine follow target rotation (essentially rotates the camera)
-        cinemachineCameraTarget.transform.rotation = Quaternion.Euler(cinemachineTargetYRot, cinemachineTargetXRot, 0.0f);
-        mainCam.transform.rotation = Quaternion.Euler(cinemachineTargetYRot, cinemachineTargetXRot, 0.0f);
+        target.rotation = Quaternion.Euler(yTargetRot, xTargetRot, 0.0f);
+
+        //mainCam.transform.rotation = Quaternion.Euler(cinemachineTargetYRot, cinemachineTargetXRot, 0.0f);
         input = Vector2.zero;
     }
 

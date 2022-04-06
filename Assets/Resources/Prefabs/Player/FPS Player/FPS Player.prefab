@@ -651,15 +651,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704133113646, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.0419135
+      value: -379.74506
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704133113646, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.748969
+      value: -0.89576083
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704133113646, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 21.918106
+      value: 24.643076
       objectReference: {fileID: 0}
     - target: {fileID: 1119962704133113646, guid: 5d6f195fe3657894d89fcd8709e6bc35, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1266,7 +1266,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8837074069219185252, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
       propertyPath: walkSpeed
-      value: 20
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 8837074069219185252, guid: f295147c5cde4fd4186a36ee3e24dd4c, type: 3}
       propertyPath: jumpHeight
