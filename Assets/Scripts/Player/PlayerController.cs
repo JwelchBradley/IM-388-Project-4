@@ -396,6 +396,9 @@ public class PlayerController : MonoBehaviour
     [Tooltip("The type of intestines upgrade used. 0 is none")]
     public int intestinesType = 0;
     #endregion
+
+    private bool canRcall = true;
+    public bool CanRecall { set { canRcall = value; } }
     #endregion
 
     #region Funcitons
@@ -688,7 +691,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnRecall()
     {
-        if (!currentActive.Equals(activeController.PERSON)) return;
+        if (!currentActive.Equals(activeController.PERSON) || !canRcall) return;
 
         if(EC != null && EC.Eye != null)
         ResetEye();
@@ -789,10 +792,13 @@ public class PlayerController : MonoBehaviour
         handMesh.SetActive(false);
         rightHandArmMesh.SetActive(false);
         tpm = hand.GetComponentInChildren<ThirdPersonMovement>();
+        tpm.SetCameras(walkCam.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.Value);
     }
 
     public void ResetHand()
     {
+        if (TPM.Equals(null)) return;
+
         Destroy(TPM.Hand.transform.parent.gameObject, 0.01f);
         TPM = null;
         HandMesh.SetActive(true);
@@ -1323,6 +1329,7 @@ public class PlayerController : MonoBehaviour
         cc.enabled = false;
         transform.position = checkpoint.transform.position;
         transform.rotation = checkpoint.transform.rotation;
+        walkCam.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.Value = transform.rotation.eulerAngles.y;
         StartCoroutine(AllowMovement());
     }
 

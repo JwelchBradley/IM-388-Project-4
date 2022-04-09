@@ -65,6 +65,10 @@ public class LeverBehaviour : Interactable
 
     float t = 0;
 
+    [SerializeField]
+    private GameObject[] Wire;
+    List<Material> OriginalColor = new List<Material>();
+
     #region Level 3
     [HideInInspector]
     public Level3LeverController l3lc;
@@ -93,6 +97,22 @@ public class LeverBehaviour : Interactable
 
     private void Start()
     {
+        foreach (GameObject wire in Wire)
+        {
+            OriginalColor.Add(wire.GetComponent<Renderer>().material);
+        }
+
+        foreach (Material mat in OriginalColor)
+        {
+            mat.EnableKeyword("_EMISSION");
+        }
+
+        //OriginalColor.EnableKeyword("_EMISSION");
+        foreach (Material mat in OriginalColor)
+        {
+            mat.SetColor("_EmissionColor", Color.black);
+        }
+
         startPos = lever.transform.localPosition;
         startRotation = lever.transform.localRotation;
 
@@ -184,6 +204,8 @@ public class LeverBehaviour : Interactable
     {
         greenYellowLight.color = Color.green;
 
+        SetEmission(Color.yellow);
+
         if (activated)
         {
             aud.PlayOneShot(correctSound);
@@ -224,5 +246,13 @@ public class LeverBehaviour : Interactable
 
             yield return new WaitForEndOfFrame();
         }
+    }
+
+    void SetEmission(Color hue)
+    {
+            foreach (Material mat in OriginalColor)
+            {
+                mat.SetColor("_EmissionColor", hue);
+            }
     }
 }

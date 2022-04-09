@@ -90,6 +90,8 @@ public class ThirdPersonMovement : MonoBehaviour
     [Tooltip("The target that the camera looks at when the hand is on a wall")]
     [SerializeField] private Transform cinemachineCameraWallTarget;
 
+    private float climbTopClamp = 30;
+
     private float cinemachineTargetXRotWall = 0;
     private float cinemachineTargetYRotWall = 0;
     private float cinemachineWallRightClamp = 90;
@@ -272,8 +274,6 @@ public class ThirdPersonMovement : MonoBehaviour
             else
             {
                 newClimbCineCam.Priority = -2;
-
-                //climbCineCam.m_Priority = -2;
             }
         }
     }
@@ -285,8 +285,10 @@ public class ThirdPersonMovement : MonoBehaviour
     /// </summary>
     public void Jump()
     {
-        if (isClimbing)
+        if (isClimbing && !isClimbTransitioning)
         {
+            Physics.Raycast(visuals.transform.position, Vector3.down, out hit, 100f, groundMask);
+            StartCoroutine(ClimbTransition());
             /*
             jumpVel = Mathf.Sqrt(jumpHeight * -8f * gravity);
             jumpOffWall = true;
@@ -329,8 +331,7 @@ public class ThirdPersonMovement : MonoBehaviour
             {
                 if (isClimbing)
                 {
-                    CameraRotation(ref cinemachineTargetXRotWall, ref cinemachineTargetYRotWall, cinemachineCameraWallTarget, bottomClamp, topClamp, true);
-                    print(cinemachineTargetXRotWall);
+                    CameraRotation(ref cinemachineTargetXRotWall, ref cinemachineTargetYRotWall, cinemachineCameraWallTarget, bottomClamp, climbTopClamp, true);
                 }
                 else
                 {
@@ -486,7 +487,7 @@ public class ThirdPersonMovement : MonoBehaviour
     #endregion
 
     #region Climbing
-    private void ClimbCheck()
+    public void ClimbCheck()
     {
         if (!isClimbTransitioning)
         {
@@ -507,6 +508,7 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             cinemachineTargetXRot = cinemachineTargetXRotWall;
             cinemachineTargetYRot = 0;
+            cinemachineCameraTarget.transform.rotation = Quaternion.Euler(cinemachineTargetYRot, cinemachineTargetXRot, 0.0f);
 
             controller.stepOffset = startingStepOffset;
             isClimbing = false;
@@ -538,9 +540,25 @@ public class ThirdPersonMovement : MonoBehaviour
         Quaternion targetRotation = Quaternion.LookRotation(-newRotation) * Quaternion.Euler(new Vector3(-90, 0, 0));
         PlayerMoveAnimation(Vector3.one);
 
+        float oldCamValue = GetClimbCamOld();
+        float newCamValue = GetClimbCamNew();
+
+        float camLerpCheck = oldCamValue - newCamValue;
+
         if (isClimbing)
         {
             Physics.Raycast(visuals.transform.position, -visuals.transform.up, out RaycastHit tempHit, 2f, wallMask);
+            if (currentNormal.x > 0.8f && tempHit.normal.z < -0.8f)
+            {
+                cinemachineTargetXRotWall += 360;
+                oldCamValue = cinemachineTargetXRotWall;
+            }
+            else if (currentNormal.z < -0.8f && tempHit.normal.x > 0.8f)
+            {
+                cinemachineTargetXRotWall -= 360;
+                oldCamValue = cinemachineTargetXRotWall;
+            }
+
             if (hit.normal.y > 0.5f || hit.normal.y < -0.5f)
             {
                 if (tempHit.normal.x > 0.5f)
@@ -600,20 +618,16 @@ public class ThirdPersonMovement : MonoBehaviour
             }
         }
 
-        float oldCamValue = GetClimbCamOld();
-        float newCamValue = GetClimbCamNew();
-
-        float camLerpCheck = oldCamValue - newCamValue;
-
         if (camLerpCheck < 0)
         {
             camLerpCheck = -camLerpCheck;
         }
 
+        /*
         if (camLerpCheck > 190)
         {
             newCamValue -= 360;
-        }
+        }*/
 
         if(hit.normal.y > 0.1f || hit.normal.y < -0.1f)
         {
@@ -637,7 +651,8 @@ public class ThirdPersonMovement : MonoBehaviour
             {
                 cinemachineTargetXRotWall = Mathf.Lerp(oldCamValue, newCamValue, t);
                 // Updates cinemachine follow target rotation (essentially rotates the camera)
-                cinemachineCameraWallTarget.rotation = Quaternion.Euler(cinemachineTargetYRotWall, cinemachineTargetXRotWall, 0.0f);
+                //cinemachineCameraWallTarget.rotation = Quaternion.Euler(cinemachineTargetYRotWall, cinemachineTargetXRotWall, 0.0f);
+                CameraRotation(ref cinemachineTargetXRotWall, ref cinemachineTargetYRotWall, cinemachineCameraWallTarget, bottomClamp, climbTopClamp, false);
                 climbCineCam.m_XAxis.Value = Mathf.Lerp(oldCamValue, newCamValue, t);
             }
 
@@ -660,7 +675,8 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         if (isClimbing)
         {
-            return climbCineCam.m_XAxis.Value;
+            return cinemachineTargetXRotWall;
+            //return climbCineCam.m_XAxis.Value;
         }
         else if (currentNormal.x < -0.8f)
         {
@@ -832,7 +848,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public void CameraRotation(ref float xTargetRot, ref float yTargetRot, Transform target, float bottomClamp, float topClamp, bool shouldSideClamp)
     {
         // Updates the target look values
-        if (input.sqrMagnitude >= 0.01f)
+        if (input.sqrMagnitude >= 0.01f && !isClimbTransitioning)
         {
             xTargetRot += input.x * Time.fixedDeltaTime * xSens;
             yTargetRot += -input.y * Time.fixedDeltaTime * ySens;
@@ -872,6 +888,21 @@ public class ThirdPersonMovement : MonoBehaviour
         return newAngle;
     }
     #endregion
+
+    public void SetCameras(float value)
+    {
+        cinemachineTargetXRot = value;
+        cinemachineTargetYRot = 0;
+
+
+        Vector2 rotationVec = new Vector2(0, 1);
+        rotationVec.Normalize();
+
+        targetRotation = Mathf.Atan2(rotationVec.x, rotationVec.y) * Mathf.Rad2Deg + mainCam.transform.eulerAngles.y;
+
+        // rotate to face input direction relative to camera position
+        visuals.transform.rotation = Quaternion.Euler(0.0f, targetRotation, 0.0f);
+    }
     #endregion
 
     public void KillPlayer()
