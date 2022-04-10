@@ -9,17 +9,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1545529706831444401, guid: ad5704d15e38f3d4bbe6a9ed3803756b, type: 3}
       propertyPath: m_text
-      value: 'Log 4. Dr. Reinback presiding.
-
-
-        Subjects 000 through 013 failed
+      value: "Log 4. Dr. Reinback presiding\r\n\r\nSubjects 000 through 013 failed
         the box test. Their higher brain functions had degraded to the point of a
         near loss of sapience. However, with the new additions Dr. Erd added in,
-        we are anticipating Subject 014 can pass the test.
-
-
-        Signed: Dr.
-        Reinback '
+        we are anticipating Subject 014 can pass the test.\r\n\r\nSigned: Dr. Reinback
+        \r"
       objectReference: {fileID: 0}
     - target: {fileID: 4949702944181134563, guid: ad5704d15e38f3d4bbe6a9ed3803756b, type: 3}
       propertyPath: m_RootOrder
@@ -69,6 +63,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: note_log_4
       objectReference: {fileID: 0}
+    - target: {fileID: 4949702944181134572, guid: ad5704d15e38f3d4bbe6a9ed3803756b, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: cdd4e9882f148604999f85f3d9b71384, type: 3}
     - target: {fileID: 4949702944181134573, guid: ad5704d15e38f3d4bbe6a9ed3803756b, type: 3}
       propertyPath: noteString
       value: 'Log 4. Dr. Reinback presiding.      Subjects 000 through 013 failed

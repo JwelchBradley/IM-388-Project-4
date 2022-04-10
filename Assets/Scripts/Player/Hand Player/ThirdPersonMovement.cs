@@ -211,6 +211,7 @@ public class ThirdPersonMovement : MonoBehaviour
     private bool isClimbing = false;
     float climbTransitionSpeed = 1;
     private bool isClimbTransitioning = false;
+    private float startingCCRadius = 0.4f;
     #endregion
 
     #region Initilization
@@ -224,6 +225,7 @@ public class ThirdPersonMovement : MonoBehaviour
     private void InitializeComponents()
     {
         controller = GetComponent<CharacterController>();
+        startingCCRadius = controller.radius;
         startingStepOffset = controller.stepOffset;
         mainCam = Camera.main;
         mainCamBrain = mainCam.GetComponent<CinemachineBrain>();
@@ -516,7 +518,7 @@ public class ThirdPersonMovement : MonoBehaviour
             newClimbCineCam.Priority = 0;
             curClimb = 0;
             xRotChange = 0;
-            controller.radius = 0.4f;
+            controller.radius = startingCCRadius;
         }
         else
         {

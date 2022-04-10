@@ -45,15 +45,16 @@ public class MoveSoundBehaviour : MonoBehaviour
     void Update()
     {
         Vector3 velocity = rb.velocity;
+        velocity = new Vector3(velocity.x, 0, velocity.z);
 
-        if(velocity.magnitude > 0.01)
+        if(velocity.magnitude > 0.01f)
         {
             moveAud.mute = false;
 
             PlayMove();
         }
 
-        if(velocity.magnitude <= 0.01)
+        if(velocity.magnitude <= 0.01f)
         {
             moveAud.mute = true;
 
