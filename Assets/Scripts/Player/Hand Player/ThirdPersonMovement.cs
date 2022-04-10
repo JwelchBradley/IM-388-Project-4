@@ -363,7 +363,7 @@ public class ThirdPersonMovement : MonoBehaviour
     }
 
     #region Movement
-    private void NewMove()
+    public void NewMove()
     {
         // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
