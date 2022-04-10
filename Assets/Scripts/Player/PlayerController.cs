@@ -755,6 +755,7 @@ public class PlayerController : MonoBehaviour
 
         UpdateCamera(walkCam);
 
+        pm.MovePlayer(Vector2.zero, true);
         currentActive = activeController.PERSON;
         fpsMesh.SetActive(false);
     }
@@ -793,6 +794,8 @@ public class PlayerController : MonoBehaviour
         rightHandArmMesh.SetActive(false);
         tpm = hand.GetComponentInChildren<ThirdPersonMovement>();
         tpm.SetCameras(walkCam.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.Value);
+        tpm.ClimbCheck();
+
     }
 
     public void ResetHand()
@@ -841,13 +844,25 @@ public class PlayerController : MonoBehaviour
         if (tpm == null)
         {
             GameObject hand;
-            if(handType == 0)
+            Vector3 spawnPos;
+            
+            if(Physics.Raycast(fpsMesh.transform.position + new Vector3(0, 3, 0), -fpsMesh.transform.right, out RaycastHit wallHit, 8, wallCheckMask))
             {
-                hand = Instantiate(normalHand, transform.position + Camera.main.transform.forward * 2, transform.rotation);
+                spawnPos = wallHit.point + fpsMesh.transform.right*0.25f;
             }
             else
             {
-                hand = Instantiate(fastHand, transform.position + Camera.main.transform.forward * 2, transform.rotation);
+                spawnPos = fpsMesh.transform.position + -fpsMesh.transform.right * 2;
+                spawnPos.y += 1;
+            }
+
+            if(handType == 0)
+            {
+                hand = Instantiate(normalHand, spawnPos, transform.rotation);
+            }
+            else
+            {
+                hand = Instantiate(fastHand, spawnPos, transform.rotation);
             }
             InitializeHand(hand);
         }
