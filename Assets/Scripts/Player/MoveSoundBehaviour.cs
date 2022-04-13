@@ -42,25 +42,24 @@ public class MoveSoundBehaviour : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         Vector3 velocity = rb.velocity;
         velocity = new Vector3(velocity.x, 0, velocity.z);
 
-        if(velocity.magnitude > 0.01f)
-        {
-            moveAud.mute = false;
-
-            PlayMove();
-        }
-
-        if(velocity.magnitude <= 0.01f)
+        if (velocity.sqrMagnitude <= 0.01f)
         {
             moveAud.mute = true;
 
             moveAud.Stop();
 
             canPlaySound = true;
+        }
+        else
+        {
+            moveAud.mute = false;
+
+            PlayMove();
         }
     }
 

@@ -15,7 +15,7 @@ public class SeeThroughWithUpgrade : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if(player.eyeType == 1 && player.CurrentActive == PlayerController.activeController.EYE)
         {

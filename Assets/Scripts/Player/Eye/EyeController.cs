@@ -13,7 +13,6 @@ public class EyeController : MonoBehaviour
     private float startingXRotation = 0;
     private float startingYRotation = 0;
 
-    private float mouseSensitivity = 2.5f;
     public static float xSens = 2.5f;
     public static float XSens { set { xSens = value * 2.5f; } }
 

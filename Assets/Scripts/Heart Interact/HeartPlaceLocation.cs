@@ -5,13 +5,7 @@ using UnityEngine.Events;
 
 public class HeartPlaceLocation : Interactable
 {
-    /*
-    [SerializeField]
-    private GameObject[] activatableObjects;
-    */
     public UnityEvent activation;
-
-    //private List<Activatable> activatables = new List<Activatable>();
 
     [SerializeField]
     private Transform heartPlaceLocation;

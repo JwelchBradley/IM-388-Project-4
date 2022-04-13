@@ -1331,8 +1331,6 @@ public class PlayerController : MonoBehaviour
         ccol.enabled = false;
         cc.enabled = true;
 
-        Debug.Log("stop");
-
         StopGrapple();
     }
     #endregion
