@@ -29,8 +29,13 @@ public class BoxBehaviour : Interactable
         pullDistSquared = pullDist * pullDist;
         rb = GetComponent<Rigidbody>();
         player = GameObject.Find("Player");
-        pm = player.GetComponent<PlayerMovement>();
-        pc = player.GetComponent<PlayerController>();
+
+        if(player != null)
+        {
+            pm = player.GetComponent<PlayerMovement>();
+            pc = player.GetComponent<PlayerController>();
+        }
+
         interactable = GetComponent<Interactable>();
     }
 
@@ -41,6 +46,8 @@ public class BoxBehaviour : Interactable
             ClampVelocity();
         }
         //canPull = Vector3.Distance(player.transform.position, transform.position) < pullDist;
+
+        if(player != null)
         canPull = (player.transform.position - transform.position).sqrMagnitude < pullDistSquared;
     }
 

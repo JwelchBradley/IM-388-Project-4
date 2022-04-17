@@ -11,13 +11,16 @@ public class SeeThroughWithUpgrade : MonoBehaviour
     void Start()
     {
         render = GetComponent<Renderer>();
-        player = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<PlayerController>();
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+
+        if(playerObj != null)
+        player = playerObj.GetComponentInChildren<PlayerController>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(player.eyeType == 1 && player.CurrentActive == PlayerController.activeController.EYE)
+        if(player != null && player.eyeType == 1 && player.CurrentActive == PlayerController.activeController.EYE)
         {
             render.enabled = false;
         }

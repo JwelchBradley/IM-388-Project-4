@@ -17,13 +17,16 @@ public class EyeHiddenController : MonoBehaviour
 
     private void Awake()
     {
-        pc = GameObject.Find("Player").GetComponent<PlayerController>();
+        GameObject playerobj = GameObject.Find("Player");
+
+        if(playerobj != null)
+        pc = playerobj.GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        bool currentActive = pc.CurrentActive.Equals(PlayerController.activeController.EYE);
+        bool currentActive = pc!=null && pc.CurrentActive.Equals(PlayerController.activeController.EYE);
 
         if (currentActive && !currentlyEye)
         {

@@ -15,6 +15,26 @@ public class HeartPlaceLocation : Interactable
     [SerializeField]
     private string heartPlacedHereMessage = "Press F to pick up the heart";
 
+    [SerializeField]
+    private bool startOnAwake = false;
+
+    [SerializeField]
+    private GameObject HeartMesh;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        if (startOnAwake)
+        {
+            HeartMesh.transform.position = heartPlaceLocation.position;
+            HeartMesh.SetActive(true);
+            hc = HeartMesh.GetComponent<HeartController>();
+            hc.HPC = this;
+            hc.StartCoroutine(hc.Switch());
+        }
+    }
+
     public override void DisplayInteractText()
     {
         base.DisplayInteractText();
