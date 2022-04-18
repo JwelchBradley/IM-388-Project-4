@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HeartSpikes : MonoBehaviour, Activatable
@@ -62,11 +61,67 @@ public class HeartSpikes : MonoBehaviour, Activatable
         {
             targetLocation = upperLocation.transform.position;
         }
-        changeTime = Time.unscaledTime;
+        changeTime = Time.time;
+
+        StartCoroutine(MoveSpike());
     }
 
+    private IEnumerator MoveSpike()
+    {
+        bool shouldMove = true;
+        float currentDelay = targetLocation == upperLocation.transform.position ? delayedMoveTime : 0f;
+        yield return new WaitForSeconds(currentDelay);
+
+        while (shouldMove)
+        {
+            if (Time.time - (changeTime+currentDelay) < spikeMoveTime)
+            {
+                if (targetLocation == upperLocation.transform.position)
+                {
+                    spike.position = Vector3.Lerp(lowerLocation.transform.position, targetLocation, (Time.time - (changeTime+currentDelay)) / spikeMoveTime);
+                }
+                else
+                {
+                    spike.position = Vector3.Lerp(upperLocation.transform.position, targetLocation, (Time.time - changeTime) / spikeMoveTime);
+                }
+
+            }
+            else
+            {
+                shouldMove = false;
+                spike.position = targetLocation;
+            }
+
+            yield return new WaitForFixedUpdate();
+        }
+        /*
+        while (shouldMove)
+        {
+            if (Time.time - changeTime < spikeMoveTime + (targetLocation == upperLocation.transform.position ? delayedMoveTime : 0f))
+            {
+                if (targetLocation == upperLocation.transform.position)
+                {
+                    spike.position = Vector3.Lerp(lowerLocation.transform.position, targetLocation, (Time.time - changeTime) / (spikeMoveTime + delayedMoveTime));
+                }
+                else
+                {
+                    spike.position = Vector3.Lerp(upperLocation.transform.position, targetLocation, (Time.time - changeTime) / spikeMoveTime);
+                }
+
+            }
+            else
+            {
+                shouldMove = false;
+                spike.position = targetLocation;
+            }
+
+            yield return new WaitForFixedUpdate();
+        }*/
+    }
+
+    /*
     // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
         if (Time.unscaledTime - changeTime < spikeMoveTime + (targetLocation == upperLocation.transform.position ? delayedMoveTime : 0f))
         {
@@ -84,7 +139,7 @@ public class HeartSpikes : MonoBehaviour, Activatable
         {
             spike.position = targetLocation;
         }
-    }
+    }*/
 
     private void OnTriggerEnter(Collider other)
     {

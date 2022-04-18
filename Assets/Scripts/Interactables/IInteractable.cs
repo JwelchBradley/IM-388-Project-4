@@ -44,11 +44,17 @@ public class Interactable : MonoBehaviour, IInteractable
     [SerializeField]
     protected PlayerController.activeController[] displayTextControllers;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         text = GameObject.Find("Pickup Text").GetComponent<TextMeshProUGUI>();
 
-        pc = GameObject.Find("Player").GetComponent<PlayerController>();
+        
+        GameObject player = GameObject.Find("Player");
+
+        if(player != null)
+        pc = player.GetComponent<PlayerController>();
+
+        //pc = FindObjectOfType<PlayerController>();
     }
 
     public virtual void DisplayInteractText()

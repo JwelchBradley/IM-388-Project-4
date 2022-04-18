@@ -11,7 +11,9 @@ GameObject:
   - component: {fileID: 1712001236380777943}
   - component: {fileID: 2336694861153858162}
   - component: {fileID: 543084876616599224}
-  - component: {fileID: 2003770311435790293}
+  - component: {fileID: 4329539137154479861}
+  - component: {fileID: 2077983571661564252}
+  - component: {fileID: 6396504612004237903}
   m_Layer: 7
   m_Name: Alex Doorway
   m_TagString: Untagged
@@ -94,8 +96,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2003770311435790293
-MeshCollider:
+--- !u!65 &4329539137154479861
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -104,7 +106,32 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 5267844360913542898, guid: 466d69a29ca92a644a4a2a2d6c22e26e, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 1.2805274, y: 4.0141826, z: 0.017564774}
+  m_Center: {x: 1.3485156, y: 0, z: -0.007396698}
+--- !u!65 &2077983571661564252
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056333727498315629}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.285105, y: 4.0141826, z: 0.022459667}
+  m_Center: {x: -1.3462268, y: 0, z: -0.00900968}
+--- !u!65 &6396504612004237903
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056333727498315629}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.4520416, y: 0.943676, z: 0.023706436}
+  m_Center: {x: 0.006263733, y: 1.5352533, z: -0.006001155}

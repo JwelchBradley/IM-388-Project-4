@@ -11,6 +11,7 @@ public class BoxBehaviour : Interactable
     private Vector3 offset;
     [SerializeField]
     private float pullDist = 1;
+    private float pullDistSquared;
     private bool canPull = false;
     private IInteractable interactable;
 
@@ -25,10 +26,16 @@ public class BoxBehaviour : Interactable
     // Start is called before the first frame update
     void Start()
     {
+        pullDistSquared = pullDist * pullDist;
         rb = GetComponent<Rigidbody>();
         player = GameObject.Find("Player");
-        pm = player.GetComponent<PlayerMovement>();
-        pc = player.GetComponent<PlayerController>();
+
+        if(player != null)
+        {
+            pm = player.GetComponent<PlayerMovement>();
+            pc = player.GetComponent<PlayerController>();
+        }
+
         interactable = GetComponent<Interactable>();
     }
 
@@ -38,7 +45,10 @@ public class BoxBehaviour : Interactable
         {
             ClampVelocity();
         }
-        canPull = Vector3.Distance(player.transform.position, transform.position) < pullDist;
+        //canPull = Vector3.Distance(player.transform.position, transform.position) < pullDist;
+
+        if(player != null)
+        canPull = (player.transform.position - transform.position).sqrMagnitude < pullDistSquared;
     }
 
     private void ClampVelocity()

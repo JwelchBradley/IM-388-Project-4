@@ -5,8 +5,10 @@ using UnityEngine;
 public class EyeCaster : MonoBehaviour
 {
     private GameObject eyeLandIndicator;
-    private float eyeSizeMod = 1.5f;
+    private float eyeSizeMod = 0.025f;
     private float maxDist = 30;
+    private float maxDistSquared;
+
     private Transform cam;
     private RaycastHit hit;
 
@@ -49,10 +51,11 @@ public class EyeCaster : MonoBehaviour
         cam = Camera.main.transform;
         eyeLandIndicator = GameObject.Find("EyeLand");
         mr = eyeLandIndicator.GetComponent<MeshRenderer>();
+        maxDistSquared = maxDist * maxDist;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (isCasting)
         {
@@ -78,9 +81,11 @@ public class EyeCaster : MonoBehaviour
                 mr.enabled = true;
             }
 
+            float distSquared = (cam.position - hit.point).sqrMagnitude;
 
             // Can Land
-            if (landableMask == (landableMask | (1 << hit.transform.gameObject.layer)) && Vector3.Distance(hit.point, cam.position) < maxDist)
+            //if (landableMask == (landableMask | (1 << hit.transform.gameObject.layer)) && Vector3.Distance(hit.point, cam.position) < maxDist)
+            if(landableMask == (landableMask | (1 << hit.transform.gameObject.layer)) && distSquared < maxDistSquared)
             {
                 mr.material = canCastMat;
             }
@@ -93,13 +98,11 @@ public class EyeCaster : MonoBehaviour
             }
 
             eyeLandIndicator.transform.position = hit.point;
-            eyeLandIndicator.transform.localScale = Vector3.one * Vector3.Distance(hit.point, cam.position) * (eyeSizeMod / 100);
+            eyeLandIndicator.transform.localScale = Vector3.one * Mathf.Sqrt(distSquared) * (eyeSizeMod);
             eyeLandIndicator.transform.rotation = SpawnRotation();
 
         }
     }
-
-    private void MoveIndicatorTowardsLocation() { }
 
     public GameObject SpawnObject(GameObject obj)
     {
