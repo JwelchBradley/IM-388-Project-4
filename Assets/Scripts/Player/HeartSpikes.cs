@@ -69,6 +69,32 @@ public class HeartSpikes : MonoBehaviour, Activatable
     private IEnumerator MoveSpike()
     {
         bool shouldMove = true;
+        float currentDelay = targetLocation == upperLocation.transform.position ? delayedMoveTime : 0f;
+        yield return new WaitForSeconds(currentDelay);
+
+        while (shouldMove)
+        {
+            if (Time.time - (changeTime+currentDelay) < spikeMoveTime)
+            {
+                if (targetLocation == upperLocation.transform.position)
+                {
+                    spike.position = Vector3.Lerp(lowerLocation.transform.position, targetLocation, (Time.time - (changeTime+currentDelay)) / spikeMoveTime);
+                }
+                else
+                {
+                    spike.position = Vector3.Lerp(upperLocation.transform.position, targetLocation, (Time.time - changeTime) / spikeMoveTime);
+                }
+
+            }
+            else
+            {
+                shouldMove = false;
+                spike.position = targetLocation;
+            }
+
+            yield return new WaitForFixedUpdate();
+        }
+        /*
         while (shouldMove)
         {
             if (Time.time - changeTime < spikeMoveTime + (targetLocation == upperLocation.transform.position ? delayedMoveTime : 0f))
@@ -90,7 +116,7 @@ public class HeartSpikes : MonoBehaviour, Activatable
             }
 
             yield return new WaitForFixedUpdate();
-        }
+        }*/
     }
 
     /*

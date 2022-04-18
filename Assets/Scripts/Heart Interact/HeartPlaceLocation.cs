@@ -39,28 +39,40 @@ public class HeartPlaceLocation : Interactable
     {
         base.DisplayInteractText();
 
-        if(hc != null)
+        foreach (PlayerController.activeController ac in displayTextControllers)
         {
-            text.text = heartPlacedHereMessage;
+            if (ac.Equals(pc.CurrentActive))
+            {
+                if (hc != null)
+                {
+                    text.text = heartPlacedHereMessage;
+                }
+            }
         }
     }
 
     public override void Interact()
     {
-        if (!pc.HeartMesh.activeInHierarchy)
+        foreach (PlayerController.activeController ac in displayTextControllers)
         {
-            pc.HeartMesh.transform.position = heartPlaceLocation.position;
-            pc.HeartMesh.SetActive(true);
-            hc = pc.HeartMesh.GetComponent<HeartController>();
-            hc.HPC = this;
-            hc.StartCoroutine(hc.Switch());
-            DisplayInteractText();
-        }
-        else
-        {
-            hc = null;
-            pc.HeartMesh.SetActive(false);
-            DisplayInteractText();
+            if (ac.Equals(pc.CurrentActive))
+            {
+                if (!pc.HeartMesh.activeInHierarchy)
+                {
+                    pc.HeartMesh.transform.position = heartPlaceLocation.position;
+                    pc.HeartMesh.SetActive(true);
+                    hc = pc.HeartMesh.GetComponent<HeartController>();
+                    hc.HPC = this;
+                    hc.StartCoroutine(hc.Switch());
+                    DisplayInteractText();
+                }
+                else
+                {
+                    hc = null;
+                    pc.HeartMesh.SetActive(false);
+                    DisplayInteractText();
+                }
+            }
         }
     }
 

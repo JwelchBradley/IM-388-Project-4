@@ -702,26 +702,26 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         if (currentNormal.x < -0.8f)
         {
-            cinemachineWallLeftClamp = 0;
-            cinemachineWallRightClamp = 180;
+            cinemachineWallLeftClamp = 10;
+            cinemachineWallRightClamp = 170;
             return 90;
         }
         else if (currentNormal.x > 0.8f)
         {
-            cinemachineWallLeftClamp = 180;
-            cinemachineWallRightClamp = 359;
+            cinemachineWallLeftClamp = 190;
+            cinemachineWallRightClamp = 350;
             return 270;
         }
         else if (currentNormal.z > 0.8f)
         {
-            cinemachineWallLeftClamp = 90;
-            cinemachineWallRightClamp = 270;
+            cinemachineWallLeftClamp = 100;
+            cinemachineWallRightClamp = 260;
             return 180;
         }
         else
         {
-            cinemachineWallLeftClamp = -90;
-            cinemachineWallRightClamp = 90;
+            cinemachineWallLeftClamp = -80;
+            cinemachineWallRightClamp = 80;
             return 0;
         }
     }
