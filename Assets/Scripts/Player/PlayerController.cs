@@ -138,9 +138,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private HeartController hc;
 
-    [SerializeField]
-    private LayerMask handClimbMask;
-
     public HeartController HC
     {
         get => hc;
@@ -849,7 +846,7 @@ public class PlayerController : MonoBehaviour
             GameObject hand;
             Vector3 spawnPos;
             
-            if(Physics.Raycast(fpsMesh.transform.position + new Vector3(0, 2, 0), -fpsMesh.transform.right, out RaycastHit wallHit, 7, handClimbMask))
+            if(Physics.Raycast(fpsMesh.transform.position + new Vector3(0, 3, 0), -fpsMesh.transform.right, out RaycastHit wallHit, 7, wallCheckMask))
             {
                 spawnPos = wallHit.point + fpsMesh.transform.right*0.25f;
             }
