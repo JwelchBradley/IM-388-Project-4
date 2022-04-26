@@ -4,58 +4,42 @@ using UnityEngine;
 
 public class FlickerLight : MonoBehaviour
 {
-    Light mainLight;
+    public Light[] flickeringLights;
 
-    bool swap;
+    public int minMiniFlickerNumber = 2;
+    public int maxMiniFlickerNumber = 6;
+    public float miniFlickerTime = 0.15f;
+    public float minFlickerTime = 0.5f;
+    public float maxFlickerTime = 2.5f;
 
-    float minSize;
-    float maxSize;
-    float decSize;
-    float incSize;
-
-    public float maxRange;
-
-    public float waitTime;
-    public int chanceMin;
-    public int chanceMax;
+    public bool mainState = true;
 
     // Start is called before the first frame update
     void Start()
     {
-        mainLight = GetComponent<Light>();
         StartCoroutine(Timer());
     }
-
-    int flicker;
-
-    // Update is called once per frame
-    void Update()
-    {
-
-
-        if(flicker != 1)
-        {
-            mainLight.range = maxRange;
-        }
-        else
-        {
-            mainLight.range = 0;
-        }
-
-
-
-    }
-
 
     private IEnumerator Timer()
     {
         while (true)
         {
-            // light
+            int randMiniFlickerNumber = Random.Range(minMiniFlickerNumber, maxMiniFlickerNumber);
+            for (int i=0; i<randMiniFlickerNumber; i++)
+            {
+                foreach (Light light in flickeringLights)
+                {
+                    light.enabled = !light.enabled;
+                }
+                yield return new WaitForSeconds(miniFlickerTime);
+            }
+            foreach(Light light in flickeringLights)
+            {
+                light.enabled = mainState;
+            }
 
-            flicker = Random.Range(chanceMin, chanceMax);
-
-            yield return new WaitForSeconds(waitTime);
+            float randWait = Random.Range(minFlickerTime, maxFlickerTime);
+            yield return new WaitForSeconds(randWait);
         }
     }
 }
