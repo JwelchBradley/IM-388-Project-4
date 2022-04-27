@@ -131,14 +131,20 @@ public class EyeCaster : MonoBehaviour
         GameObject eye = (GameObject)Instantiate(Resources.Load("Prefabs/Player/Eye/Eye", typeof(GameObject)), hit.point, SpawnRotation());
         eye.transform.position = SpawnSpot(eye);
         mr.enabled = false;
-        aud.PlayOneShot(placeSound);
+        if (aud != null)
+        {
+            aud.PlayOneShot(placeSound);
+        }
         return eye;
     }
 
     private Vector3 SpawnSpot(GameObject eye)
     {
         Vector3 spot = eye.transform.position + eye.transform.forward.normalized*0.5f;
-        aud.PlayOneShot(placeSound);
+        if(aud != null)
+        {
+            aud.PlayOneShot(placeSound);
+        }
         return spot;
     }
 
