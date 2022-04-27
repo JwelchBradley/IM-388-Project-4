@@ -29,6 +29,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private GameObject pullPos;
 
+    [SerializeField]
+    private AudioClip walkAudio;
+
     public GameObject PullPos
     {
         get => pullPos;
@@ -173,7 +176,15 @@ public class PlayerMovement : MonoBehaviour
 
         controller = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
-        aud = GetComponent<AudioSource>();
+        AudioSource[] auds = GetComponents<AudioSource>();
+        foreach(AudioSource audio in auds)
+        {
+            if(audio.clip == walkAudio)
+            {
+                aud = audio;
+            }
+        }
+
         pc = GetComponent<PlayerController>();
 
         pauseMenu = GameObject.Find("Pause Menu Templates Canvas").GetComponent<PauseMenuBehavior>();
