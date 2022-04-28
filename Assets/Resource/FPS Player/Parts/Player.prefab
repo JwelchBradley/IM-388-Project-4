@@ -164,6 +164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pullPos: {fileID: 0}
+  walkAudio: {fileID: 8300000, guid: 05e793f43ca27884d84a68e095b13654, type: 3}
   walkSpeed: 10
   crouchWalkSpeed: 6
   jumpHeight: 3
@@ -253,6 +254,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 469
   canCastMat: {fileID: 2100000, guid: b2b7d037846d54643ab016ee7f120bf4, type: 2}
+  placeSound: {fileID: 8300000, guid: 90a8121a02f2437439cf52152ee0b677, type: 3}
   cannotCastMat: {fileID: 2100000, guid: 48ef98b26440edd4780a811c131a1ec9, type: 2}
 --- !u!114 &6399384503034149750
 MonoBehaviour:
@@ -268,6 +270,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   castableEye: {fileID: 0}
   castableEar: {fileID: 0}
+  upgradedEar: {fileID: 0}
+  normalHand: {fileID: 0}
+  fastHand: {fileID: 0}
   hc: {fileID: 0}
   heartMesh: {fileID: 0}
   eyeImageRendererMask:
@@ -295,6 +300,8 @@ MonoBehaviour:
     m_Bits: 0
   hookMaxDistCheck: 40
   grappleLocationMarker: {fileID: 0}
+  intestinesMaterial: {fileID: 0}
+  intestinesWidth: 0.5
   maxJointDist: 6
   minJointDist: 3.5
   springJoint: 1.25

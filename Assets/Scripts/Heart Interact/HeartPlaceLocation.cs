@@ -21,9 +21,12 @@ public class HeartPlaceLocation : Interactable
     [SerializeField]
     private GameObject HeartMesh;
 
+    private AudioSource heartbeat;
+
     protected override void Awake()
     {
         base.Awake();
+        heartbeat.enabled = false;
 
         if (startOnAwake)
         {
@@ -31,6 +34,7 @@ public class HeartPlaceLocation : Interactable
             HeartMesh.SetActive(true);
             hc = HeartMesh.GetComponent<HeartController>();
             hc.HPC = this;
+            heartbeat.enabled = true;
             hc.StartCoroutine(hc.Switch());
         }
     }
@@ -55,12 +59,14 @@ public class HeartPlaceLocation : Interactable
             hc.HPC = this;
             hc.StartCoroutine(hc.Switch());
             DisplayInteractText();
+            heartbeat.enabled = true;
         }
         else
         {
             hc = null;
             pc.HeartMesh.SetActive(false);
             DisplayInteractText();
+            heartbeat.enabled = false;
         }
     }
 
