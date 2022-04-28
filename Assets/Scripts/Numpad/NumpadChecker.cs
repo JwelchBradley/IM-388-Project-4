@@ -50,7 +50,7 @@ public class NumpadChecker : Interactable
     private void Start()
     {
         pmb = GameObject.Find("Pause Menu Templates Canvas").GetComponent<PauseMenuBehavior>();
-        nc = pmb.KeyPad.GetComponent<NumpadController>();
+        nc = pmb.KeyPad.GetComponentInChildren<NumpadController>();
 
         foreach(GameObject gm in activatableObjects)
         {
@@ -70,11 +70,6 @@ public class NumpadChecker : Interactable
 
     public string EnterNumber(int num)
     {
-        if (Solved)
-        {
-            return "Correct";
-        }
-
         //numText.text += num;
         currentEntered += num;
         currentIndex++;
@@ -82,6 +77,11 @@ public class NumpadChecker : Interactable
         if (currentIndex == code.Length)
         {
             Entered();
+        }
+
+        if (Solved)
+        {
+            return "Correct";
         }
 
         return currentEntered;
@@ -95,12 +95,16 @@ public class NumpadChecker : Interactable
             entered += num.ToString();
         }
 
+        print(currentEntered);
         if(entered == currentEntered)
         {
+            print("activate");
             ActivateObjects();
         }
         else
         {
+            print("reset");
+
             Reset();
         }
     }
@@ -131,8 +135,10 @@ public class NumpadChecker : Interactable
         if (!canInteract || Time.timeScale == 0)
             return;
 
+        print("Interacting");
         if (!pmb.KeyPad.activeInHierarchy || !Input.GetKeyDown(KeyCode.Mouse0))
         {
+            print("interacted");
             nc.CurrentNumpad = GetComponent<NumpadChecker>();
             pmb.KeyPad.SetActive(!pmb.KeyPad.activeInHierarchy);
             Cursor.visible = !Cursor.visible;

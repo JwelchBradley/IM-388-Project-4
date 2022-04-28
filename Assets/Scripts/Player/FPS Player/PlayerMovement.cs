@@ -19,6 +19,8 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private Vector3 velocity = Vector3.zero;
 
+    public Vector3 Velocity { get => velocity; }
+
     /// <summary>
     /// Animator of the FPS Controller.
     /// </summary>

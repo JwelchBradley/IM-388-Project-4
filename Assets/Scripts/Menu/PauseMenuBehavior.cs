@@ -93,6 +93,11 @@ public class PauseMenuBehavior : MenuBehavior
     {
         get => note;
     }
+
+    [SerializeField]
+    private GameObject deathPanel;
+
+    public static GameObject DeathPanel;
     #endregion
 
     #region Functions
@@ -101,6 +106,7 @@ public class PauseMenuBehavior : MenuBehavior
     /// </summary>
     private void Awake()
     {
+        DeathPanel = deathPanel;
         StartCoroutine(WaitFadeIn());
     }
 

@@ -1339,7 +1339,19 @@ public class PlayerController : MonoBehaviour
     public void KillPlayer()
     {
         if(cc == null) cc = GetComponent<CharacterController>();
+        PauseMenuBehavior.DeathPanel.GetComponent<DeathPanelController>().StartFade();
         cc.enabled = false;
+
+        if(intestinesRenderer != null)
+        ExitHook();
+
+        StartCoroutine(WaitForRespawn());
+    }
+
+    private IEnumerator WaitForRespawn()
+    {
+        yield return new WaitForSeconds(1.0f);
+        PauseMenuBehavior.DeathPanel.GetComponent<DeathPanelController>().StartFade();
         transform.position = checkpoint.transform.position;
         transform.rotation = checkpoint.transform.rotation;
         walkCam.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.Value = transform.rotation.eulerAngles.y;
