@@ -35,9 +35,26 @@ public class HeartSpikes : MonoBehaviour, Activatable
     /// </summary>
     private float changeTime = 0f;
 
+    [SerializeField]
+    private bool isHeart = true;
+
+    [SerializeField]
+    private int shouldPopUpIter = 0;
+
+    private int startingPopIter = 0;
+
+    [SerializeField]
+    private EndSpikesController esc;
+
     private void Start()
     {
+        if(isHeart)
         heartLocation.GetComponent<HeartPlaceLocation>().activation.AddListener(ChangeObjectState);
+        else
+        {
+            startingPopIter = shouldPopUpIter;
+            esc.spikeAction.AddListener(ResetEndSpikes);
+        }
 
         if(startUp)
         {
@@ -51,9 +68,41 @@ public class HeartSpikes : MonoBehaviour, Activatable
         }
     }
 
+    private void ResetEndSpikes(bool shouldReset)
+    {
+        if (shouldReset)
+        {
+            if (shouldPopUpIter < 0)
+            {
+                shouldPopUpIter = 0;
+
+                ChangeObjectState();
+            }
+        }
+        else
+        {
+            ChangeObjectState();
+        }
+
+        if (shouldReset)
+        {
+            shouldPopUpIter = startingPopIter;
+        }
+    }
+
     public void ChangeObjectState()
     {
-        if(targetLocation == upperLocation.transform.position)
+        if(shouldPopUpIter != 0)
+        {
+            shouldPopUpIter--;
+            return;
+        }
+        else if (!isHeart && shouldPopUpIter == 0)
+        {
+            shouldPopUpIter--;
+        }
+
+        if (targetLocation == upperLocation.transform.position)
         {
             targetLocation = lowerLocation.transform.position;
         }
@@ -74,11 +123,11 @@ public class HeartSpikes : MonoBehaviour, Activatable
 
         while (shouldMove)
         {
-            if (Time.time - (changeTime+currentDelay) < spikeMoveTime)
+            if (Time.time - (changeTime + currentDelay) < spikeMoveTime)
             {
                 if (targetLocation == upperLocation.transform.position)
                 {
-                    spike.position = Vector3.Lerp(lowerLocation.transform.position, targetLocation, (Time.time - (changeTime+currentDelay)) / spikeMoveTime);
+                    spike.position = Vector3.Lerp(lowerLocation.transform.position, targetLocation, (Time.time - (changeTime + currentDelay)) / spikeMoveTime);
                 }
                 else
                 {
@@ -94,62 +143,39 @@ public class HeartSpikes : MonoBehaviour, Activatable
 
             yield return new WaitForFixedUpdate();
         }
-        /*
-        while (shouldMove)
-        {
-            if (Time.time - changeTime < spikeMoveTime + (targetLocation == upperLocation.transform.position ? delayedMoveTime : 0f))
-            {
-                if (targetLocation == upperLocation.transform.position)
-                {
-                    spike.position = Vector3.Lerp(lowerLocation.transform.position, targetLocation, (Time.time - changeTime) / (spikeMoveTime + delayedMoveTime));
-                }
-                else
-                {
-                    spike.position = Vector3.Lerp(upperLocation.transform.position, targetLocation, (Time.time - changeTime) / spikeMoveTime);
-                }
-
-            }
-            else
-            {
-                shouldMove = false;
-                spike.position = targetLocation;
-            }
-
-            yield return new WaitForFixedUpdate();
-        }*/
     }
 
-    /*
-    // Update is called once per frame
-    private void FixedUpdate()
+    protected virtual void OnTriggerEnter(Collider other)
     {
-        if (Time.unscaledTime - changeTime < spikeMoveTime + (targetLocation == upperLocation.transform.position ? delayedMoveTime : 0f))
+        if (isHeart)
         {
-            if(targetLocation == upperLocation.transform.position)
+            if (other.tag == "Player")
             {
-                spike.position = Vector3.Lerp(lowerLocation.transform.position, targetLocation, (Time.unscaledTime - changeTime) / (spikeMoveTime + delayedMoveTime));
+                other.GetComponent<PlayerController>().KillPlayer();
             }
-            else
+            else if (other.tag == "Hand")
             {
-                spike.position = Vector3.Lerp(upperLocation.transform.position, targetLocation, (Time.unscaledTime - changeTime) / spikeMoveTime);
+                other.GetComponent<ThirdPersonMovement>().KillPlayer();
             }
-            
         }
         else
         {
-            spike.position = targetLocation;
-        }
-    }*/
+            if (other.tag == "Hand")
+            {
+                other.GetComponent<ThirdPersonMovement>().KillPlayer();
+            }
 
-    private void OnTriggerEnter(Collider other)
+            if (other.tag == "Player" || other.tag == "Hand")
+            {
+                FindObjectOfType<PlayerController>().KillPlayer();
+
+                StartCoroutine(ResetAllSpikes());
+            }
+        }
+    }
+    private IEnumerator ResetAllSpikes()
     {
-        if(other.tag == "Player")
-        {
-            other.GetComponent<PlayerController>().KillPlayer();
-        }
-        else if(other.tag == "Hand") 
-        {
-            other.GetComponent<ThirdPersonMovement>().KillPlayer();
-        }
+        yield return new WaitForSeconds(1);
+        esc.ResetSpikes();
     }
 }

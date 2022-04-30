@@ -26,13 +26,16 @@ public class HeartPlaceLocation : Interactable
     protected override void Awake()
     {
         base.Awake();
-        heartbeat.enabled = false;
 
         if (startOnAwake)
         {
             HeartMesh.transform.position = heartPlaceLocation.position;
             HeartMesh.SetActive(true);
             hc = HeartMesh.GetComponent<HeartController>();
+
+            heartbeat = hc.GetComponent<AudioSource>();
+            heartbeat.enabled = false;
+            
             hc.HPC = this;
             heartbeat.enabled = true;
             hc.StartCoroutine(hc.Switch());
