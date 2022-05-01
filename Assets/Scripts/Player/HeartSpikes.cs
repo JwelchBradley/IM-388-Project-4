@@ -175,7 +175,7 @@ public class HeartSpikes : MonoBehaviour, Activatable
     }
     private IEnumerator ResetAllSpikes()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
         esc.ResetSpikes();
     }
 }
