@@ -11,6 +11,8 @@ public class HeartController : MonoBehaviour
 
     private HeartPlaceLocation hpc;
 
+    private AudioSource heartBeat;
+
     public HeartPlaceLocation HPC
     {
         set
@@ -19,11 +21,17 @@ public class HeartController : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        heartBeat = GetComponent<AudioSource>();
+    }
+
     public IEnumerator Switch()
     {
         while (true)
         {
             yield return new WaitForSeconds(heartbeatTime);
+            heartBeat.PlayOneShot(heartBeat.clip);
             UpdateHeartInteractables();
             //heartbeatSwitch = !heartbeatSwitch;
         }

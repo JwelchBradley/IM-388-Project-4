@@ -23,6 +23,13 @@ public class EndSpikesController : MonoBehaviour
 
     private bool hasStarted = false;
 
+    private AudioSource aud;
+
+    private void Awake()
+    {
+        aud = GetComponent<AudioSource>();
+    }
+
     protected void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player" && !hasStarted)
@@ -46,12 +53,20 @@ public class EndSpikesController : MonoBehaviour
 
         yield return new WaitForSeconds(timeBeforeFirstSpike);
         spikeAction.Invoke(false);
+        StartCoroutine(AudioSoundWait());
         yield return new WaitForSeconds(timeBeforeSecondSpike);
 
         while (true)
         {
             spikeAction.Invoke(false);
+            StartCoroutine(AudioSoundWait());
             yield return new WaitForSeconds(timeBetweenSpikes);
         }
+    }
+
+    private IEnumerator AudioSoundWait()
+    {
+        yield return new WaitForSeconds(0.1f);
+        aud.PlayOneShot(aud.clip);
     }
 }

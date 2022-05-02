@@ -7,6 +7,7 @@
                        different controllers.
 *****************************************************************************/
 using Cinemachine;
+using RopeMinikit;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -399,6 +400,12 @@ public class PlayerController : MonoBehaviour
 
     private bool canRcall = true;
     public bool CanRecall { set { canRcall = value; } }
+
+    [SerializeField]
+    private GameObject intestines;
+    private RopeConnection[] ropeConnections;
+
+    private AudioSource aud;
     #endregion
 
     #region Funcitons
@@ -413,6 +420,8 @@ public class PlayerController : MonoBehaviour
         pm = GetComponent<PlayerMovement>();
         eCaster = GetComponent<EyeCaster>();
         walkCam = GameObject.Find("Walk vcam").GetComponent<CinemachineVirtualCamera>();
+        ropeConnections = intestines.GetComponentsInChildren<RopeConnection>();
+        aud = GetComponent<AudioSource>();
 
         // Initializes the main camera
         mainCam = Camera.main;
@@ -883,12 +892,15 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Eye
+    [SerializeField]
+    private AudioClip castEyeSound;
     /// <summary>
     /// Initializes the eye when it is first placed.
     /// </summary>
     /// <param name="eye"></param>
     private void InitializeEye(GameObject eye)
     {
+        aud.PlayOneShot(castEyeSound);
         // Hides eye on player and shows zombie
         eyeMesh.SetActive(false);
         pm.MovePlayer(Vector2.zero, false);
@@ -1011,9 +1023,12 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
+    [SerializeField]
+    private AudioClip eyePickUp;
     public void ResetEye()
     {
         Destroy(EC.Eye, 0.01f);
+        aud.PlayOneShot(eyePickUp);
         EC = null;
         EyeCam = null;
         EyeMesh.SetActive(true);
@@ -1247,10 +1262,36 @@ public class PlayerController : MonoBehaviour
         StartGrapple();
     }
 
+    [SerializeField]
+    private AudioClip intestinesGrabSound;
     private void HookGrab()
     {
         Keys.Add(hit.transform.gameObject);
-        hit.transform.gameObject.SetActive(false);
+        aud.PlayOneShot(intestinesGrabSound);
+        StartCoroutine(PullKeyToPlayer(hit.transform.gameObject));
+    }
+
+    private IEnumerator PullKeyToPlayer(GameObject key)
+    {
+        float t = 0;
+        intestinesRenderer = gameObject.AddComponent<LineRenderer>();
+        intestinesRenderer.material = intestinesMaterial;
+        intestinesRenderer.startWidth = intestinesWidth / 4;
+        intestinesRenderer.endWidth = intestinesWidth;
+        Vector3 startPos = key.transform.position;
+
+        while (t < 1)
+        {
+            yield return new WaitForEndOfFrame();
+            intestinesRenderer.positionCount = 2;
+            intestinesRenderer.SetPosition(0, intestines.transform.position);
+            intestinesRenderer.SetPosition(1, key.transform.position);
+            t += Time.deltaTime * 4;
+            key.transform.position = Vector3.Lerp(startPos, intestines.transform.position, t);
+        }
+
+        Destroy(intestinesRenderer);
+        key.transform.gameObject.SetActive(false);
     }
 
     #region Hooking
@@ -1265,10 +1306,19 @@ public class PlayerController : MonoBehaviour
 
                 // Create positions for joint
                 joint = gameObject.AddComponent<SpringJoint>();
+            
             intestinesRenderer = gameObject.AddComponent<LineRenderer>();
             intestinesRenderer.material = intestinesMaterial;
-            intestinesRenderer.startWidth = intestinesWidth;
-            intestinesRenderer.endWidth = intestinesWidth * 2;
+            intestinesRenderer.startWidth = intestinesWidth / 4;
+            intestinesRenderer.endWidth = intestinesWidth;
+            
+
+            /*
+            intestines.SetActive(true);
+
+            ropeConnections[0].transformSettings.transform = hit.transform;
+            ropeConnections[1].rigidbodySettings.body = rb;
+            */
 
             joint.autoConfigureConnectedAnchor = false;
                 joint.connectedAnchor = hookPos;
@@ -1298,7 +1348,7 @@ public class PlayerController : MonoBehaviour
         if (joint == null) return;
 
         intestinesRenderer.positionCount = 2;
-        intestinesRenderer.SetPosition(0, transform.position);
+        intestinesRenderer.SetPosition(0, intestines.transform.position);
         intestinesRenderer.SetPosition(1, hookPos);
 
     }
@@ -1330,17 +1380,21 @@ public class PlayerController : MonoBehaviour
         rb.useGravity = false;
         ccol.enabled = false;
         cc.enabled = true;
+        intestines.SetActive(false);
 
         StopGrapple();
     }
     #endregion
 
     #region Checkpoints
+    [SerializeField]
+    private AudioClip deathSound;
     public void KillPlayer()
     {
         if(cc == null) cc = GetComponent<CharacterController>();
         PauseMenuBehavior.DeathPanel.GetComponent<DeathPanelController>().StartFade();
         cc.enabled = false;
+        aud.PlayOneShot(deathSound);
 
         if(intestinesRenderer != null)
         ExitHook();

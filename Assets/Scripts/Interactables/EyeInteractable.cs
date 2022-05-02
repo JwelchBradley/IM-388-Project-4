@@ -6,6 +6,8 @@
 // Brief Description : A default implementation of the eye interactable
 *****************************************************************************/
 
+using UnityEngine;
+
 public class EyeInteractable : Interactable
 {
     /// <summary>
