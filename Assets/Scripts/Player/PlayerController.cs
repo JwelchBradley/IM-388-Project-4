@@ -7,7 +7,6 @@
                        different controllers.
 *****************************************************************************/
 using Cinemachine;
-using RopeMinikit;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -403,7 +402,6 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private GameObject intestines;
-    private RopeConnection[] ropeConnections;
 
     private AudioSource aud;
     #endregion
@@ -420,7 +418,6 @@ public class PlayerController : MonoBehaviour
         pm = GetComponent<PlayerMovement>();
         eCaster = GetComponent<EyeCaster>();
         walkCam = GameObject.Find("Walk vcam").GetComponent<CinemachineVirtualCamera>();
-        ropeConnections = intestines.GetComponentsInChildren<RopeConnection>();
         aud = GetComponent<AudioSource>();
 
         // Initializes the main camera
@@ -1407,8 +1404,8 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
         PauseMenuBehavior.DeathPanel.GetComponent<DeathPanelController>().StartFade();
         transform.position = checkpoint.transform.position;
-        transform.rotation = checkpoint.transform.rotation;
-        walkCam.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.Value = transform.rotation.eulerAngles.y;
+        fpsMesh.transform.rotation = checkpoint.transform.rotation;
+        walkCam.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.Value = fpsMesh.transform.rotation.eulerAngles.y;
         StartCoroutine(AllowMovement());
     }
 

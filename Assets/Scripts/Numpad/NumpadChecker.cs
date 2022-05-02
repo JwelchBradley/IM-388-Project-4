@@ -47,10 +47,20 @@ public class NumpadChecker : Interactable
 
     private NumpadController nc;
 
+    private AudioSource aud;
+
+    [SerializeField]
+    private AudioClip correct;
+    [SerializeField]
+    private AudioClip incorrect;
+    [SerializeField]
+    private AudioClip click;
+
     private void Start()
     {
         pmb = GameObject.Find("Pause Menu Templates Canvas").GetComponent<PauseMenuBehavior>();
         nc = pmb.KeyPad.GetComponentInChildren<NumpadController>();
+        aud = GetComponent<AudioSource>();
 
         foreach(GameObject gm in activatableObjects)
         {
@@ -73,6 +83,7 @@ public class NumpadChecker : Interactable
         //numText.text += num;
         currentEntered += num;
         currentIndex++;
+        aud.PlayOneShot(click);
 
         if (currentIndex == code.Length)
         {
@@ -98,13 +109,12 @@ public class NumpadChecker : Interactable
         print(currentEntered);
         if(entered == currentEntered)
         {
-            print("activate");
+            aud.PlayOneShot(correct);
             ActivateObjects();
         }
         else
         {
-            print("reset");
-
+            aud.PlayOneShot(incorrect);
             Reset();
         }
     }
